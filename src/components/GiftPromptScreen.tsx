@@ -16,7 +16,7 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
   onTryAgain,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center select-none py-8">
+    <div className="w-full flex flex-col items-center justify-center text-center select-none py-1 sm:py-2 my-auto">
       {/* ================= PROMPT VIEW ================= */}
       {!isRejectedView ? (
         <motion.div
@@ -24,18 +24,18 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="flex flex-col items-center max-w-lg mx-auto bg-white/80 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-scrapbook-card border border-rose-100"
+          className="flex flex-col items-center max-w-md sm:max-w-lg mx-auto bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-6 sm:px-8 shadow-2xl border-2 border-rose-200/80 ring-1 ring-white/60"
         >
           {/* Header */}
-          <span className="font-dancing text-2xl text-[#801336] block mb-1">
+          <span className="font-dancing text-base sm:text-lg text-[#801336] block mb-0.5 font-semibold">
             From Dhinesh • A special surprise for my bestie, Hebziba
           </span>
-          <h1 className="font-playfair text-3xl sm:text-4xl font-extrabold text-[#801336] tracking-wide mb-6 uppercase">
+          <h1 className="font-playfair text-xl sm:text-2xl font-extrabold text-[#801336] tracking-wide mb-2 uppercase">
             PLEASE ACCEPT THE GIFT
           </h1>
 
           {/* Center Illustration: Cute Panda holding large maroon heart */}
-          <div className="w-64 h-64 sm:w-72 sm:h-72 my-2 relative">
+          <div className="w-36 h-36 sm:w-44 sm:h-44 my-1 relative">
             <svg viewBox="0 0 300 300" className="w-full h-full drop-shadow-md">
               {/* Soft pink circle behind */}
               <circle cx="150" cy="150" r="115" fill="#FDE8EF" opacity="0.6" />
@@ -89,23 +89,23 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
             </svg>
           </div>
 
-          <p className="font-dancing text-xl text-[#801336] my-4">
+          <p className="font-dancing text-sm sm:text-base text-[#801336] my-2 font-bold">
             "Will you accept these surprises from Dhinesh?"
           </p>
 
           {/* Two Maroon Pill Buttons: YES and NO */}
-          <div className="flex items-center gap-6 mt-2">
+          <div className="flex items-center gap-4 mt-1">
             <button
               onClick={onAccept}
-              className="px-8 py-3.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-base tracking-widest shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-108 active:scale-95 transition-all duration-200 flex items-center gap-2"
+              className="px-6 py-2.5 sm:px-7 sm:py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs sm:text-sm tracking-widest shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-1.5"
             >
-              <Heart className="w-4 h-4 fill-[#F49CB4] text-[#F49CB4]" />
+              <Heart className="w-3.5 h-3.5 fill-[#F49CB4] text-[#F49CB4]" />
               <span>YES</span>
             </button>
 
             <button
               onClick={onReject}
-              className="px-8 py-3.5 rounded-full bg-white text-[#801336] border-2 border-[#801336] font-playfair font-bold text-base tracking-widest shadow-md hover:bg-rose-50 hover:scale-105 active:scale-95 transition-all duration-200"
+              className="px-6 py-2.5 sm:px-7 sm:py-2.5 rounded-full bg-white text-[#801336] border-2 border-[#801336] font-playfair font-bold text-xs sm:text-sm tracking-widest shadow-md hover:bg-rose-50 hover:scale-105 active:scale-95 transition-all duration-200"
             >
               <span>NO</span>
             </button>
@@ -118,18 +118,18 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
           initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           exit={{ opacity: 0, scale: 0.9 }}
-          className="flex flex-col items-center max-w-lg mx-auto bg-white/90 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-scrapbook-card border-2 border-rose-300"
+          className="flex flex-col items-center max-w-md sm:max-w-lg mx-auto bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-6 sm:px-8 shadow-2xl border-2 border-rose-300 ring-1 ring-white/60"
         >
           {/* Header */}
-          <h1 className="font-playfair text-3xl sm:text-4xl font-extrabold text-[#801336] tracking-wide mb-4 uppercase animate-bounce">
+          <h1 className="font-playfair text-xl sm:text-2xl font-extrabold text-[#801336] tracking-wide mb-1.5 uppercase animate-bounce">
             WHY DID YOU CLICK NO! 😭
           </h1>
-          <p className="font-dancing text-xl text-[#801336]/80 mb-4">
+          <p className="font-dancing text-sm sm:text-base text-[#801336]/80 mb-1.5 font-semibold">
             You broke Dhinesh's heart into tiny pieces... 😭💔
           </p>
 
           {/* Center Illustration: Crying / Sad Panda */}
-          <div className="w-64 h-64 sm:w-72 sm:h-72 my-2 relative">
+          <div className="w-36 h-36 sm:w-44 sm:h-44 my-1 relative">
             <svg viewBox="0 0 300 300" className="w-full h-full drop-shadow-md">
               <circle cx="150" cy="150" r="115" fill="#E2E8F0" opacity="0.6" />
 
@@ -172,18 +172,18 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
             </svg>
           </div>
 
-          <p className="font-dancing text-xl text-[#801336] my-4">
+          <p className="font-dancing text-sm sm:text-base text-[#801336] my-2 font-bold">
             Hebziba, don't break your bestie's heart, please say YES! 🥺
           </p>
 
           {/* Button: TRY AGAIN */}
           <button
             onClick={onTryAgain}
-            className="px-8 py-3.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-base tracking-widest shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-108 active:scale-95 transition-all duration-200 flex items-center gap-2 mt-2"
+            className="px-6 py-2.5 sm:px-7 sm:py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs sm:text-sm tracking-widest shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-1.5 mt-1"
           >
-            <RefreshCw className="w-4 h-4 animate-spin-slow" />
+            <RefreshCw className="w-3.5 h-3.5 animate-spin-slow" />
             <span>TRY AGAIN</span>
-            <Sparkles className="w-4 h-4 text-amber-200" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-200" />
           </button>
         </motion.div>
       )}
