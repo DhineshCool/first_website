@@ -11,9 +11,11 @@ import { MusicCardGift } from './components/MusicCardGift';
 import { BouquetBuilderGift } from './components/BouquetBuilderGift';
 import { LoveLetterGift } from './components/LoveLetterGift';
 import { ScrapbookLayout } from './components/ScrapbookLayout';
+import { FloatingMemoryPhotos } from './components/FloatingMemoryPhotos';
 
 export const App: React.FC = () => {
   const [screenState, setScreenState] = useState<ScreenState>('BIRTHDAY_COUNTDOWN');
+  const [candlesBlown, setCandlesBlown] = useState<boolean>(false);
 
   // Handle navigation transitions
   const handleEnterPasscode = () => setScreenState('LOCK');
@@ -102,6 +104,7 @@ export const App: React.FC = () => {
               onContinue={handleCakeContinue}
               targetDay={27}
               monthName="October"
+              onCandlesBlown={() => setCandlesBlown(true)}
             />
           )}
 
@@ -138,6 +141,7 @@ export const App: React.FC = () => {
           {screenState === 'GIFT_LETTER' && <LoveLetterGift />}
         </motion.div>
       </AnimatePresence>
+      {candlesBlown && <FloatingMemoryPhotos />}
     </ScrapbookLayout>
   );
 };

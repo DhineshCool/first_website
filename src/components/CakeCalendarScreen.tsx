@@ -7,12 +7,14 @@ interface CakeCalendarScreenProps {
   onContinue: () => void;
   targetDay?: number;
   monthName?: string;
+  onCandlesBlown?: () => void;
 }
 
 export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
   onContinue,
   targetDay = 27,
   monthName = 'October',
+  onCandlesBlown,
 }) => {
   const [candlesLit, setCandlesLit] = useState<boolean>(true);
   const [smokeActive, setSmokeActive] = useState<boolean>(false);
@@ -21,6 +23,7 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
     if (!candlesLit) return;
     setCandlesLit(false);
     setSmokeActive(true);
+    onCandlesBlown?.();
 
     // Celebratory pastel & maroon confetti blast
     try {
