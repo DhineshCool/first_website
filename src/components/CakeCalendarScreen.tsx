@@ -378,10 +378,12 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.94 }}
                   onClick={handleBlowCandles}
-                  className="px-5 py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs sm:text-sm tracking-wide shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-1.5"
+                  className="animate-shimmer px-5 py-2.5 rounded-full bg-gradient-to-r from-[#801336] via-[#9E1B43] to-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs sm:text-sm tracking-wide shadow-pill-maroon hover:shadow-lg transition-all duration-200 flex items-center gap-1.5 cursor-pointer border border-rose-300/40"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+                  <Sparkles className="w-3.5 h-3.5 text-amber-200 animate-spin-slow" />
                   <span>Blow the Candles ✨</span>
                 </motion.button>
               ) : (
@@ -389,11 +391,13 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
                   key="continue-btn"
                   initial={{ opacity: 0, scale: 0.9, y: 10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.94 }}
                   onClick={onContinue}
-                  className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#801336] to-[#9E1B43] text-[#FAF6F0] font-playfair font-bold text-sm tracking-wide shadow-pill-maroon hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-1.5 animate-bounce"
+                  className="animate-shimmer px-6 py-2.5 rounded-full bg-gradient-to-r from-[#801336] via-[#9E1B43] to-[#801336] text-[#FAF6F0] font-playfair font-bold text-sm tracking-wide shadow-pill-maroon hover:shadow-lg transition-all duration-200 flex items-center gap-1.5 border border-rose-300/40 cursor-pointer"
                 >
                   <span>• Continue</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3.5 h-3.5 animate-bounce" />
                 </motion.button>
               )}
             </AnimatePresence>
@@ -444,15 +448,16 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
                     className="relative h-6 sm:h-7 flex items-center justify-center"
                   >
                     {isTargetDay ? (
-                      /* Encircled by Solid Maroon Heart Badge */
+                      /* Encircled by Solid Maroon Heart Badge with glowing ripple */
                       <motion.div
                         animate={{ scale: [1, 1.12, 1] }}
                         transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
                         className="relative w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center cursor-pointer"
                         title="Hebziba's Birthday!"
                       >
-                        <Heart className="w-full h-full fill-[#801336] text-[#801336] drop-shadow-md" />
-                        <span className="absolute inset-0 flex items-center justify-center font-bold text-white text-[10px] sm:text-xs">
+                        <div className="absolute inset-0 rounded-full bg-[#F49CB4]/50 animate-ping opacity-60" />
+                        <Heart className="w-full h-full fill-[#801336] text-[#801336] drop-shadow-md relative z-10" />
+                        <span className="absolute inset-0 flex items-center justify-center font-bold text-white text-[10px] sm:text-xs z-10">
                           {cell}
                         </span>
                       </motion.div>

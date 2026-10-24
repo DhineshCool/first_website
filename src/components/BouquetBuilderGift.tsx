@@ -198,16 +198,18 @@ export const BouquetBuilderGift: React.FC = () => {
                   </div>
 
                   {/* Select CTA Button */}
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={(e) => {
                       e.stopPropagation();
                       handleSelectBouquet(b);
                     }}
-                    className="w-full py-1.5 sm:py-2 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-[11px] sm:text-xs tracking-wider shadow-pill-maroon hover:bg-[#9E1B43] active:scale-95 transition-all flex items-center justify-center gap-1 mt-auto"
+                    className="animate-shimmer w-full py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-[#801336] via-[#9E1B43] to-[#801336] text-[#FAF6F0] font-playfair font-bold text-[11px] sm:text-xs tracking-wider shadow-pill-maroon hover:shadow-lg transition-all flex items-center justify-center gap-1 mt-auto border border-rose-300/30 cursor-pointer"
                   >
-                    <Flower2 className="w-3 h-3 text-[#F49CB4]" />
+                    <Flower2 className="w-3 h-3 text-[#F49CB4] animate-spin-slow" />
                     <span>Present to Hebziba 💖</span>
-                  </button>
+                  </motion.button>
                 </motion.div>
               ))}
             </div>

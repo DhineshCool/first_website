@@ -168,8 +168,14 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
                 <ellipse cx="182" cy="188" rx="14" ry="20" transform="rotate(30 182 188)" fill="#FFFFFF" />
               </g>
 
-              {/* Big Shared Crimson Maroon Heart */}
-              <g id="shared-heart" transform="translate(160, 195) scale(1.1)">
+              {/* Big Shared Crimson Maroon Heart with heartbeat pulse */}
+              <motion.g
+                id="shared-heart"
+                animate={{ scale: [1.1, 1.18, 1.1, 1.15, 1.1] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ transformOrigin: '160px 195px' }}
+                transform="translate(160, 195)"
+              >
                 <path
                   d="M0 -15 C-25 -45 -55 -15 -55 15 C-55 45 0 75 0 90 C0 75 55 45 55 15 C55 -15 25 -45 0 -15 Z"
                   fill="#801336"
@@ -179,7 +185,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
                 <text x="0" y="32" textAnchor="middle" fill="#FAF6F0" className="font-dancing text-xs font-bold">
                   for Hebziba
                 </text>
-              </g>
+              </motion.g>
             </svg>
           </div>
 
@@ -237,16 +243,18 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
               )}
             </div>
 
-            {/* 3x4 Circular Button Keypad */}
+            {/* 3x4 Circular Button Keypad with spring press */}
             <div className="grid grid-cols-3 gap-2 sm:gap-2.5 w-full max-w-[220px]">
               {['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'].map((btn) => (
-                <button
+                <motion.button
                   key={btn}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.92 }}
                   onClick={() => handleKeyPress(btn)}
-                  className="w-11 h-11 sm:w-12 sm:h-12 mx-auto rounded-full bg-white text-[#801336] font-playfair text-lg sm:text-xl font-bold shadow-md hover:bg-[#FAF6F0] hover:scale-105 active:scale-95 transition-all duration-150 flex items-center justify-center border border-[#801336]/10"
+                  className="w-11 h-11 sm:w-12 sm:h-12 mx-auto rounded-full bg-white text-[#801336] font-playfair text-lg sm:text-xl font-bold shadow-md hover:bg-[#FAF6F0] transition-all duration-150 flex items-center justify-center border border-[#801336]/10 cursor-pointer"
                 >
                   {btn}
-                </button>
+                </motion.button>
               ))}
             </div>
 
@@ -257,13 +265,13 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
                   setPin('2710');
                   verifyPin('2710');
                 }}
-                className="text-[10px] font-dancing text-[#801336] underline hover:opacity-80 font-bold"
+                className="text-[10px] font-dancing text-[#801336] underline hover:opacity-80 font-bold cursor-pointer"
               >
                 Quick Unlock (2710)
               </button>
               <button
                 onClick={handleDelete}
-                className="flex items-center gap-1 text-[11px] text-[#801336] font-bold hover:opacity-80 p-0.5"
+                className="flex items-center gap-1 text-[11px] text-[#801336] font-bold hover:opacity-80 p-0.5 cursor-pointer"
                 aria-label="Delete digit"
               >
                 <Delete className="w-3.5 h-3.5" />
@@ -274,13 +282,15 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
 
           {/* Bottom Pill Button: UNLOCK */}
           <div className="w-full mt-3 flex flex-col items-center justify-center gap-1">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleUnlockClick}
-              className="w-full max-w-[210px] py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs tracking-widest shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center gap-1.5"
+              className="animate-shimmer w-full max-w-[210px] py-2.5 rounded-full bg-gradient-to-r from-[#801336] via-[#9E1B43] to-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs tracking-widest shadow-pill-maroon hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-1.5 border border-rose-300/40 cursor-pointer"
             >
-              <Lock className="w-3.5 h-3.5" />
+              <Lock className="w-3.5 h-3.5 animate-pulse" />
               <span>UNLOCK</span>
-            </button>
+            </motion.button>
             {onBackToCountdown && (
               <button
                 onClick={onBackToCountdown}

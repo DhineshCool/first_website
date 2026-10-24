@@ -34,17 +34,51 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
             PLEASE ACCEPT THE GIFT
           </h1>
 
-          {/* Center Illustration: Cute Panda holding large maroon heart */}
+          {/* Center Illustration: Animated Cute Panda holding large maroon heart */}
           <div className="w-36 h-36 sm:w-44 sm:h-44 my-1 relative">
-            <svg viewBox="0 0 300 300" className="w-full h-full drop-shadow-md">
+            {/* Soft floating mini hearts rising from the panda */}
+            <motion.div
+              animate={{ y: [-5, -28], opacity: [0, 0.9, 0], x: [0, -8, -12] }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeOut' }}
+              className="absolute top-6 left-8 pointer-events-none text-xs text-[#801336]"
+            >
+              💖
+            </motion.div>
+            <motion.div
+              animate={{ y: [-5, -30], opacity: [0, 0.85, 0], x: [0, 10, 14] }}
+              transition={{ duration: 3.6, repeat: Infinity, ease: 'easeOut', delay: 1.5 }}
+              className="absolute top-8 right-8 pointer-events-none text-xs text-[#F49CB4]"
+            >
+              ✨
+            </motion.div>
+
+            <motion.svg
+              viewBox="0 0 300 300"
+              animate={{ y: [0, -3.5, 0] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-full h-full drop-shadow-md overflow-visible"
+            >
               {/* Soft pink circle behind */}
               <circle cx="150" cy="150" r="115" fill="#FDE8EF" opacity="0.6" />
 
-              {/* Panda Ears */}
-              <circle cx="95" cy="85" r="24" fill="#2E1C0C" />
-              <circle cx="95" cy="85" r="12" fill="#4A2E18" />
-              <circle cx="205" cy="85" r="24" fill="#2E1C0C" />
-              <circle cx="205" cy="85" r="12" fill="#4A2E18" />
+              {/* Panda Ears with subtle playful twitch */}
+              <motion.g
+                animate={{ rotate: [-3, 3, -3] }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ transformOrigin: '95px 85px' }}
+              >
+                <circle cx="95" cy="85" r="24" fill="#2E1C0C" />
+                <circle cx="95" cy="85" r="12" fill="#4A2E18" />
+              </motion.g>
+
+              <motion.g
+                animate={{ rotate: [3, -3, 3] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ transformOrigin: '205px 85px' }}
+              >
+                <circle cx="205" cy="85" r="24" fill="#2E1C0C" />
+                <circle cx="205" cy="85" r="12" fill="#4A2E18" />
+              </motion.g>
 
               {/* Panda Body */}
               <ellipse cx="150" cy="205" rx="65" ry="60" fill="#2E1C0C" />
@@ -56,11 +90,18 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
               {/* Eye patches */}
               <ellipse cx="125" cy="125" rx="16" ry="20" transform="rotate(-15 125 125)" fill="#2E1C0C" />
               <ellipse cx="175" cy="125" rx="16" ry="20" transform="rotate(15 175 125)" fill="#2E1C0C" />
-              {/* Eyes */}
-              <circle cx="127" cy="123" r="5" fill="#FFFFFF" />
-              <circle cx="173" cy="123" r="5" fill="#FFFFFF" />
-              <circle cx="128" cy="122" r="2.5" fill="#2E1C0C" />
-              <circle cx="172" cy="122" r="2.5" fill="#2E1C0C" />
+
+              {/* Eyes with periodic cute blink */}
+              <motion.g
+                animate={{ scaleY: [1, 1, 0.15, 1, 1] }}
+                transition={{ duration: 4.2, repeat: Infinity, times: [0, 0.88, 0.92, 0.96, 1] }}
+                style={{ transformOrigin: '150px 123px' }}
+              >
+                <circle cx="127" cy="123" r="5" fill="#FFFFFF" />
+                <circle cx="173" cy="123" r="5" fill="#FFFFFF" />
+                <circle cx="128" cy="122" r="2.5" fill="#2E1C0C" />
+                <circle cx="172" cy="122" r="2.5" fill="#2E1C0C" />
+              </motion.g>
 
               {/* Nose & Mouth */}
               <ellipse cx="150" cy="140" rx="7" ry="5" fill="#2E1C0C" />
@@ -74,8 +115,14 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
               <ellipse cx="98" cy="190" rx="18" ry="26" transform="rotate(25 98 190)" fill="#2E1C0C" />
               <ellipse cx="202" cy="190" rx="18" ry="26" transform="rotate(-25 202 190)" fill="#2E1C0C" />
 
-              {/* Large Maroon Heart in Panda's Hands */}
-              <g id="panda-heart" transform="translate(150, 185) scale(0.95)">
+              {/* Large Maroon Heart in Panda's Hands with Heartbeat Pulse */}
+              <motion.g
+                id="panda-heart"
+                animate={{ scale: [0.95, 1.05, 0.95, 1.02, 0.95] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ transformOrigin: '150px 185px' }}
+                transform="translate(150, 185)"
+              >
                 <path
                   d="M0 -20 C-30 -55 -70 -20 -70 20 C-70 60 0 100 0 115 C0 100 70 60 70 20 C70 -20 30 -55 0 -20 Z"
                   fill="#801336"
@@ -85,8 +132,8 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
                 <text x="0" y="38" textAnchor="middle" fill="#FAF6F0" className="font-dancing text-sm font-bold">
                   besties 4ever
                 </text>
-              </g>
-            </svg>
+              </motion.g>
+            </motion.svg>
           </div>
 
           <p className="font-dancing text-sm sm:text-base text-[#801336] my-2 font-bold">
@@ -95,20 +142,24 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
 
           {/* Two Maroon Pill Buttons: YES and NO */}
           <div className="flex items-center gap-4 mt-1">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.94 }}
               onClick={onAccept}
-              className="px-6 py-2.5 sm:px-7 sm:py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs sm:text-sm tracking-widest shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-1.5"
+              className="animate-shimmer px-6 py-2.5 sm:px-7 sm:py-2.5 rounded-full bg-gradient-to-r from-[#801336] via-[#9E1B43] to-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs sm:text-sm tracking-widest shadow-pill-maroon hover:shadow-lg transition-all duration-200 flex items-center gap-1.5 cursor-pointer border border-rose-300/40"
             >
-              <Heart className="w-3.5 h-3.5 fill-[#F49CB4] text-[#F49CB4]" />
+              <Heart className="w-3.5 h-3.5 fill-[#F49CB4] text-[#F49CB4] animate-heartbeat" />
               <span>YES</span>
-            </button>
+            </motion.button>
 
-            <button
+            <motion.button
+              whileHover={{ scale: 0.95, rotate: [-2, 2, -2, 0] }}
+              whileTap={{ scale: 0.9 }}
               onClick={onReject}
-              className="px-6 py-2.5 sm:px-7 sm:py-2.5 rounded-full bg-white text-[#801336] border-2 border-[#801336] font-playfair font-bold text-xs sm:text-sm tracking-widest shadow-md hover:bg-rose-50 hover:scale-105 active:scale-95 transition-all duration-200"
+              className="px-6 py-2.5 sm:px-7 sm:py-2.5 rounded-full bg-white text-[#801336] border-2 border-[#801336] font-playfair font-bold text-xs sm:text-sm tracking-widest shadow-md hover:bg-rose-50 transition-all duration-200 cursor-pointer"
             >
               <span>NO</span>
-            </button>
+            </motion.button>
           </div>
         </motion.div>
       ) : (

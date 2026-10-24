@@ -401,6 +401,7 @@ export const FloatingMemoryPhotos: React.FC<FloatingMemoryPhotosProps> = ({ isBl
               opacity: isBlurred ? item.opacity * 0.45 : item.opacity,
               scale: 1,
               y: [0, item.floatDistance, 0],
+              rotate: [item.rotation - 1.5, item.rotation + 1.5, item.rotation - 1.5],
             }}
             transition={{
               opacity: { duration: 0.8, delay: (index % 6) * 0.08 },
@@ -408,6 +409,11 @@ export const FloatingMemoryPhotos: React.FC<FloatingMemoryPhotosProps> = ({ isBl
               y: {
                 repeat: Infinity,
                 duration: item.duration,
+                ease: 'easeInOut',
+              },
+              rotate: {
+                repeat: Infinity,
+                duration: item.duration * 1.3,
                 ease: 'easeInOut',
               },
             }}

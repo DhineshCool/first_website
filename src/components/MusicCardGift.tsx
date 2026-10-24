@@ -204,6 +204,33 @@ export const MusicCardGift: React.FC = () => {
 
             {/* Black Vinyl Record Graphic with rotation */}
             <div className="relative w-28 h-28 sm:w-32 sm:h-32 my-auto flex items-center justify-center">
+              {/* Floating music notes when playing */}
+              {isPlaying && (
+                <>
+                  <motion.span
+                    animate={{ y: [-10, -42], x: [0, -16], opacity: [0, 0.9, 0], scale: [0.8, 1.2, 0.9] }}
+                    transition={{ duration: 2.6, repeat: Infinity, ease: 'easeOut' }}
+                    className="absolute top-2 left-4 text-xs pointer-events-none select-none text-amber-200 z-20"
+                  >
+                    🎵
+                  </motion.span>
+                  <motion.span
+                    animate={{ y: [-8, -46], x: [0, 16], opacity: [0, 0.85, 0], scale: [0.8, 1.25, 0.9] }}
+                    transition={{ duration: 2.9, repeat: Infinity, ease: 'easeOut', delay: 1.3 }}
+                    className="absolute top-3 right-4 text-xs pointer-events-none select-none text-rose-200 z-20"
+                  >
+                    🎶
+                  </motion.span>
+                  <motion.span
+                    animate={{ y: [-5, -35], x: [0, 6], opacity: [0, 0.75, 0] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut', delay: 0.6 }}
+                    className="absolute top-1 left-12 text-[10px] pointer-events-none select-none text-white z-20"
+                  >
+                    ✨
+                  </motion.span>
+                </>
+              )}
+
               <motion.div
                 animate={{ rotate: isPlaying ? 360 : 0 }}
                 transition={
@@ -254,9 +281,10 @@ export const MusicCardGift: React.FC = () => {
               {isPlaying ? (
                 <div className="flex items-center gap-1">
                   <span className="w-1 h-2.5 bg-amber-300 rounded-full animate-bounce [animation-delay:0ms]" />
-                  <span className="w-1 h-3.5 bg-amber-300 rounded-full animate-bounce [animation-delay:150ms]" />
+                  <span className="w-1 h-4 bg-amber-300 rounded-full animate-bounce [animation-delay:150ms]" />
                   <span className="w-1 h-2 bg-amber-300 rounded-full animate-bounce [animation-delay:300ms]" />
-                  <span className="w-1 h-4 bg-amber-300 rounded-full animate-bounce [animation-delay:200ms]" />
+                  <span className="w-1 h-4.5 bg-amber-300 rounded-full animate-bounce [animation-delay:200ms]" />
+                  <span className="w-1 h-3 bg-amber-300 rounded-full animate-bounce [animation-delay:100ms]" />
                 </div>
               ) : (
                 <Sparkles className="w-3 h-3 text-amber-300" />

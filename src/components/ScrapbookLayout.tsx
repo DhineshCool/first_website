@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 
@@ -8,17 +8,67 @@ interface ScrapbookLayoutProps {
   onBack?: () => void;
 }
 
+// Subtle magical drifting particles for ambient fairy-tale warmth
+const PARTICLE_TYPES = ['✨', '💖', '🌸', '✦', '⭐', '💫', '🧁'];
+
 export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
   children,
   showBackButton = false,
   onBack,
 }) => {
+  // Pre-generate stable positions for 18 ambient floating particles
+  const particles = useMemo(() => {
+    return Array.from({ length: 18 }, (_, i) => ({
+      id: i,
+      icon: PARTICLE_TYPES[i % PARTICLE_TYPES.length],
+      left: `${(i * 5.6 + (i % 3) * 2.5) % 96 + 2}%`,
+      delay: (i * 0.9) % 10,
+      duration: 14 + (i % 5) * 2.5,
+      scale: 0.6 + (i % 4) * 0.18,
+      opacity: 0.25 + (i % 3) * 0.15,
+      driftX: (i % 2 === 0 ? 1 : -1) * (15 + (i % 4) * 5),
+    }));
+  }, []);
+
   return (
     <div className="relative min-h-screen w-full scrapbook-grid overflow-x-hidden flex flex-col justify-between selection:bg-[#F49CB4] selection:text-[#801336]">
-      {/* ================= FIXED CORNER DECORATIONS ================= */}
+      {/* ================= AMBIENT DRIFTING PARTICLES ================= */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
+        {particles.map((p) => (
+          <motion.div
+            key={p.id}
+            initial={{ y: '105vh', x: 0, opacity: 0 }}
+            animate={{
+              y: '-8vh',
+              x: [0, p.driftX, -p.driftX / 2, 0],
+              opacity: [0, p.opacity, p.opacity, 0],
+              rotate: [0, p.driftX * 3, -p.driftX * 2, 0],
+            }}
+            transition={{
+              duration: p.duration,
+              delay: p.delay,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            style={{
+              left: p.left,
+              fontSize: `${p.scale * 1.1}rem`,
+            }}
+            className="absolute drop-shadow-sm filter"
+          >
+            {p.icon}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* ================= FIXED CORNER DECORATIONS WITH SUBTLE BREATHING ================= */}
 
       {/* TOP-LEFT: Torn Pink Paper Wave + Taped Label "sweet" (Subtle background accent) */}
-      <div className="fixed top-0 left-0 pointer-events-none z-0 select-none">
+      <motion.div
+        animate={{ y: [0, -3, 0], rotate: [0, 0.8, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        className="fixed top-0 left-0 pointer-events-none z-0 select-none"
+      >
         <svg
           viewBox="0 0 220 180"
           className="w-24 sm:w-32 h-auto drop-shadow-sm overflow-visible opacity-75"
@@ -71,10 +121,14 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
             </text>
           </g>
         </svg>
-      </div>
+      </motion.div>
 
       {/* TOP-RIGHT: Sketched Maroon Stars, Outline Hearts + Taped Label "always" */}
-      <div className="fixed top-0 right-0 pointer-events-none z-0 select-none">
+      <motion.div
+        animate={{ y: [0, -3, 0], rotate: [0, -0.8, 0] }}
+        transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
+        className="fixed top-0 right-0 pointer-events-none z-0 select-none"
+      >
         <svg
           viewBox="0 0 220 180"
           className="w-24 sm:w-32 h-auto drop-shadow-sm overflow-visible opacity-75"
@@ -117,10 +171,14 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
             </text>
           </g>
         </svg>
-      </div>
+      </motion.div>
 
       {/* BOTTOM-LEFT: Maroon & Pink Hibiscus Flower Cluster */}
-      <div className="fixed bottom-0 left-0 pointer-events-none z-0 select-none">
+      <motion.div
+        animate={{ y: [0, 3, 0], scale: [1, 1.02, 1] }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+        className="fixed bottom-0 left-0 pointer-events-none z-0 select-none"
+      >
         <svg
           viewBox="0 0 240 220"
           className="w-28 sm:w-36 h-auto drop-shadow-sm overflow-visible opacity-75"
@@ -153,10 +211,14 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
             <circle cx="0" cy="0" r="10" fill="#801336" />
           </g>
         </svg>
-      </div>
+      </motion.div>
 
       {/* BOTTOM-RIGHT: Maroon & Pink Hibiscus Flower Cluster */}
-      <div className="fixed bottom-0 right-0 pointer-events-none z-0 select-none">
+      <motion.div
+        animate={{ y: [0, 3, 0], scale: [1, 1.02, 1] }}
+        transition={{ duration: 7.2, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        className="fixed bottom-0 right-0 pointer-events-none z-0 select-none"
+      >
         <svg
           viewBox="0 0 240 220"
           className="w-28 sm:w-36 h-auto drop-shadow-sm overflow-visible opacity-75"
@@ -187,7 +249,7 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
             <circle cx="0" cy="0" r="10" fill="#801336" />
           </g>
         </svg>
-      </div>
+      </motion.div>
 
       {/* ================= TOP NAVIGATION PILL: "← Back" ================= */}
       {showBackButton && onBack && (
