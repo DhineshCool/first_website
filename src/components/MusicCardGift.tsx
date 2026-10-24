@@ -333,7 +333,7 @@ export const MusicCardGift: React.FC = () => {
                     Best Friends Forever
                   </h3>
                   <p className="font-dancing text-xl text-[#F49CB4] font-bold mt-1">
-                    To My Dearest Bestie, Hebziba ✨
+                    From Dhinesh to my favorite bestie, Hebziba ✨
                   </p>
                 </div>
               </div>

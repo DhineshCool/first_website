@@ -137,7 +137,7 @@ export const LoveLetterGift: React.FC = () => {
                 Best Friends Forever,
               </p>
               <p className="font-playfair text-xs text-[#801336]/80 tracking-wider uppercase font-semibold">
-                Your Partner in Crime ✨
+                Your Partner in Crime, Dhinesh ✨
               </p>
             </div>
 

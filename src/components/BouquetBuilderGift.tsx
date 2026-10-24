@@ -254,11 +254,11 @@ export const BouquetBuilderGift: React.FC = () => {
                   Forever Besties
                 </h4>
                 <p className="font-dancing text-xl text-[#801336] font-bold mt-1">
-                  "Only the finest blooms for Hebziba!"
+                  "Handpicked by Dhinesh for Hebziba!"
                 </p>
                 <div className="mt-3 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-xs font-semibold text-[#801336] inline-flex items-center gap-1">
                   <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Delivered to Bestie</span>
+                  <span>Delivered by Dhinesh ✨</span>
                 </div>
               </div>
 
