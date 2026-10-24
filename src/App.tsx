@@ -15,7 +15,22 @@ import { FloatingMemoryPhotos } from './components/FloatingMemoryPhotos';
 
 export const App: React.FC = () => {
   const [screenState, setScreenState] = useState<ScreenState>('BIRTHDAY_COUNTDOWN');
-  const [candlesBlown, setCandlesBlown] = useState<boolean>(false);
+  const [candlesBlown, setCandlesBlown] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem('hebziba_candles_blown') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const handleCandlesBlown = () => {
+    setCandlesBlown(true);
+    try {
+      sessionStorage.setItem('hebziba_candles_blown', 'true');
+    } catch {
+      // safe fallback
+    }
+  };
 
   // Handle navigation transitions
   const handleEnterPasscode = () => setScreenState('LOCK');
@@ -104,7 +119,7 @@ export const App: React.FC = () => {
               onContinue={handleCakeContinue}
               targetDay={27}
               monthName="October"
-              onCandlesBlown={() => setCandlesBlown(true)}
+              onCandlesBlown={handleCandlesBlown}
             />
           )}
 
@@ -141,7 +156,13 @@ export const App: React.FC = () => {
           {screenState === 'GIFT_LETTER' && <LoveLetterGift />}
         </motion.div>
       </AnimatePresence>
-      {candlesBlown && <FloatingMemoryPhotos />}
+      {(candlesBlown ||
+        screenState === 'PROMPT_GIFT' ||
+        screenState === 'REJECT_GIFT' ||
+        screenState === 'GIFT_HUB' ||
+        screenState === 'GIFT_MUSIC' ||
+        screenState === 'GIFT_BOUQUET' ||
+        screenState === 'GIFT_LETTER') && <FloatingMemoryPhotos />}
     </ScrapbookLayout>
   );
 };
