@@ -114,7 +114,7 @@ export const MusicCardGift: React.FC = () => {
           Our Special Song & Card
         </h1>
         <p className="font-dancing text-xl text-[#801336]/80 mt-1">
-          "Every love song was written about you, Hebziba"
+          "The soundtrack to our bestie memories, Hebziba"
         </p>
       </div>
 
@@ -129,7 +129,7 @@ export const MusicCardGift: React.FC = () => {
 
             {/* Inscription at top of frame */}
             <p className="font-dancing text-base sm:text-lg text-[#FAF6F0] text-center font-bold tracking-wide z-10">
-              "every love song was about you"
+              "only the best tunes for my bestie"
             </p>
 
             {/* Black Vinyl Record Graphic with rotation */}
@@ -327,13 +327,13 @@ export const MusicCardGift: React.FC = () => {
                   </svg>
                 </div>
 
-                {/* Caption: "I Love You So Much Hebziba" */}
+                {/* Caption: "Best Friends Forever, Hebziba" */}
                 <div>
                   <h3 className="font-playfair text-2xl font-bold text-[#801336]">
-                    I Love You So Much
+                    Best Friends Forever
                   </h3>
                   <p className="font-dancing text-xl text-[#F49CB4] font-bold mt-1">
-                    Forever & Always, Hebziba ❤️
+                    To My Dearest Bestie, Hebziba ✨
                   </p>
                 </div>
               </div>
@@ -375,7 +375,7 @@ export const MusicCardGift: React.FC = () => {
               </h3>
 
               <p className="font-dancing text-2xl text-[#801336] leading-relaxed my-4 px-2">
-                "I heard this song one day... and every single word reminded me of you. So this one is dedicated only to you, Hebziba ❤️"
+                "I heard this song one day... and it instantly reminded me of our crazy laughs, late talks, and memories. Dedicated to my bestie, Hebziba! ✨"
               </p>
 
               <div className="mt-6 flex justify-center">

@@ -28,8 +28,8 @@ export const LoveLetterGift: React.FC = () => {
     },
     {
       id: 'p4',
-      caption: 'Forever my girl 🌸',
-      dateText: 'With all my heart',
+      caption: 'Forever my bestie 🌸',
+      dateText: 'Through everything',
       rotation: 6,
       imageUrl: '/images/photo-4.svg',
     },
@@ -43,10 +43,10 @@ export const LoveLetterGift: React.FC = () => {
           Gift 3 of 3
         </span>
         <h1 className="font-playfair text-3xl sm:text-5xl font-extrabold text-[#801336] tracking-tight">
-          A Handwritten Epistle
+          A Letter to My Bestie
         </h1>
         <p className="font-dancing text-xl text-[#801336]/80 mt-1">
-          "Penned straight from my soul for Hebziba"
+          "Penned straight from the soul for my bestie, Hebziba"
         </p>
       </div>
 
@@ -111,22 +111,22 @@ export const LoveLetterGift: React.FC = () => {
 
           {/* Letter Title */}
           <h2 className="font-dancing text-3xl sm:text-4xl font-bold text-[#801336] mb-4">
-            My Love Hebziba ❤️
+            My Bestie Hebziba ❤️
           </h2>
 
           {/* Scrollable Letter Content (max-h-[420px] overflow-y-auto) */}
           <div className="max-h-[380px] sm:max-h-[420px] overflow-y-auto pr-3 space-y-4 font-dancing text-xl sm:text-2xl text-[#801336] leading-relaxed text-justify">
             <p>
-              From the very first moment our worlds crossed paths, you brought an effortless grace and warmth that completely changed everything. You turned ordinary days into quiet masterpieces, and laughter into something I could never get enough of.
+              To the person who knows my wildest stories, laughs at my dumbest jokes, and always stands by me no matter what—Happy 22nd Birthday!
             </p>
             <p>
-              Today isn't just about another birthday on the calendar; it's a celebration of you—your radiant kindness, the sparkle in your eyes when you're truly happy, and the gentle strength you carry without even trying. You have this rare, beautiful power to make the entire world feel lighter simply by being in it.
+              Having you as my best friend has been one of the greatest blessings. From random spontaneous late-night conversations to all the unfiltered laughs that hurt our stomachs, every memory with you is pure gold. You have this rare gift of making even the most boring days feel fun and full of life.
             </p>
             <p>
-              I want you to know how deeply cherished, loved, and valued you are. Not just today, but in every single second between the sunrise and the stars. May this coming year shower you with boundless joy, wild adventures, dreams fulfilled, and a love that never stops fighting for your smile.
+              Born on October 27, 2004, you’ve brought so much light, humor, and joy into this world. I hope this new chapter brings you everything your heart desires—massive success, endless happiness, incredible adventures, and all the sweet moments you truly deserve.
             </p>
             <p>
-              Thank you for being my happiest thought, my quiet comfort, and my absolute favorite person in the whole universe.
+              No matter where life takes us or how crazy things get, know that I’ll always have your back. Cheers to another year of inside jokes, surviving chaos together, and being the best duo ever!
             </p>
           </div>
 
@@ -134,16 +134,16 @@ export const LoveLetterGift: React.FC = () => {
           <div className="mt-6 pt-4 border-t border-[#801336]/20 flex items-center justify-between">
             <div>
               <p className="font-dancing text-2xl font-bold text-[#801336]">
-                Forever yours,
+                Best Friends Forever,
               </p>
               <p className="font-playfair text-xs text-[#801336]/80 tracking-wider uppercase font-semibold">
-                With All My Heart
+                Your Partner in Crime ✨
               </p>
             </div>
 
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/70 border border-[#801336]/20 text-[#801336] text-xs font-bold font-dancing">
               <Heart className="w-3.5 h-3.5 fill-[#801336] text-[#801336]" />
-              <span>Sealed Forever</span>
+              <span>Forever Besties</span>
             </div>
           </div>
         </motion.div>

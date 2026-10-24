@@ -28,7 +28,7 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
         >
           {/* Header */}
           <span className="font-dancing text-2xl text-[#801336] block mb-1">
-            A little surprise for Hebziba
+            A special surprise for my bestie, Hebziba
           </span>
           <h1 className="font-playfair text-3xl sm:text-4xl font-extrabold text-[#801336] tracking-wide mb-6 uppercase">
             PLEASE ACCEPT THE GIFT
@@ -83,14 +83,14 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
                 />
                 <circle cx="-20" cy="15" r="5" fill="#FFFFFF" opacity="0.3" />
                 <text x="0" y="38" textAnchor="middle" fill="#FAF6F0" className="font-dancing text-sm font-bold">
-                  take my heart
+                  besties 4ever
                 </text>
               </g>
             </svg>
           </div>
 
           <p className="font-dancing text-xl text-[#801336] my-4">
-            "Will you accept this heartfelt celebration?"
+            "Will you accept these surprises from your bestie?"
           </p>
 
           {/* Two Maroon Pill Buttons: YES and NO */}
@@ -173,7 +173,7 @@ export const GiftPromptScreen: React.FC<GiftPromptScreenProps> = ({
           </div>
 
           <p className="font-dancing text-xl text-[#801336] my-4">
-            Hebziba, please say YES this time! 🥺
+            Hebziba, don't break your bestie's heart, please say YES! 🥺
           </p>
 
           {/* Button: TRY AGAIN */}

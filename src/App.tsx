@@ -88,8 +88,8 @@ export const App: React.FC = () => {
           {screenState === 'CAKE' && (
             <CakeCalendarScreen
               onContinue={handleCakeContinue}
-              targetDay={19}
-              monthName="August"
+              targetDay={27}
+              monthName="October"
             />
           )}
 

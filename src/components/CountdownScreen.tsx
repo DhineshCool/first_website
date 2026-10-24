@@ -64,7 +64,7 @@ export const CountdownScreen: React.FC<CountdownScreenProps> = ({ onComplete }) 
       </div>
 
       <p className="font-dancing text-2xl text-[#801336] mt-6">
-        ✨ A magical moment awaits Hebziba ✨
+        ✨ A magical celebration awaits my bestie, Hebziba ✨
       </p>
     </div>
   );

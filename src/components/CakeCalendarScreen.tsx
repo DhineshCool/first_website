@@ -11,8 +11,8 @@ interface CakeCalendarScreenProps {
 
 export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
   onContinue,
-  targetDay = 19,
-  monthName = 'August',
+  targetDay = 27,
+  monthName = 'October',
 }) => {
   const [candlesLit, setCandlesLit] = useState<boolean>(true);
   const [smokeActive, setSmokeActive] = useState<boolean>(false);
@@ -68,13 +68,13 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
         className="text-center mb-8 sm:mb-12"
       >
         <span className="font-dancing text-2xl sm:text-3xl text-[#801336] block mb-1">
-          Dearest Hebziba
+          To My Favorite Person & Bestie
         </span>
         <h1 className="font-playfair text-4xl sm:text-6xl md:text-7xl font-extrabold text-[#801336] tracking-tight">
-          Happy Birthday!
+          Happy Birthday Hebziba!
         </h1>
         <p className="font-dancing text-xl sm:text-2xl text-[#801336]/80 mt-2">
-          "Wishing you a year filled with love, laughter, and endless sunshine"
+          "Wishing my bestie a year filled with wild adventures, endless laughs, and sunshine"
         </p>
       </motion.div>
 
@@ -324,11 +324,11 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
             })}
           </div>
 
-          {/* Birthday Girl Note footer */}
+          {/* Bestie Birthday Note footer */}
           <div className="mt-6 pt-4 border-t border-rose-100 w-full flex items-center justify-center gap-2">
             <Heart className="w-4 h-4 fill-[#801336] text-[#801336]" />
             <span className="font-dancing text-lg text-[#801336] font-bold">
-              {monthName} {targetDay} — Hebziba's Day!
+              {monthName} {targetDay}, 2004 — The day my bestie was born! ✨
             </span>
           </div>
         </motion.div>

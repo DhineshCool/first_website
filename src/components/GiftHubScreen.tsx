@@ -86,8 +86,8 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
     },
     {
       id: 'letter',
-      title: 'Love Epistle',
-      subtitle: 'Memories and words from the soul',
+      title: 'Bestie Epistle',
+      subtitle: 'Memories and heartfelt words for my bestie',
       icon: Mail,
       action: onSelectLetter,
       tag: 'read my letter 💌',
@@ -134,13 +134,13 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
         className="text-center mb-10"
       >
         <span className="font-dancing text-2xl text-[#801336] block mb-1">
-          Special surprises prepared with all my love
+          Special surprises prepared for my best friend
         </span>
         <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#801336] tracking-tight">
           Choose Your Gifts!
         </h1>
         <p className="font-dancing text-xl text-[#801336]/80 mt-2">
-          "Each one holds a piece of my heart for Hebziba"
+          "Celebrating our laughter, inside jokes, and bond as besties"
         </p>
       </motion.div>
 

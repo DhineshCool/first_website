@@ -8,7 +8,7 @@ interface PasscodeScreenProps {
 }
 
 export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
-  correctPasscode = '0819',
+  correctPasscode = '2710',
   onSuccess,
 }) => {
   const [pin, setPin] = useState<string>('');
@@ -32,11 +32,18 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
   };
 
   const verifyPin = useCallback((currentPin: string) => {
-    if (currentPin === correctPasscode) {
+    // Accepts 2710 (DD/MM), 1027 (MM/DD), or 2004 (birth year)
+    if (
+      currentPin === correctPasscode ||
+      currentPin === '1027' ||
+      currentPin === '2710' ||
+      currentPin === '2004' ||
+      currentPin === '0819'
+    ) {
       onSuccess();
     } else {
       setIsShaking(true);
-      setErrorMessage('Oops! Incorrect passcode. Try 0819 ✨');
+      setErrorMessage('Oops! Incorrect passcode. Try 2710 ✨');
       setTimeout(() => {
         setIsShaking(false);
         setPin('');
@@ -163,10 +170,10 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
           </div>
 
           <h2 className="font-playfair text-xl sm:text-2xl font-bold text-[#801336] mt-4 text-center">
-            A Special Secret Gift
+            A Special Gift For My Bestie
           </h2>
           <p className="font-dancing text-lg text-[#801336]/80 text-center mt-1">
-            "Only for the birthday girl..."
+            "Only for my favorite human, Hebziba..."
           </p>
         </div>
 
@@ -211,7 +218,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
                 <span className="text-[#801336] font-bold animate-pulse">{errorMessage}</span>
               ) : (
                 <span className="text-[#801336]/70 flex items-center gap-1 justify-center">
-                  <Sparkles className="w-3 h-3" /> Hint: Tap 0819 or your birthday month/date
+                  <Sparkles className="w-3 h-3" /> Hint: Tap 2710 (October 27) ✨
                 </span>
               )}
             </div>
@@ -233,12 +240,12 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
             <div className="w-full max-w-[280px] flex items-center justify-between mt-3 px-2">
               <button
                 onClick={() => {
-                  setPin('0819');
-                  verifyPin('0819');
+                  setPin('2710');
+                  verifyPin('2710');
                 }}
                 className="text-[11px] font-dancing text-[#801336] underline hover:opacity-80"
               >
-                Quick Unlock (0819)
+                Quick Unlock (2710)
               </button>
               <button
                 onClick={handleDelete}
