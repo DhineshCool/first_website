@@ -19,9 +19,9 @@ interface BackgroundPhoto {
   showOnMobile?: boolean;
 }
 
-// 22 Carefully positioned ambient background slots forming a dreamy scrapbook memory wallpaper
+// 22 Distinct ambient background slots with rich, high-visibility opacity and size
 const initialSlots: BackgroundPhoto[] = [
-  // ================= OUTER LEFT COLUMN (Edge framing) =================
+  // ================= OUTER LEFT COLUMN (Vibrant side memories) =================
   {
     id: 'bg-ol-1',
     imageUrl: '/images/memories/memory_laughter.jpg',
@@ -30,9 +30,9 @@ const initialSlots: BackgroundPhoto[] = [
     anchor: 'left',
     xPercent: 1.2,
     yPercent: 8,
-    size: 'md',
-    opacity: 0.55,
-    floatDistance: 12,
+    size: 'lg',
+    opacity: 0.92,
+    floatDistance: 14,
     duration: 6.5,
     showOnMobile: true,
   },
@@ -45,8 +45,8 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.5,
     yPercent: 28,
     size: 'md',
-    opacity: 0.55,
-    floatDistance: -10,
+    opacity: 0.88,
+    floatDistance: -12,
     duration: 7.2,
     showOnMobile: false,
   },
@@ -58,11 +58,11 @@ const initialSlots: BackgroundPhoto[] = [
     anchor: 'left',
     xPercent: 1,
     yPercent: 48,
-    size: 'md',
-    opacity: 0.55,
+    size: 'lg',
+    opacity: 0.92,
     floatDistance: 14,
     duration: 8,
-    showOnMobile: false,
+    showOnMobile: true,
   },
   {
     id: 'bg-ol-4',
@@ -73,8 +73,8 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.8,
     yPercent: 68,
     size: 'md',
-    opacity: 0.55,
-    floatDistance: -12,
+    opacity: 0.88,
+    floatDistance: -13,
     duration: 6.8,
     showOnMobile: false,
   },
@@ -86,14 +86,14 @@ const initialSlots: BackgroundPhoto[] = [
     anchor: 'left',
     xPercent: 1.2,
     yPercent: 86,
-    size: 'md',
-    opacity: 0.55,
-    floatDistance: 11,
+    size: 'lg',
+    opacity: 0.92,
+    floatDistance: 12,
     duration: 7.5,
     showOnMobile: true,
   },
 
-  // ================= OUTER RIGHT COLUMN (Edge framing) =================
+  // ================= OUTER RIGHT COLUMN (Vibrant side memories) =================
   {
     id: 'bg-or-1',
     imageUrl: '/images/memories/memory_sunset.jpg',
@@ -102,9 +102,9 @@ const initialSlots: BackgroundPhoto[] = [
     anchor: 'right',
     xPercent: 1.2,
     yPercent: 7,
-    size: 'md',
-    opacity: 0.55,
-    floatDistance: -12,
+    size: 'lg',
+    opacity: 0.92,
+    floatDistance: -13,
     duration: 7,
     showOnMobile: true,
   },
@@ -117,8 +117,8 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.6,
     yPercent: 27,
     size: 'md',
-    opacity: 0.55,
-    floatDistance: 11,
+    opacity: 0.88,
+    floatDistance: 12,
     duration: 6.6,
     showOnMobile: false,
   },
@@ -130,11 +130,11 @@ const initialSlots: BackgroundPhoto[] = [
     anchor: 'right',
     xPercent: 1,
     yPercent: 47,
-    size: 'md',
-    opacity: 0.55,
-    floatDistance: -13,
+    size: 'lg',
+    opacity: 0.92,
+    floatDistance: -14,
     duration: 8.2,
-    showOnMobile: false,
+    showOnMobile: true,
   },
   {
     id: 'bg-or-4',
@@ -145,8 +145,8 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.8,
     yPercent: 67,
     size: 'md',
-    opacity: 0.55,
-    floatDistance: 10,
+    opacity: 0.88,
+    floatDistance: 11,
     duration: 7.4,
     showOnMobile: false,
   },
@@ -158,25 +158,25 @@ const initialSlots: BackgroundPhoto[] = [
     anchor: 'right',
     xPercent: 1.2,
     yPercent: 85,
-    size: 'md',
-    opacity: 0.55,
-    floatDistance: -11,
+    size: 'lg',
+    opacity: 0.92,
+    floatDistance: -12,
     duration: 6.9,
     showOnMobile: true,
   },
 
-  // ================= MID-BACKGROUND LEFT (Subtle wallpaper layer) =================
+  // ================= MID-BACKGROUND LEFT (Warm background depth) =================
   {
     id: 'bg-ml-1',
     imageUrl: '/images/memories/memory_stargazing.jpg',
     caption: 'Always ✨',
     rotation: -5,
     anchor: 'left',
-    xPercent: 8.5,
+    xPercent: 8,
     yPercent: 18,
-    size: 'sm',
-    opacity: 0.38,
-    floatDistance: 9,
+    size: 'md',
+    opacity: 0.78,
+    floatDistance: 10,
     duration: 8.5,
     showOnMobile: false,
   },
@@ -186,11 +186,11 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Precious 🍰',
     rotation: 2,
     anchor: 'left',
-    xPercent: 9,
+    xPercent: 8.5,
     yPercent: 38,
     size: 'sm',
-    opacity: 0.38,
-    floatDistance: -10,
+    opacity: 0.75,
+    floatDistance: -11,
     duration: 9.1,
     showOnMobile: false,
   },
@@ -200,11 +200,11 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Moments 🍓',
     rotation: -3,
     anchor: 'left',
-    xPercent: 8,
+    xPercent: 7.8,
     yPercent: 58,
-    size: 'sm',
-    opacity: 0.38,
-    floatDistance: 10,
+    size: 'md',
+    opacity: 0.78,
+    floatDistance: 11,
     duration: 7.8,
     showOnMobile: false,
   },
@@ -214,27 +214,27 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Forever 🌸',
     rotation: 4,
     anchor: 'left',
-    xPercent: 8.5,
+    xPercent: 8.2,
     yPercent: 78,
     size: 'sm',
-    opacity: 0.38,
-    floatDistance: -9,
+    opacity: 0.75,
+    floatDistance: -10,
     duration: 8.7,
     showOnMobile: false,
   },
 
-  // ================= MID-BACKGROUND RIGHT (Subtle wallpaper layer) =================
+  // ================= MID-BACKGROUND RIGHT (Warm background depth) =================
   {
     id: 'bg-mr-1',
     imageUrl: '/images/memories/memory_picnic.jpg',
     caption: 'Pure Joy ☀️',
     rotation: 3,
     anchor: 'right',
-    xPercent: 8.5,
+    xPercent: 8,
     yPercent: 17,
-    size: 'sm',
-    opacity: 0.38,
-    floatDistance: -9,
+    size: 'md',
+    opacity: 0.78,
+    floatDistance: -10,
     duration: 8.3,
     showOnMobile: false,
   },
@@ -244,11 +244,11 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Smiles 🌙',
     rotation: -3,
     anchor: 'right',
-    xPercent: 9,
+    xPercent: 8.5,
     yPercent: 37,
     size: 'sm',
-    opacity: 0.38,
-    floatDistance: 11,
+    opacity: 0.75,
+    floatDistance: 12,
     duration: 7.6,
     showOnMobile: false,
   },
@@ -258,11 +258,11 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Laughter 🚗',
     rotation: 4,
     anchor: 'right',
-    xPercent: 8,
+    xPercent: 7.8,
     yPercent: 57,
-    size: 'sm',
-    opacity: 0.38,
-    floatDistance: -10,
+    size: 'md',
+    opacity: 0.78,
+    floatDistance: -11,
     duration: 8.9,
     showOnMobile: false,
   },
@@ -272,11 +272,11 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Best Duo 💖',
     rotation: -2,
     anchor: 'right',
-    xPercent: 8.5,
+    xPercent: 8.2,
     yPercent: 77,
     size: 'sm',
-    opacity: 0.38,
-    floatDistance: 9,
+    opacity: 0.75,
+    floatDistance: 10,
     duration: 8.1,
     showOnMobile: false,
   },
@@ -288,11 +288,11 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Timeless ✨',
     rotation: -2,
     anchor: 'left',
-    xPercent: 24,
+    xPercent: 23,
     yPercent: 3,
     size: 'sm',
-    opacity: 0.35,
-    floatDistance: 8,
+    opacity: 0.72,
+    floatDistance: 9,
     duration: 9.5,
     showOnMobile: false,
   },
@@ -302,11 +302,11 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Sweet 🍰',
     rotation: 3,
     anchor: 'right',
-    xPercent: 24,
+    xPercent: 23,
     yPercent: 3,
     size: 'sm',
-    opacity: 0.35,
-    floatDistance: -8,
+    opacity: 0.72,
+    floatDistance: -9,
     duration: 9.8,
     showOnMobile: false,
   },
@@ -316,11 +316,11 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Cherished 🌸',
     rotation: 2,
     anchor: 'left',
-    xPercent: 22,
-    yPercent: 91,
+    xPercent: 21,
+    yPercent: 90,
     size: 'sm',
-    opacity: 0.35,
-    floatDistance: 7,
+    opacity: 0.72,
+    floatDistance: 8,
     duration: 9.2,
     showOnMobile: false,
   },
@@ -330,11 +330,11 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Hebziba & Dhinesh 💫',
     rotation: -3,
     anchor: 'right',
-    xPercent: 22,
-    yPercent: 91,
+    xPercent: 21,
+    yPercent: 90,
     size: 'sm',
-    opacity: 0.35,
-    floatDistance: -7,
+    opacity: 0.72,
+    floatDistance: -8,
     duration: 9.6,
     showOnMobile: false,
   },
@@ -383,7 +383,7 @@ export const FloatingMemoryPhotos: React.FC = () => {
   }, []);
 
   return (
-    // STRICT BACKGROUND LAYER: z-0, pointer-events-none, never blocks clicks
+    // STRICT BACKGROUND LAYER: z-0, pointer-events-none, sits behind z-20 content cards
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
       {photos.map((item, index) => {
         const sideStyle: React.CSSProperties =
@@ -391,11 +391,13 @@ export const FloatingMemoryPhotos: React.FC = () => {
             ? { left: `${item.xPercent}%`, top: `${item.yPercent}%` }
             : { right: `${item.xPercent}%`, top: `${item.yPercent}%` };
 
-        // Card width based on slot size
+        // Increased card widths for prominent, clear visibility
         const sizeClasses =
-          item.size === 'sm'
-            ? 'w-16 sm:w-20'
-            : 'w-20 sm:w-24 lg:w-26';
+          item.size === 'lg'
+            ? 'w-24 sm:w-28 lg:w-32'
+            : item.size === 'md'
+            ? 'w-22 sm:w-26 lg:w-28'
+            : 'w-18 sm:w-22 lg:w-24';
 
         return (
           <motion.div
@@ -408,8 +410,8 @@ export const FloatingMemoryPhotos: React.FC = () => {
               rotate: [item.rotation, item.rotation + 1.5, item.rotation],
             }}
             transition={{
-              opacity: { duration: 1, delay: (index % 6) * 0.1 },
-              scale: { duration: 1, delay: (index % 6) * 0.1 },
+              opacity: { duration: 0.8, delay: (index % 6) * 0.08 },
+              scale: { duration: 0.8, delay: (index % 6) * 0.08 },
               y: {
                 repeat: Infinity,
                 duration: item.duration,
@@ -431,17 +433,17 @@ export const FloatingMemoryPhotos: React.FC = () => {
                 : 'hidden md:flex'
             }`}
           >
-            {/* Scrapbook Mini Polaroid Card with Authentic Warm Parchment Feel */}
+            {/* Crisp, beautiful Scrapbook Polaroid Card */}
             <div
-              className={`bg-white/90 p-1.5 pb-2 rounded-xl shadow-sm border border-rose-100/70 flex flex-col items-center relative transition-opacity ${sizeClasses}`}
+              className={`bg-white p-2 pb-2.5 rounded-xl shadow-md border border-rose-200/80 flex flex-col items-center relative transition-transform ${sizeClasses}`}
             >
               {/* Pink Heart Pin at Top Center */}
-              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 z-10 w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-[#F49CB4] border border-white shadow-xs flex items-center justify-center">
-                <Heart className="w-1.5 h-1.5 sm:w-2 sm:h-2 fill-[#801336] text-[#801336]" />
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-10 w-4 h-4 rounded-full bg-[#F49CB4] border border-white shadow-xs flex items-center justify-center">
+                <Heart className="w-2.5 h-2.5 fill-[#801336] text-[#801336]" />
               </div>
 
-              {/* Square Photo Frame */}
-              <div className="w-full aspect-square rounded-lg overflow-hidden bg-rose-50/40 shadow-inner">
+              {/* Square Photo Frame with subtle shadow border */}
+              <div className="w-full aspect-square rounded-lg overflow-hidden bg-rose-50/50 shadow-inner border border-rose-100">
                 <img
                   src={item.imageUrl}
                   alt={item.caption}
@@ -451,7 +453,7 @@ export const FloatingMemoryPhotos: React.FC = () => {
               </div>
 
               {/* Handwritten Scrapbook Caption */}
-              <span className="font-dancing text-[10px] sm:text-[11px] font-bold text-[#801336]/80 text-center mt-0.5 leading-tight truncate max-w-full px-0.5">
+              <span className="font-dancing text-xs sm:text-[13px] font-bold text-[#801336] text-center mt-1 leading-tight truncate max-w-full px-0.5">
                 {item.caption}
               </span>
             </div>
