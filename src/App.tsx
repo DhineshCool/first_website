@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ScreenState } from './types';
 import { StartingCountdownScreen } from './components/StartingCountdownScreen';
@@ -15,27 +15,34 @@ import { FloatingMemoryPhotos } from './components/FloatingMemoryPhotos';
 
 export const App: React.FC = () => {
   const [screenState, setScreenState] = useState<ScreenState>('BIRTHDAY_COUNTDOWN');
-  const [candlesBlown, setCandlesBlown] = useState<boolean>(() => {
+  const [candlesBlown, setCandlesBlown] = useState<boolean>(false);
+
+  // Clear any legacy session flag on mount so every run starts clean
+  useEffect(() => {
     try {
-      return sessionStorage.getItem('hebziba_candles_blown') === 'true';
+      sessionStorage.removeItem('hebziba_candles_blown');
     } catch {
-      return false;
+      // safe
     }
-  });
+  }, []);
 
   const handleCandlesBlown = () => {
     setCandlesBlown(true);
-    try {
-      sessionStorage.setItem('hebziba_candles_blown', 'true');
-    } catch {
-      // safe fallback
-    }
   };
 
   // Handle navigation transitions
-  const handleEnterPasscode = () => setScreenState('LOCK');
-  const handleBackToCountdown = () => setScreenState('BIRTHDAY_COUNTDOWN');
-  const handlePasscodeSuccess = () => setScreenState('COUNTDOWN');
+  const handleEnterPasscode = () => {
+    setCandlesBlown(false);
+    setScreenState('LOCK');
+  };
+  const handleBackToCountdown = () => {
+    setCandlesBlown(false);
+    setScreenState('BIRTHDAY_COUNTDOWN');
+  };
+  const handlePasscodeSuccess = () => {
+    setCandlesBlown(false);
+    setScreenState('COUNTDOWN');
+  };
   const handleCountdownComplete = () => setScreenState('CAKE');
   const handleCakeContinue = () => setScreenState('PROMPT_GIFT');
   const handleAcceptGift = () => setScreenState('GIFT_HUB');
@@ -156,13 +163,8 @@ export const App: React.FC = () => {
           {screenState === 'GIFT_LETTER' && <LoveLetterGift />}
         </motion.div>
       </AnimatePresence>
-      {(candlesBlown ||
-        screenState === 'PROMPT_GIFT' ||
-        screenState === 'REJECT_GIFT' ||
-        screenState === 'GIFT_HUB' ||
-        screenState === 'GIFT_MUSIC' ||
-        screenState === 'GIFT_BOUQUET' ||
-        screenState === 'GIFT_LETTER') && <FloatingMemoryPhotos />}
+      {/* Ambient background photos reveal strictly after candles are blown */}
+      {candlesBlown && <FloatingMemoryPhotos />}
     </ScrapbookLayout>
   );
 };

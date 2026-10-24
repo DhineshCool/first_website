@@ -17,11 +17,11 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
     <div className="relative min-h-screen w-full scrapbook-grid overflow-hidden flex flex-col justify-between selection:bg-[#F49CB4] selection:text-[#801336]">
       {/* ================= FIXED CORNER DECORATIONS ================= */}
 
-      {/* TOP-LEFT: Torn Pink Paper Wave + Taped Label "sweet" */}
-      <div className="fixed top-0 left-0 pointer-events-none z-30 select-none">
+      {/* TOP-LEFT: Torn Pink Paper Wave + Taped Label "sweet" (Subtle background accent) */}
+      <div className="fixed top-0 left-0 pointer-events-none z-0 select-none">
         <svg
           viewBox="0 0 220 180"
-          className="w-44 sm:w-56 h-auto drop-shadow-md overflow-visible"
+          className="w-24 sm:w-32 h-auto drop-shadow-sm overflow-visible opacity-75"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -29,12 +29,12 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
           <path
             d="M-10 -10 H180 Q160 50 190 90 T120 150 Q70 140 20 170 L-10 170 Z"
             fill="#FCE4EC"
-            opacity="0.95"
+            opacity="0.9"
           />
           <path
             d="M-10 -10 H160 Q140 45 170 80 T100 135 Q50 120 0 150 L-10 150 Z"
             fill="#F49CB4"
-            opacity="0.95"
+            opacity="0.85"
           />
           {/* Torn deckle edge dashes */}
           <path
@@ -42,11 +42,11 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
             stroke="#801336"
             strokeWidth="1.5"
             strokeDasharray="4 4"
-            opacity="0.4"
+            opacity="0.3"
           />
 
           {/* Washi Masking Tape with "sweet" label */}
-          <g transform="translate(60, 45) rotate(-14)">
+          <g transform="translate(50, 35) rotate(-14) scale(0.8)">
             <rect
               x="-40"
               y="-14"
@@ -74,10 +74,10 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
       </div>
 
       {/* TOP-RIGHT: Sketched Maroon Stars, Outline Hearts + Taped Label "always" */}
-      <div className="fixed top-0 right-0 pointer-events-none z-30 select-none">
+      <div className="fixed top-0 right-0 pointer-events-none z-0 select-none">
         <svg
           viewBox="0 0 220 180"
-          className="w-44 sm:w-56 h-auto drop-shadow-md overflow-visible"
+          className="w-24 sm:w-32 h-auto drop-shadow-sm overflow-visible opacity-75"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -93,7 +93,7 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
           </g>
 
           {/* Washi Masking Tape with "always" label */}
-          <g transform="translate(130, 60) rotate(12)">
+          <g transform="translate(130, 60) rotate(12) scale(0.8)">
             <rect
               x="-45"
               y="-14"
@@ -120,10 +120,10 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
       </div>
 
       {/* BOTTOM-LEFT: Maroon & Pink Hibiscus Flower Cluster */}
-      <div className="fixed bottom-0 left-0 pointer-events-none z-30 select-none">
+      <div className="fixed bottom-0 left-0 pointer-events-none z-0 select-none">
         <svg
           viewBox="0 0 240 220"
-          className="w-48 sm:w-64 h-auto drop-shadow-md overflow-visible"
+          className="w-28 sm:w-36 h-auto drop-shadow-sm overflow-visible opacity-75"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -156,10 +156,10 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
       </div>
 
       {/* BOTTOM-RIGHT: Maroon & Pink Hibiscus Flower Cluster */}
-      <div className="fixed bottom-0 right-0 pointer-events-none z-30 select-none">
+      <div className="fixed bottom-0 right-0 pointer-events-none z-0 select-none">
         <svg
           viewBox="0 0 240 220"
-          className="w-48 sm:w-64 h-auto drop-shadow-md overflow-visible"
+          className="w-28 sm:w-36 h-auto drop-shadow-sm overflow-visible opacity-75"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
