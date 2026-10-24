@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Music, Flower2, Mail, Sparkles, Heart } from 'lucide-react';
+import { Music, Flower2, Mail, Sparkles, Heart, BookOpen, Images } from 'lucide-react';
+import { MemoryAlbumModal } from './MemoryAlbumModal';
 
 interface GiftHubScreenProps {
   onSelectMusic: () => void;
@@ -13,6 +14,7 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
   onSelectBouquet,
   onSelectLetter,
 }) => {
+  const [showAlbum, setShowAlbum] = useState(false);
   const gifts = [
     {
       id: 'music',
@@ -188,10 +190,50 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
         ))}
       </div>
 
-      <div className="mt-12 flex items-center gap-2 text-xs text-[#801336]/70">
+      {/* Special Scrapbook Memory Album Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.4 }}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={() => setShowAlbum(true)}
+        className="mt-8 w-full max-w-4xl bg-gradient-to-r from-[#FFF8E7] via-white to-[#FDE8EF] rounded-3xl p-5 sm:p-6 shadow-scrapbook-card border-2 border-[#801336]/20 flex flex-col sm:flex-row items-center justify-between gap-4 cursor-pointer hover:border-[#801336]/50 hover:shadow-xl transition-all duration-300 relative z-20 overflow-hidden group"
+      >
+        {/* Taped label */}
+        <div className="absolute top-2.5 right-4 bg-[#F49CB4] text-[#801336] px-3 py-0.5 rounded-full text-[11px] font-dancing font-bold shadow-sm">
+          ✨ 110 Memories Vault
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-[#801336] text-white flex items-center justify-center shrink-0 shadow-md group-hover:rotate-6 transition-transform">
+            <Images className="w-7 h-7 text-[#F49CB4]" />
+          </div>
+          <div className="text-left">
+            <div className="flex items-center gap-2">
+              <h3 className="font-playfair text-xl sm:text-2xl font-bold text-[#801336]">
+                Our Bestie Memory Album 📖
+              </h3>
+            </div>
+            <p className="font-dancing text-base sm:text-lg text-[#801336]/80 mt-0.5">
+              Flip through all 110 unforgettable moments & laughs with Hebziba
+            </p>
+          </div>
+        </div>
+
+        <div className="shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs tracking-wider shadow-sm group-hover:bg-[#9E1B43] transition-colors">
+          <BookOpen className="w-4 h-4 text-[#F49CB4]" />
+          <span>OPEN SCRAPBOOK</span>
+        </div>
+      </motion.div>
+
+      <div className="mt-8 flex items-center gap-2 text-xs text-[#801336]/70">
         <Heart className="w-3.5 h-3.5 fill-[#801336] text-[#801336]" />
-        <span>You can explore all three gifts in any order!</span>
+        <span>Explore your gifts and relive every memory!</span>
       </div>
+
+      {/* Memory Album Modal */}
+      <MemoryAlbumModal isOpen={showAlbum} onClose={() => setShowAlbum(false)} />
     </div>
   );
 };

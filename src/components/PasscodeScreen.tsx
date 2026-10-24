@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Delete, Lock, Sparkles } from 'lucide-react';
+import { vaultService } from '../services/vaultService';
 
 interface PasscodeScreenProps {
   correctPasscode?: string;
@@ -42,6 +43,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
       currentPin === '2004' ||
       currentPin === '0819'
     ) {
+      vaultService.init('2710');
       onSuccess();
     } else {
       setIsShaking(true);

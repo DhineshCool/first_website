@@ -1,37 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Sparkles, Feather } from 'lucide-react';
 import { PolaroidPhoto } from '../types';
+import { vaultService } from '../services/vaultService';
 
 export const LoveLetterGift: React.FC = () => {
+  const [photoUrls, setPhotoUrls] = useState<string[]>([
+    '/images/photo-1.svg',
+    '/images/photo-2.svg',
+    '/images/photo-3.svg',
+    '/images/photo-4.svg',
+  ]);
+
+  useEffect(() => {
+    const loadVaultPhotos = async () => {
+      const photos = await vaultService.init('2710');
+      if (photos.length >= 4) {
+        const filesToDecrypt = [
+          photos[0].file,
+          photos[Math.min(5, photos.length - 1)].file,
+          photos[Math.min(12, photos.length - 1)].file,
+          photos[Math.min(20, photos.length - 1)].file,
+        ];
+        const urls = await Promise.all(
+          filesToDecrypt.map((f) => vaultService.getDecryptedUrl(f).catch(() => ''))
+        );
+        setPhotoUrls((prev) => urls.map((u, i) => u || prev[i]));
+      }
+    };
+    loadVaultPhotos();
+  }, []);
+
   const polaroids: PolaroidPhoto[] = [
     {
       id: 'p1',
       caption: 'The way you smile ✨',
       dateText: 'Timeless',
       rotation: -5,
-      imageUrl: '/images/photo-1.svg',
+      imageUrl: photoUrls[0],
     },
     {
       id: 'p2',
       caption: 'Starlit laughs 🌙',
       dateText: 'Unforgettable',
       rotation: 4,
-      imageUrl: '/images/photo-2.svg',
+      imageUrl: photoUrls[1],
     },
     {
       id: 'p3',
       caption: 'Pure Serendipity 💖',
       dateText: 'Always',
       rotation: -3,
-      imageUrl: '/images/photo-3.svg',
+      imageUrl: photoUrls[2],
     },
     {
       id: 'p4',
       caption: 'Forever my bestie 🌸',
       dateText: 'Through everything',
       rotation: 6,
-      imageUrl: '/images/photo-4.svg',
+      imageUrl: photoUrls[3],
     },
   ];
 

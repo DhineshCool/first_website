@@ -26,3 +26,7 @@ dist-ssr
 
 # Netlify build output
 .netlify
+
+# Personal unencrypted photos (NEVER commit raw personal photos to git)
+public/images/mine/
+public/images/mine/*

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Plus, Camera, X, Image as ImageIcon } from 'lucide-react';
+import { vaultService } from '../services/vaultService';
 
 interface FloatingPhoto {
   id: string;
@@ -103,6 +104,35 @@ export const FloatingMemoryPhotos: React.FC = () => {
       // Safe fallback
     }
   }, [photos]);
+
+  // Load and decrypt real vault photos for background polaroids
+  useEffect(() => {
+    const loadVaultMemories = async () => {
+      const vaultList = await vaultService.init('2710');
+      if (vaultList.length >= 6) {
+        const indices = [2, 18, 35, 52, 70, 95];
+        const selected = indices.map((i) => vaultList[i % vaultList.length]);
+
+        const decryptedUrls = await Promise.all(
+          selected.map((item) => vaultService.getDecryptedUrl(item.file).catch(() => ''))
+        );
+
+        setPhotos((prev) => {
+          return prev.map((item, idx) => {
+            if (decryptedUrls[idx]) {
+              return {
+                ...item,
+                imageUrl: decryptedUrls[idx],
+              };
+            }
+            return item;
+          });
+        });
+      }
+    };
+
+    loadVaultMemories();
+  }, []);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
