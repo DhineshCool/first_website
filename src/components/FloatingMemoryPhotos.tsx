@@ -8,7 +8,6 @@ interface BackgroundPhoto {
   imageUrl: string;
   caption: string;
   rotation: number;
-  // Positioning
   anchor: 'left' | 'right';
   xPercent: number; // percentage from side edge
   yPercent: number; // percentage from top edge
@@ -18,6 +17,31 @@ interface BackgroundPhoto {
   duration: number;
   showOnMobile?: boolean;
 }
+
+const bestieCaptions = [
+  'Laughter ✨',
+  'Golden Hour 🌅',
+  'Bestie Cafe 🍰',
+  'Sunny Days 🍓',
+  'Road Trips 🚗',
+  'Night Talks 🌌',
+  'Sweet Vibes 🌸',
+  'Happy Times 💖',
+  'Unfiltered 💫',
+  'Memories 🌟',
+  'Pure Joy ☀️',
+  'Timeless ✨',
+  'Best Duo 💖',
+  'Forever Besties 🌸',
+  'Inside Jokes 💫',
+  'Adventures 🚗',
+  'Cherished 🌸',
+  'Through Everything 💖',
+  'Always Smiling 🍓',
+  'Hebziba & Dhinesh 🌟',
+  'Precious Days 🌅',
+  'Unforgettable 🍰',
+];
 
 // 22 Distinct ambient background slots with rich, high-visibility opacity and size
 const initialSlots: BackgroundPhoto[] = [
@@ -363,6 +387,9 @@ export const FloatingMemoryPhotos: React.FC = () => {
       prev.map((item, idx) => ({
         ...item,
         imageUrl: decryptedUrls[idx] || item.imageUrl,
+        caption: bestieCaptions[(idx + Math.floor(Math.random() * bestieCaptions.length)) % bestieCaptions.length],
+        // Subtle organic angle jitter on each shuffle
+        rotation: item.rotation + (Math.random() * 2 - 1),
       }))
     );
   }, []);
@@ -407,13 +434,16 @@ export const FloatingMemoryPhotos: React.FC = () => {
             ? { left: `${item.xPercent}%`, top: `${item.yPercent}%` }
             : { right: `${item.xPercent}%`, top: `${item.yPercent}%` };
 
-        // Increased card widths for prominent, clear visibility
+        // Card width classes
         const sizeClasses =
           item.size === 'lg'
             ? 'w-24 sm:w-28 lg:w-32'
             : item.size === 'md'
             ? 'w-22 sm:w-26 lg:w-28'
             : 'w-18 sm:w-22 lg:w-24';
+
+        // Stagger ripple delay based on card position
+        const rippleDelay = (index % 8) * 0.07;
 
         return (
           <motion.div
@@ -423,7 +453,6 @@ export const FloatingMemoryPhotos: React.FC = () => {
               opacity: item.opacity,
               scale: 1,
               y: [0, item.floatDistance, 0],
-              rotate: [item.rotation, item.rotation + 1.5, item.rotation],
             }}
             transition={{
               opacity: { duration: 0.8, delay: (index % 6) * 0.08 },
@@ -433,53 +462,101 @@ export const FloatingMemoryPhotos: React.FC = () => {
                 duration: item.duration,
                 ease: 'easeInOut',
               },
-              rotate: {
-                repeat: Infinity,
-                duration: item.duration * 1.2,
-                ease: 'easeInOut',
-              },
             }}
             style={{
               position: 'absolute',
               ...sideStyle,
             }}
             className={`pointer-events-none ${
-              item.showOnMobile
-                ? 'flex'
-                : 'hidden md:flex'
+              item.showOnMobile ? 'flex' : 'hidden md:flex'
             }`}
           >
-            {/* Crisp, beautiful Scrapbook Polaroid Card */}
-            <div
-              className={`bg-white p-2 pb-2.5 rounded-xl shadow-md border border-rose-200/80 flex flex-col items-center relative transition-transform ${sizeClasses}`}
-            >
-              {/* Pink Heart Pin at Top Center */}
-              <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-10 w-4 h-4 rounded-full bg-[#F49CB4] border border-white shadow-xs flex items-center justify-center">
-                <Heart className="w-2.5 h-2.5 fill-[#801336] text-[#801336]" />
-              </div>
+            {/* Scrapbook 3D Polaroid Card with Ripple Flip & Film Developing Animation */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={item.imageUrl}
+                initial={{
+                  opacity: 0,
+                  scale: 0.88,
+                  rotateY: 38,
+                  rotateZ: item.rotation - 3,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  rotateY: 0,
+                  rotateZ: item.rotation,
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.88,
+                  rotateY: -38,
+                  rotateZ: item.rotation + 3,
+                }}
+                transition={{
+                  type: 'spring',
+                  damping: 18,
+                  stiffness: 220,
+                  delay: rippleDelay,
+                }}
+                style={{
+                  transformPerspective: 900,
+                  transformStyle: 'preserve-3d',
+                }}
+                className={`bg-white p-2 pb-2.5 rounded-xl shadow-md border border-rose-200/90 flex flex-col items-center relative ${sizeClasses}`}
+              >
+                {/* Pink Heart Pin with subtle landing bounce */}
+                <motion.div
+                  initial={{ scale: 0.5, y: -4 }}
+                  animate={{ scale: 1, y: 0 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 350,
+                    damping: 14,
+                    delay: rippleDelay + 0.15,
+                  }}
+                  className="absolute -top-2 left-1/2 -translate-x-1/2 z-10 w-4 h-4 rounded-full bg-[#F49CB4] border border-white shadow-xs flex items-center justify-center"
+                >
+                  <Heart className="w-2.5 h-2.5 fill-[#801336] text-[#801336]" />
+                </motion.div>
 
-              {/* Square Photo Frame with smooth cross-fade animation between randomized photos */}
-              <div className="w-full aspect-square rounded-lg overflow-hidden bg-rose-50/50 shadow-inner border border-rose-100 relative">
-                <AnimatePresence mode="wait">
+                {/* Photo Frame with Vintage Film Exposure Developing Bloom */}
+                <div className="w-full aspect-square rounded-lg overflow-hidden bg-rose-50/50 shadow-inner border border-rose-100 relative">
                   <motion.img
-                    key={item.imageUrl}
                     src={item.imageUrl}
                     alt={item.caption}
-                    initial={{ opacity: 0.2 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0.2 }}
-                    transition={{ duration: 0.8, ease: 'easeInOut' }}
+                    initial={{
+                      filter: 'brightness(1.3) contrast(0.85)',
+                      scale: 1.06,
+                    }}
+                    animate={{
+                      filter: 'brightness(1) contrast(1)',
+                      scale: 1,
+                    }}
+                    transition={{
+                      duration: 0.7,
+                      ease: 'easeOut',
+                      delay: rippleDelay + 0.1,
+                    }}
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
-                </AnimatePresence>
-              </div>
+                </div>
 
-              {/* Handwritten Scrapbook Caption */}
-              <span className="font-dancing text-xs sm:text-[13px] font-bold text-[#801336] text-center mt-1 leading-tight truncate max-w-full px-0.5">
-                {item.caption}
-              </span>
-            </div>
+                {/* Handwritten Scrapbook Caption with gentle fade-up */}
+                <motion.span
+                  initial={{ opacity: 0, y: 3 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: rippleDelay + 0.2,
+                  }}
+                  className="font-dancing text-xs sm:text-[13px] font-bold text-[#801336] text-center mt-1 leading-tight truncate max-w-full px-0.5"
+                >
+                  {item.caption}
+                </motion.span>
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
         );
       })}
