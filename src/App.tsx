@@ -163,8 +163,8 @@ export const App: React.FC = () => {
           {screenState === 'GIFT_LETTER' && <LoveLetterGift />}
         </motion.div>
       </AnimatePresence>
-      {/* Ambient background photos reveal strictly after candles are blown */}
-      {candlesBlown && <FloatingMemoryPhotos />}
+      {/* Ambient background photos reveal strictly after candles are blown; blur only on letter to bestie page */}
+      {candlesBlown && <FloatingMemoryPhotos isBlurred={screenState === 'GIFT_LETTER'} />}
     </ScrapbookLayout>
   );
 };

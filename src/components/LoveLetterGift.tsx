@@ -78,16 +78,16 @@ export const LoveLetterGift: React.FC = () => {
       </div>
 
       {/* Main 3-Column Layout: 2 Polaroids Left, Center Parchment Card, 2 Polaroids Right */}
-      <div className="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-center">
+      <div className="w-full max-w-4xl p-2.5 sm:p-4 rounded-3xl backdrop-blur-md bg-[#FAF6F0]/65 border border-rose-100/60 shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-center relative z-20">
         {/* ================= LEFT 2 POLAROIDS ================= */}
         <div className="lg:col-span-3 flex flex-row lg:flex-col items-center justify-around h-full gap-2.5 sm:gap-3 order-2 lg:order-1 py-1">
           {polaroids.slice(0, 2).map((item) => (
             <motion.div
               key={item.id}
-              whileHover={{ scale: 1.05, rotate: 0 }}
+              whileHover={{ scale: 1.06, rotate: 0 }}
               style={{ rotate: `${item.rotation}deg` }}
               transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-              className="bg-white p-2 pb-2.5 sm:p-2.5 sm:pb-3 rounded-xl shadow-polaroid-scrap border border-rose-100 w-26 sm:w-30 relative flex flex-col cursor-pointer"
+              className="bg-white p-2 pb-2.5 sm:p-2.5 sm:pb-3 rounded-xl shadow-2xl border-2 border-white ring-2 ring-rose-300/80 w-26 sm:w-30 relative flex flex-col cursor-pointer z-20 transform transition-shadow hover:shadow-rose-200/80"
             >
               {/* Pink Heart Pin at Top Center */}
               <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 w-5.5 h-5.5 rounded-full bg-[#F49CB4] border-2 border-white shadow-md flex items-center justify-center">
@@ -95,7 +95,7 @@ export const LoveLetterGift: React.FC = () => {
               </div>
 
               {/* Photo Frame */}
-              <div className="w-full aspect-square rounded-lg overflow-hidden bg-slate-900 border border-slate-100">
+              <div className="w-full aspect-square rounded-lg overflow-hidden bg-slate-900 border border-slate-100 shadow-inner">
                 <img
                   src={item.imageUrl}
                   alt={item.caption}
@@ -119,7 +119,7 @@ export const LoveLetterGift: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="lg:col-span-6 bg-[#E8D8C8] parchment-paper rounded-2xl p-4 sm:p-5 shadow-scrapbook-card border-3 border-[#D4B996] order-1 lg:order-2 flex flex-col relative"
+          className="lg:col-span-6 bg-[#E8D8C8]/95 parchment-paper rounded-2xl p-4 sm:p-5 shadow-2xl border-3 border-[#D4B996] order-1 lg:order-2 flex flex-col relative z-20 backdrop-blur-sm"
         >
           {/* Decorative Corner Washi Tape */}
           <div className="absolute -top-2.5 left-6 bg-[#FFF8E7] px-3 py-0.5 rounded shadow-sm border border-amber-300/60 transform -rotate-3 text-[10px] font-dancing font-bold text-[#801336]">
@@ -180,10 +180,10 @@ export const LoveLetterGift: React.FC = () => {
           {polaroids.slice(2, 4).map((item) => (
             <motion.div
               key={item.id}
-              whileHover={{ scale: 1.05, rotate: 0 }}
+              whileHover={{ scale: 1.06, rotate: 0 }}
               style={{ rotate: `${item.rotation}deg` }}
               transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-              className="bg-white p-2 pb-2.5 sm:p-2.5 sm:pb-3 rounded-xl shadow-polaroid-scrap border border-rose-100 w-26 sm:w-30 relative flex flex-col cursor-pointer"
+              className="bg-white p-2 pb-2.5 sm:p-2.5 sm:pb-3 rounded-xl shadow-2xl border-2 border-white ring-2 ring-rose-300/80 w-26 sm:w-30 relative flex flex-col cursor-pointer z-20 transform transition-shadow hover:shadow-rose-200/80"
             >
               {/* Pink Heart Pin at Top Center */}
               <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 w-5.5 h-5.5 rounded-full bg-[#F49CB4] border-2 border-white shadow-md flex items-center justify-center">
@@ -191,7 +191,7 @@ export const LoveLetterGift: React.FC = () => {
               </div>
 
               {/* Photo Frame */}
-              <div className="w-full aspect-square rounded-lg overflow-hidden bg-slate-900 border border-slate-100">
+              <div className="w-full aspect-square rounded-lg overflow-hidden bg-slate-900 border border-slate-100 shadow-inner">
                 <img
                   src={item.imageUrl}
                   alt={item.caption}

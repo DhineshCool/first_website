@@ -43,9 +43,9 @@ const bestieCaptions = [
   'Unforgettable 🍰',
 ];
 
-// 22 High-visibility ambient background slots: 100% crisp solid cards with rich contrast
+// 22 Soft-focus ambient background slots with depth-of-field bokeh
 const initialSlots: BackgroundPhoto[] = [
-  // ================= OUTER LEFT COLUMN (Crisp, fully vivid side memories) =================
+  // ================= OUTER LEFT COLUMN (Soft ambient side memories) =================
   {
     id: 'bg-ol-1',
     imageUrl: '/images/memories/memory_laughter.jpg',
@@ -117,7 +117,7 @@ const initialSlots: BackgroundPhoto[] = [
     showOnMobile: true,
   },
 
-  // ================= OUTER RIGHT COLUMN (Crisp, fully vivid side memories) =================
+  // ================= OUTER RIGHT COLUMN (Vivid side memories) =================
   {
     id: 'bg-or-1',
     imageUrl: '/images/memories/memory_sunset.jpg',
@@ -196,7 +196,7 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Always ✨',
     rotation: -5,
     anchor: 'left',
-    xPercent: 8,
+    xPercent: 5.5,
     yPercent: 18,
     size: 'md',
     opacity: 0.92,
@@ -210,7 +210,7 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Precious 🍰',
     rotation: 2,
     anchor: 'left',
-    xPercent: 8.5,
+    xPercent: 6,
     yPercent: 38,
     size: 'sm',
     opacity: 0.90,
@@ -224,7 +224,7 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Moments 🍓',
     rotation: -3,
     anchor: 'left',
-    xPercent: 7.8,
+    xPercent: 5.2,
     yPercent: 58,
     size: 'md',
     opacity: 0.92,
@@ -238,7 +238,7 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Forever 🌸',
     rotation: 4,
     anchor: 'left',
-    xPercent: 8.2,
+    xPercent: 5.8,
     yPercent: 78,
     size: 'sm',
     opacity: 0.90,
@@ -254,7 +254,7 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Pure Joy ☀️',
     rotation: 3,
     anchor: 'right',
-    xPercent: 8,
+    xPercent: 5.5,
     yPercent: 17,
     size: 'md',
     opacity: 0.92,
@@ -268,7 +268,7 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Smiles 🌙',
     rotation: -3,
     anchor: 'right',
-    xPercent: 8.5,
+    xPercent: 6,
     yPercent: 37,
     size: 'sm',
     opacity: 0.90,
@@ -282,7 +282,7 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Laughter 🚗',
     rotation: 4,
     anchor: 'right',
-    xPercent: 7.8,
+    xPercent: 5.2,
     yPercent: 57,
     size: 'md',
     opacity: 0.92,
@@ -296,7 +296,7 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Best Duo 💖',
     rotation: -2,
     anchor: 'right',
-    xPercent: 8.2,
+    xPercent: 5.8,
     yPercent: 77,
     size: 'sm',
     opacity: 0.90,
@@ -312,8 +312,8 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Timeless ✨',
     rotation: -2,
     anchor: 'left',
-    xPercent: 23,
-    yPercent: 3,
+    xPercent: 11,
+    yPercent: 2,
     size: 'sm',
     opacity: 0.88,
     floatDistance: 9,
@@ -326,8 +326,8 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Sweet 🍰',
     rotation: 3,
     anchor: 'right',
-    xPercent: 23,
-    yPercent: 3,
+    xPercent: 11,
+    yPercent: 2,
     size: 'sm',
     opacity: 0.88,
     floatDistance: -9,
@@ -340,8 +340,8 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Cherished 🌸',
     rotation: 2,
     anchor: 'left',
-    xPercent: 21,
-    yPercent: 90,
+    xPercent: 11,
+    yPercent: 91,
     size: 'sm',
     opacity: 0.88,
     floatDistance: 8,
@@ -354,8 +354,8 @@ const initialSlots: BackgroundPhoto[] = [
     caption: 'Hebziba & Dhinesh 💫',
     rotation: -3,
     anchor: 'right',
-    xPercent: 21,
-    yPercent: 90,
+    xPercent: 11,
+    yPercent: 91,
     size: 'sm',
     opacity: 0.88,
     floatDistance: -8,
@@ -364,7 +364,11 @@ const initialSlots: BackgroundPhoto[] = [
   },
 ];
 
-export const FloatingMemoryPhotos: React.FC = () => {
+interface FloatingMemoryPhotosProps {
+  isBlurred?: boolean;
+}
+
+export const FloatingMemoryPhotos: React.FC<FloatingMemoryPhotosProps> = ({ isBlurred = false }) => {
   const [photos, setPhotos] = useState<BackgroundPhoto[]>(initialSlots);
   const vaultListRef = useRef<VaultPhoto[]>([]);
 
@@ -450,7 +454,7 @@ export const FloatingMemoryPhotos: React.FC = () => {
             key={item.id}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{
-              opacity: item.opacity,
+              opacity: isBlurred ? item.opacity * 0.45 : item.opacity,
               scale: 1,
               y: [0, item.floatDistance, 0],
             }}
@@ -503,7 +507,11 @@ export const FloatingMemoryPhotos: React.FC = () => {
                   transformPerspective: 900,
                   transformStyle: 'preserve-3d',
                 }}
-                className={`bg-white p-2.5 pb-3 rounded-2xl shadow-lg border-2 border-rose-200/90 flex flex-col items-center relative ${sizeClasses}`}
+                className={`${
+                  isBlurred
+                    ? 'bg-white/70 filter blur-[2.5px] sm:blur-[3.5px] border border-rose-200/40 shadow-sm'
+                    : 'bg-white filter-none border-2 border-rose-200/90 shadow-md'
+                } p-2 pb-2.5 rounded-xl flex flex-col items-center relative transition-all duration-500 ${sizeClasses}`}
               >
                 {/* Pink Heart Pin with subtle landing bounce */}
                 <motion.div
