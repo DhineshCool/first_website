@@ -1,133 +1,132 @@
-import React, { useRef, useState } from 'react';
-import { PhysicsLayer } from './components/PhysicsLayer';
-import { CountdownHero } from './components/CountdownHero';
-import { MemoryLane } from './components/MemoryLane';
-import { LetterEnvelope } from './components/LetterEnvelope';
-import { CandleCake } from './components/CandleCake';
-import { AudioController } from './components/AudioController';
-import { fallbackMemories } from './data/memories';
-import { Sparkles, Heart, Gift, ArrowUp } from 'lucide-react';
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ScreenState } from './types';
+import { PasscodeScreen } from './components/PasscodeScreen';
+import { CountdownScreen } from './components/CountdownScreen';
+import { CakeCalendarScreen } from './components/CakeCalendarScreen';
+import { GiftPromptScreen } from './components/GiftPromptScreen';
+import { GiftHubScreen } from './components/GiftHubScreen';
+import { MusicCardGift } from './components/MusicCardGift';
+import { BouquetBuilderGift } from './components/BouquetBuilderGift';
+import { LoveLetterGift } from './components/LoveLetterGift';
+import { ScrapbookLayout } from './components/ScrapbookLayout';
 
 export const App: React.FC = () => {
-  const [audioTrigger, setAudioTrigger] = useState(false);
-  const memorySectionRef = useRef<HTMLDivElement | null>(null);
-  const envelopeSectionRef = useRef<HTMLDivElement | null>(null);
-  const cakeSectionRef = useRef<HTMLDivElement | null>(null);
+  const [screenState, setScreenState] = useState<ScreenState>('LOCK');
 
-  // Set default target date: 2026-11-15T00:00:00 as suggested in the SPEC
-  const targetDate = '2026-11-15T00:00:00';
-  const recipientName = 'Hebziba';
+  // Handle navigation transitions
+  const handlePasscodeSuccess = () => setScreenState('COUNTDOWN');
+  const handleCountdownComplete = () => setScreenState('CAKE');
+  const handleCakeContinue = () => setScreenState('PROMPT_GIFT');
+  const handleAcceptGift = () => setScreenState('GIFT_HUB');
+  const handleRejectGift = () => setScreenState('REJECT_GIFT');
+  const handleTryAgain = () => setScreenState('PROMPT_GIFT');
 
-  const handleStartAudio = () => {
-    setAudioTrigger(true);
+  // Gift selections
+  const handleSelectMusic = () => setScreenState('GIFT_MUSIC');
+  const handleSelectBouquet = () => setScreenState('GIFT_BOUQUET');
+  const handleSelectLetter = () => setScreenState('GIFT_LETTER');
+
+  // Back button navigation (screens after Candle view)
+  const handleBack = () => {
+    switch (screenState) {
+      case 'GIFT_MUSIC':
+      case 'GIFT_BOUQUET':
+      case 'GIFT_LETTER':
+        setScreenState('GIFT_HUB');
+        break;
+      case 'GIFT_HUB':
+        setScreenState('PROMPT_GIFT');
+        break;
+      case 'REJECT_GIFT':
+        setScreenState('PROMPT_GIFT');
+        break;
+      case 'PROMPT_GIFT':
+        setScreenState('CAKE');
+        break;
+      default:
+        break;
+    }
   };
 
-  const scrollToMemories = () => {
-    memorySectionRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  // Whether the back button should appear
+  // "Render a pill button '← Back' at top-left on all screens after the Candle view."
+  const showBackButton = [
+    'PROMPT_GIFT',
+    'REJECT_GIFT',
+    'GIFT_HUB',
+    'GIFT_MUSIC',
+    'GIFT_BOUQUET',
+    'GIFT_LETTER',
+  ].includes(screenState);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  // If on LOCK screen, render without the scrapbook frame
+  if (screenState === 'LOCK') {
+    return (
+      <PasscodeScreen
+        correctPasscode="0819"
+        onSuccess={handlePasscodeSuccess}
+      />
+    );
+  }
 
   return (
-    <div className="relative min-h-screen bg-background text-tprimary selection:bg-accent-primary selection:text-white overflow-hidden">
-      {/* 1. Ambient Zero-Gravity Physics Floating Canvas in Background */}
-      <PhysicsLayer className="z-0 pointer-events-auto" particleCount={22} />
+    <ScrapbookLayout showBackButton={showBackButton} onBack={handleBack}>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={screenState}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.35, ease: 'easeInOut' }}
+          className="w-full flex flex-col items-center justify-center"
+        >
+          {screenState === 'COUNTDOWN' && (
+            <CountdownScreen onComplete={handleCountdownComplete} />
+          )}
 
-      {/* Top Subtle Floating Nav / Brand */}
-      <header className="fixed top-0 inset-x-0 z-40 backdrop-blur-md bg-background/60 border-b border-white/5 transition-all">
-        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 md:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-accent-primary to-accent-highlight flex items-center justify-center shadow-glow-rose">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-heading font-bold text-base sm:text-lg tracking-wide bg-gradient-to-r from-slate-100 to-slate-400 bg-clip-text text-transparent">
-              Tribute for {recipientName}
-            </span>
-          </div>
+          {screenState === 'CAKE' && (
+            <CakeCalendarScreen
+              onContinue={handleCakeContinue}
+              targetDay={19}
+              monthName="August"
+            />
+          )}
 
-          <nav className="flex items-center gap-2 sm:gap-4 text-xs font-medium text-tmuted">
-            <button
-              onClick={() => memorySectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
-            >
-              Memories
-            </button>
-            <button
-              onClick={() => envelopeSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all"
-            >
-              Letter
-            </button>
-            <button
-              onClick={() => cakeSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-3 py-1.5 rounded-full text-accent-primary hover:bg-accent-primary/10 transition-all font-semibold flex items-center gap-1"
-            >
-              <Gift className="w-3.5 h-3.5" />
-              <span>Make a Wish</span>
-            </button>
-          </nav>
-        </div>
-      </header>
+          {screenState === 'PROMPT_GIFT' && (
+            <GiftPromptScreen
+              isRejectedView={false}
+              onAccept={handleAcceptGift}
+              onReject={handleRejectGift}
+              onTryAgain={handleTryAgain}
+            />
+          )}
 
-      {/* Main Page Layout Container (Max 1100px with responsive padding) */}
-      <main className="relative z-10 max-w-[1100px] mx-auto px-4 sm:px-6 md:px-8 flex flex-col gap-12 sm:gap-20">
-        {/* 2. Countdown Entry Hero Section */}
-        <CountdownHero
-          targetDate={targetDate}
-          recipientName={recipientName}
-          onEnterExperience={handleStartAudio}
-          onScrollToExplore={scrollToMemories}
-        />
+          {screenState === 'REJECT_GIFT' && (
+            <GiftPromptScreen
+              isRejectedView={true}
+              onAccept={handleAcceptGift}
+              onReject={handleRejectGift}
+              onTryAgain={handleTryAgain}
+            />
+          )}
 
-        {/* 3. Interactive Polaroid Memory Scrapbook */}
-        <div ref={memorySectionRef} className="scroll-mt-20">
-          <MemoryLane memories={fallbackMemories} />
-        </div>
+          {screenState === 'GIFT_HUB' && (
+            <GiftHubScreen
+              onSelectMusic={handleSelectMusic}
+              onSelectBouquet={handleSelectBouquet}
+              onSelectLetter={handleSelectLetter}
+            />
+          )}
 
-        {/* 4. Digital 3D Skeuomorphic Unfolding Letter Envelope */}
-        <div ref={envelopeSectionRef} className="scroll-mt-20">
-          <LetterEnvelope
-            recipientName={recipientName}
-            senderName="Your Lifelong Friends & Admirers"
-            onOpenLetter={handleStartAudio}
-          />
-        </div>
+          {screenState === 'GIFT_MUSIC' && <MusicCardGift />}
 
-        {/* 5. Virtual Interactive Birthday Cake & Candle Climax */}
-        <div ref={cakeSectionRef} className="scroll-mt-20">
-          <CandleCake onBlowOut={handleStartAudio} />
-        </div>
-      </main>
+          {screenState === 'GIFT_BOUQUET' && <BouquetBuilderGift />}
 
-      {/* 6. Sticky Floating Audio Controller Pill */}
-      <AudioController
-        autoPlayTrigger={audioTrigger}
-        onAudioStarted={() => setAudioTrigger(true)}
-      />
-
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-white/5 mt-20 py-12 px-4 sm:px-6 text-center text-xs text-tmuted backdrop-blur-sm bg-background/50">
-        <div className="max-w-[1100px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Heart className="w-4 h-4 text-accent-primary fill-accent-primary" />
-            <span>Crafted with infinite affection & antigravity physics</span>
-          </div>
-
-          <div className="flex items-center gap-6">
-            <span>© {new Date().getFullYear()} Hebziba’s Celestial Birthday</span>
-            <button
-              onClick={scrollToTop}
-              className="flex items-center gap-1 text-slate-300 hover:text-accent-primary transition-colors"
-            >
-              <span>Back to Top</span>
-              <ArrowUp className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
-      </footer>
-    </div>
+          {screenState === 'GIFT_LETTER' && <LoveLetterGift />}
+        </motion.div>
+      </AnimatePresence>
+    </ScrapbookLayout>
   );
 };
 

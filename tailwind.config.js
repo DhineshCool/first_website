@@ -7,50 +7,42 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0B0F19',
-        surface: {
-          DEFAULT: '#161E31',
-          light: '#1e293b',
-          glass: 'rgba(22, 30, 49, 0.75)',
+        scrapbook: {
+          cream: '#FAF6F0',
+          maroon: '#801336',
+          'maroon-dark': '#5c0d26',
+          'maroon-light': '#9e1b43',
+          pink: '#F49CB4',
+          'pink-soft': '#FCE4EC',
+          'pink-tint': '#F8BBD0',
+          tan: '#E8D8C8',
+          paper: '#FFFDF9',
         },
-        accent: {
-          primary: '#F43F5E',
-          secondary: '#F59E0B',
-          highlight: '#EC4899',
-        },
-        tprimary: '#F8FAFC',
-        tmuted: '#94A3B8',
       },
       fontFamily: {
-        heading: ['Cinzel', 'Playfair Display', 'serif'],
-        body: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-        handwriting: ['Caveat', 'cursive'],
+        playfair: ['"Playfair Display"', 'serif'],
+        dancing: ['"Dancing Script"', 'cursive'],
+        jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
       },
       boxShadow: {
-        'glow-rose': '0 0 25px rgba(244, 63, 94, 0.35)',
-        'glow-amber': '0 0 25px rgba(245, 158, 11, 0.35)',
-        'glow-pink': '0 0 30px rgba(236, 72, 153, 0.4)',
-        'polaroid': '0 12px 35px -8px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.08)',
-        'wax-seal': 'inset 0 2px 4px rgba(255,255,255,0.4), 0 4px 14px rgba(0,0,0,0.6)',
+        'scrapbook-card': '0 10px 30px -5px rgba(128, 19, 54, 0.12), 0 0 1px 1px rgba(128, 19, 54, 0.05)',
+        'polaroid-scrap': '0 8px 25px -4px rgba(128, 19, 54, 0.15), 0 2px 6px -1px rgba(0, 0, 0, 0.06)',
+        'pill-maroon': '0 4px 14px rgba(128, 19, 54, 0.25)',
+        'pill-pink': '0 4px 14px rgba(244, 156, 180, 0.35)',
       },
       animation: {
-        'float-slow': 'floating 6s ease-in-out infinite',
-        'pulse-subtle': 'pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'flame-flicker': 'flame 1.5s ease-in-out infinite alternate',
+        'spin-slow': 'spin 8s linear infinite',
+        'wiggle': 'wiggle 1s ease-in-out infinite',
+        'float-gentle': 'floatGentle 4s ease-in-out infinite',
       },
       keyframes: {
-        floating: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+        floatGentle: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-        pulseSubtle: {
-          '0%, 100%': { opacity: '1', borderColor: 'rgba(244, 63, 94, 0.4)' },
-          '50%': { opacity: '0.7', borderColor: 'rgba(245, 158, 11, 0.3)' },
-        },
-        flame: {
-          '0%': { transform: 'scale(1) skewX(-1deg)' },
-          '50%': { transform: 'scale(1.08, 0.95) skewX(2deg)' },
-          '100%': { transform: 'scale(0.96, 1.05) skewX(-2deg)' },
+          '50%': { transform: 'translateY(-6px)' },
         }
       }
     },

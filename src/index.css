@@ -3,26 +3,36 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    color-scheme: dark;
-  }
-
   body {
-    background-color: #0B0F19;
-    color: #F8FAFC;
+    background-color: #FAF6F0;
+    color: #801336;
     overflow-x: hidden;
   }
 
-  /* Optimize tap delays on mobile */
   button, 
   a, 
-  canvas, 
   .interactive-tap {
     touch-action: manipulation;
   }
 }
 
-/* 3D Envelope Perspective Utilities */
+/* Subtle Scrapbook Notebook Grid Pattern */
+.scrapbook-grid {
+  background-color: #FAF6F0;
+  background-image: 
+    linear-gradient(to right, rgba(139, 30, 63, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 30, 63, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Parchment paper texture simulation */
+.parchment-paper {
+  background-color: #E8D8C8;
+  background-image: radial-gradient(rgba(128, 19, 54, 0.08) 0.75px, transparent 0.75px);
+  background-size: 20px 20px;
+}
+
+/* 3D Card Unfolding Utilities */
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -35,26 +45,11 @@
   backface-visibility: hidden;
 }
 
-/* Custom scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.rotate-y-180 {
+  transform: rotateY(180deg);
 }
 
-::-webkit-scrollbar-track {
-  background: #0B0F19;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #334155;
-}
-
-/* Horizontal scroll styling for mobile snap rails */
+/* Hide scrollbars */
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -63,16 +58,21 @@
   display: none;
 }
 
-/* Smooth glass effect */
-.glass-panel {
-  background: rgba(22, 30, 49, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Custom warm scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.glass-card {
-  background: rgba(22, 30, 49, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+::-webkit-scrollbar-track {
+  background: rgba(244, 156, 180, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #F49CB4;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #801336;
 }
