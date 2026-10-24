@@ -1,6 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Heart, Sparkles, BookOpen, Shuffle } from 'lucide-react';
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Sparkles,
+  BookOpen,
+  Shuffle,
+  ZoomIn,
+  ZoomOut,
+  Maximize2,
+} from 'lucide-react';
 import { vaultService, VaultPhoto } from '../services/vaultService';
 
 interface MemoryAlbumModalProps {
@@ -13,34 +24,96 @@ export const MemoryAlbumModal: React.FC<MemoryAlbumModalProps> = ({ isOpen, onCl
   const [decryptedUrls, setDecryptedUrls] = useState<Record<string, string>>({});
   const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
+  const [isZoomed, setIsZoomed] = useState<boolean>(false);
 
-  // Initialize and load photo manifest
+  const decryptedUrlsRef = useRef<Record<string, string>>({});
+  const loadingMapRef = useRef<Record<string, boolean>>({});
+
+  // Decrypt single photo on demand
+  const loadPhoto = useCallback(async (photo: VaultPhoto): Promise<string> => {
+    if (decryptedUrlsRef.current[photo.file]) {
+      return decryptedUrlsRef.current[photo.file];
+    }
+    if (loadingMapRef.current[photo.file]) {
+      return '';
+    }
+
+    loadingMapRef.current[photo.file] = true;
+    setLoadingMap((prev) => ({ ...prev, [photo.file]: true }));
+
+    try {
+      const url = await vaultService.getDecryptedUrl(photo.file);
+      decryptedUrlsRef.current[photo.file] = url;
+      setDecryptedUrls((prev) => ({ ...prev, [photo.file]: url }));
+      return url;
+    } catch (e) {
+      console.error('Failed to decrypt photo', photo.file, e);
+      return '';
+    } finally {
+      loadingMapRef.current[photo.file] = false;
+      setLoadingMap((prev) => ({ ...prev, [photo.file]: false }));
+    }
+  }, []);
+
+  // Initialize and load photo manifest, preloading first batch immediately
   useEffect(() => {
     if (!isOpen) return;
 
+    let isMounted = true;
     const loadManifest = async () => {
-      const list = await vaultService.init('2710');
-      setPhotos(list);
+      try {
+        const list = await vaultService.init('2710');
+        if (!isMounted) return;
+        setPhotos(list);
+
+        // Preload the first 24 photos so the top 6 rows load instantly without waiting
+        const initialBatch = list.slice(0, 24);
+        initialBatch.forEach((item) => loadPhoto(item));
+      } catch (err) {
+        console.warn('Scrapbook vault init error:', err);
+      }
     };
 
     loadManifest();
-  }, [isOpen]);
 
-  // Decrypt single photo on demand
-  const loadPhoto = useCallback(async (photo: VaultPhoto) => {
-    if (decryptedUrls[photo.file]) return;
-    if (loadingMap[photo.file]) return;
+    return () => {
+      isMounted = false;
+    };
+  }, [isOpen, loadPhoto]);
 
-    setLoadingMap((prev) => ({ ...prev, [photo.file]: true }));
-    try {
-      const url = await vaultService.getDecryptedUrl(photo.file);
-      setDecryptedUrls((prev) => ({ ...prev, [photo.file]: url }));
-    } catch (e) {
-      console.error('Failed to decrypt photo', photo.file, e);
-    } finally {
-      setLoadingMap((prev) => ({ ...prev, [photo.file]: false }));
-    }
-  }, [decryptedUrls, loadingMap]);
+  // Open spotlight on click
+  const handleOpenSpotlight = useCallback(
+    (index: number) => {
+      setActivePhotoIndex(index);
+      setIsZoomed(false);
+      const photo = photos[index];
+      if (photo) {
+        loadPhoto(photo);
+        // Preload next & previous
+        if (index + 1 < photos.length) loadPhoto(photos[index + 1]);
+        if (index - 1 >= 0) loadPhoto(photos[index - 1]);
+      }
+    },
+    [photos, loadPhoto]
+  );
+
+  const handleNext = useCallback(() => {
+    if (activePhotoIndex === null || photos.length === 0) return;
+    const nextIdx = (activePhotoIndex + 1) % photos.length;
+    setActivePhotoIndex(nextIdx);
+    setIsZoomed(false);
+    loadPhoto(photos[nextIdx]);
+    if (nextIdx + 1 < photos.length) loadPhoto(photos[nextIdx + 1]);
+  }, [activePhotoIndex, photos, loadPhoto]);
+
+  const handlePrev = useCallback(() => {
+    if (activePhotoIndex === null || photos.length === 0) return;
+    const prevIdx = (activePhotoIndex - 1 + photos.length) % photos.length;
+    setActivePhotoIndex(prevIdx);
+    setIsZoomed(false);
+    loadPhoto(photos[prevIdx]);
+    if (prevIdx - 1 >= 0) loadPhoto(photos[prevIdx - 1]);
+  }, [activePhotoIndex, photos, loadPhoto]);
 
   // Keyboard navigation for spotlight modal
   useEffect(() => {
@@ -63,21 +136,7 @@ export const MemoryAlbumModal: React.FC<MemoryAlbumModalProps> = ({ isOpen, onCl
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, activePhotoIndex, photos.length]);
-
-  const handleNext = () => {
-    if (activePhotoIndex === null || photos.length === 0) return;
-    const nextIdx = (activePhotoIndex + 1) % photos.length;
-    setActivePhotoIndex(nextIdx);
-    loadPhoto(photos[nextIdx]);
-  };
-
-  const handlePrev = () => {
-    if (activePhotoIndex === null || photos.length === 0) return;
-    const prevIdx = (activePhotoIndex - 1 + photos.length) % photos.length;
-    setActivePhotoIndex(prevIdx);
-    loadPhoto(photos[prevIdx]);
-  };
+  }, [isOpen, activePhotoIndex, handleNext, handlePrev, onClose]);
 
   const handleShuffle = () => {
     const shuffled = [...photos].sort(() => Math.random() - 0.5);
@@ -88,14 +147,14 @@ export const MemoryAlbumModal: React.FC<MemoryAlbumModalProps> = ({ isOpen, onCl
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 overflow-hidden">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/75 backdrop-blur-sm"
         />
 
         {/* Scrapbook Album Container */}
@@ -104,14 +163,14 @@ export const MemoryAlbumModal: React.FC<MemoryAlbumModalProps> = ({ isOpen, onCl
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.92, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-6xl h-[90vh] bg-[#FAF6F0] rounded-3xl shadow-2xl border-4 border-[#801336]/20 flex flex-col overflow-hidden z-10"
+          className="relative w-full max-w-6xl h-[92vh] bg-[#FAF6F0] rounded-3xl shadow-2xl border-4 border-[#801336]/20 flex flex-col overflow-hidden z-10"
           style={{
             backgroundImage: `radial-gradient(rgba(139, 30, 63, 0.08) 1px, transparent 0)`,
             backgroundSize: '24px 24px',
           }}
         >
           {/* Header */}
-          <div className="bg-white/80 backdrop-blur-md px-6 py-4 border-b border-rose-200/80 flex items-center justify-between shrink-0 shadow-sm relative z-20">
+          <div className="bg-white/90 backdrop-blur-md px-4 sm:px-6 py-3.5 border-b border-rose-200/80 flex items-center justify-between shrink-0 shadow-sm relative z-20">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-[#801336] text-white flex items-center justify-center shadow-md">
                 <BookOpen className="w-5 h-5 text-[#F49CB4]" />
@@ -125,8 +184,8 @@ export const MemoryAlbumModal: React.FC<MemoryAlbumModalProps> = ({ isOpen, onCl
                     {photos.length} Memories
                   </span>
                 </div>
-                <p className="font-dancing text-sm text-[#801336]/80 hidden sm:block">
-                  "Every photo is a treasure with my bestie, Hebziba" — End-to-end encrypted & decrypted in your browser
+                <p className="font-dancing text-xs sm:text-sm text-[#801336]/80 hidden sm:block">
+                  "Every photo is a treasure with my bestie, Hebziba" — End-to-end encrypted in vault
                 </p>
               </div>
             </div>
@@ -150,8 +209,8 @@ export const MemoryAlbumModal: React.FC<MemoryAlbumModalProps> = ({ isOpen, onCl
             </div>
           </div>
 
-          {/* Album Grid Content */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-8">
+          {/* Album Grid Content: 4 Photos Per Row on Desktop/Laptop */}
+          <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 lg:p-7">
             {photos.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center p-8">
                 <Sparkles className="w-10 h-10 text-[#801336] animate-spin mb-3" />
@@ -161,7 +220,7 @@ export const MemoryAlbumModal: React.FC<MemoryAlbumModalProps> = ({ isOpen, onCl
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                 {photos.map((item, index) => {
                   const url = decryptedUrls[item.file];
                   const isLoading = loadingMap[item.file];
@@ -174,10 +233,7 @@ export const MemoryAlbumModal: React.FC<MemoryAlbumModalProps> = ({ isOpen, onCl
                       url={url}
                       isLoading={isLoading}
                       onVisible={() => loadPhoto(item)}
-                      onClick={() => {
-                        setActivePhotoIndex(index);
-                        loadPhoto(item);
-                      }}
+                      onClick={() => handleOpenSpotlight(index)}
                     />
                   );
                 })}
@@ -186,99 +242,136 @@ export const MemoryAlbumModal: React.FC<MemoryAlbumModalProps> = ({ isOpen, onCl
           </div>
 
           {/* Footer note */}
-          <div className="bg-[#FAF6F0] px-6 py-2.5 border-t border-rose-200/60 flex items-center justify-between text-xs text-[#801336]/70 font-sans">
-            <span className="flex items-center gap-1">
-              <Heart className="w-3 h-3 text-[#801336] fill-[#801336]" />
-              Tap any Polaroid to expand in full view
+          <div className="bg-[#FAF6F0] px-4 sm:px-6 py-2.5 border-t border-rose-200/60 flex items-center justify-between text-xs text-[#801336]/70 font-sans">
+            <span className="flex items-center gap-1.5 font-dancing text-sm text-[#801336] font-bold">
+              <Heart className="w-3.5 h-3.5 text-[#801336] fill-[#801336]" />
+              Tap any photo to expand into high resolution!
             </span>
-            <span className="font-mono text-[10px] hidden sm:inline">
+            <span className="font-mono text-[10px] hidden sm:inline text-[#801336]/60">
               🔒 AES-256-GCM Zero-Knowledge Vault
             </span>
           </div>
         </motion.div>
 
-        {/* ================= FULLSCREEN SPOTLIGHT MODAL ================= */}
-        {activePhotoIndex !== null && photos[activePhotoIndex] && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-60 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 select-none"
-            onClick={() => setActivePhotoIndex(null)}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setActivePhotoIndex(null)}
-              className="absolute top-4 right-4 z-70 w-11 h-11 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            {/* Prev Button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePrev();
-              }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-70 w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors"
-            >
-              <ChevronLeft className="w-7 h-7" />
-            </button>
-
-            {/* Next Button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNext();
-              }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-70 w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors"
-            >
-              <ChevronRight className="w-7 h-7" />
-            </button>
-
-            {/* Polaroid Large Card */}
+        {/* ================= FULLSCREEN SPOTLIGHT EXPAND MODAL ================= */}
+        <AnimatePresence>
+          {activePhotoIndex !== null && photos[activePhotoIndex] && (
             <motion.div
-              key={activePhotoIndex}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-white p-4 pb-6 rounded-2xl shadow-2xl max-w-xl max-h-[88vh] flex flex-col items-center relative border border-white/50"
+              key="spotlight-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 select-none"
+              onClick={() => setActivePhotoIndex(null)}
             >
-              {/* Taped label */}
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#FFF8E7] px-4 py-1 rounded shadow-sm border border-amber-200 text-xs font-dancing font-bold text-[#801336]">
-                Memory {activePhotoIndex + 1} of {photos.length}
+              {/* Top Bar Controls */}
+              <div className="absolute top-4 right-4 z-[110] flex items-center gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsZoomed((prev) => !prev);
+                  }}
+                  className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors backdrop-blur-sm"
+                  title={isZoomed ? 'Zoom Out' : 'Zoom In'}
+                >
+                  {isZoomed ? <ZoomOut className="w-5 h-5" /> : <ZoomIn className="w-5 h-5" />}
+                </button>
+                <button
+                  onClick={() => setActivePhotoIndex(null)}
+                  className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors backdrop-blur-sm"
+                  title="Close (Esc)"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
 
-              {/* Photo Display */}
-              <div className="w-full flex-1 min-h-[300px] max-h-[68vh] rounded-lg overflow-hidden bg-rose-50/50 flex items-center justify-center">
-                {decryptedUrls[photos[activePhotoIndex].file] ? (
-                  <img
-                    src={decryptedUrls[photos[activePhotoIndex].file]}
-                    alt={`Memory ${activePhotoIndex + 1}`}
-                    className="max-h-[68vh] w-auto max-w-full object-contain rounded-lg"
-                  />
-                ) : (
-                  <div className="flex flex-col items-center gap-2 p-8">
-                    <Sparkles className="w-8 h-8 text-[#801336] animate-spin" />
-                    <span className="font-dancing text-sm text-[#801336]">Decrypting photo...</span>
-                  </div>
-                )}
-              </div>
+              {/* Prev Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                }}
+                className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-[110] w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/20 hover:bg-white/35 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg backdrop-blur-sm"
+                title="Previous Photo (←)"
+              >
+                <ChevronLeft className="w-7 h-7 sm:w-8 sm:h-8" />
+              </button>
 
-              {/* Caption */}
-              <div className="mt-3 text-center">
-                <span className="font-dancing text-2xl text-[#801336] font-bold block">
-                  Hebziba & Dhinesh ✨
-                </span>
-                <span className="text-xs text-rose-900/60 font-sans">
-                  October 27 • 22nd Birthday Celebration
-                </span>
-              </div>
+              {/* Next Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+                className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-[110] w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/20 hover:bg-white/35 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg backdrop-blur-sm"
+                title="Next Photo (→)"
+              >
+                <ChevronRight className="w-7 h-7 sm:w-8 sm:h-8" />
+              </button>
+
+              {/* Polaroid Expanded Spotlight Card */}
+              <motion.div
+                key={activePhotoIndex}
+                initial={{ scale: 0.88, opacity: 0, y: 15 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.88, opacity: 0, y: 15 }}
+                transition={{ type: 'spring', damping: 24, stiffness: 280 }}
+                onClick={(e) => e.stopPropagation()}
+                className="bg-white p-3.5 sm:p-5 pb-5 sm:pb-6 rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl max-h-[92vh] flex flex-col items-center relative border-2 border-white ring-1 ring-black/10 z-[105]"
+              >
+                {/* Pink Heart Pin at Top Center */}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 w-6 h-6 rounded-full bg-[#F49CB4] border-2 border-white shadow-md flex items-center justify-center">
+                  <Heart className="w-3 h-3 fill-[#801336] text-[#801336]" />
+                </div>
+
+                {/* Tape Header Label */}
+                <div className="mb-2 bg-[#FFF8E7] px-3.5 py-1 rounded shadow-sm border border-amber-200/60 text-xs font-dancing font-bold text-[#801336] flex items-center gap-1.5">
+                  <Sparkles className="w-3 h-3 text-[#F59E0B]" />
+                  <span>
+                    Memory {activePhotoIndex + 1} of {photos.length}
+                  </span>
+                  <Heart className="w-2.5 h-2.5 fill-[#F49CB4] text-[#801336]" />
+                </div>
+
+                {/* Expanded Photo Container */}
+                <div
+                  onClick={() => setIsZoomed((prev) => !prev)}
+                  className={`w-full overflow-hidden rounded-xl bg-rose-50/50 flex items-center justify-center transition-all duration-300 ${
+                    isZoomed ? 'cursor-zoom-out max-h-[75vh]' : 'cursor-zoom-in max-h-[62vh] sm:max-h-[66vh]'
+                  }`}
+                >
+                  {decryptedUrls[photos[activePhotoIndex].file] ? (
+                    <motion.img
+                      src={decryptedUrls[photos[activePhotoIndex].file]}
+                      alt={photos[activePhotoIndex].caption || `Memory ${activePhotoIndex + 1}`}
+                      animate={{ scale: isZoomed ? 1.5 : 1 }}
+                      transition={{ type: 'spring', stiffness: 260, damping: 25 }}
+                      className="max-h-[62vh] sm:max-h-[66vh] w-auto max-w-full object-contain rounded-lg shadow-sm"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center gap-3 p-12 min-h-[300px] justify-center">
+                      <Sparkles className="w-10 h-10 text-[#801336] animate-spin" />
+                      <span className="font-dancing text-base text-[#801336] font-bold">
+                        Decrypting Vault Memory...
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Caption & Date Footer */}
+                <div className="mt-3 text-center w-full">
+                  <h3 className="font-dancing text-xl sm:text-2xl text-[#801336] font-bold block leading-snug">
+                    {photos[activePhotoIndex].caption || 'Unforgettable Times with Hebziba 💖'}
+                  </h3>
+                  <p className="text-xs text-[#801336]/60 font-jakarta mt-0.5">
+                    Hebziba & Dhinesh • Celebrating 22 Wonderful Years ✨
+                  </p>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
+          )}
+        </AnimatePresence>
       </div>
     </AnimatePresence>
   );
@@ -316,7 +409,7 @@ const PolaroidItem: React.FC<PolaroidItemProps> = ({
           observer.disconnect();
         }
       },
-      { rootMargin: '200px' }
+      { rootMargin: '250px' }
     );
 
     observer.observe(el);
@@ -330,7 +423,7 @@ const PolaroidItem: React.FC<PolaroidItemProps> = ({
   return (
     <motion.div
       ref={ref}
-      whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
+      whileHover={{ scale: 1.05, y: -4, rotate: 0, zIndex: 10 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
       style={{ rotate: rot }}
@@ -341,8 +434,13 @@ const PolaroidItem: React.FC<PolaroidItemProps> = ({
         <Heart className="w-2.5 h-2.5 fill-[#801336] text-[#801336]" />
       </div>
 
+      {/* Hover Expand Badge */}
+      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 text-white p-1 rounded-full shadow-sm z-20">
+        <Maximize2 className="w-3 h-3" />
+      </div>
+
       {/* Image frame */}
-      <div className="w-full aspect-square rounded-lg overflow-hidden bg-rose-50 flex items-center justify-center relative">
+      <div className="w-full aspect-square rounded-lg overflow-hidden bg-rose-50 flex items-center justify-center relative shadow-inner border border-rose-100">
         {url ? (
           <img
             src={url}

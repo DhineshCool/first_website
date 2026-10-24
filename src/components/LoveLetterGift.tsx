@@ -1,6 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Heart, Sparkles, Feather } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Heart,
+  Sparkles,
+  Feather,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
+} from 'lucide-react';
 import { PolaroidPhoto } from '../types';
 import { vaultService } from '../services/vaultService';
 
@@ -11,6 +19,7 @@ export const LoveLetterGift: React.FC = () => {
     '/images/photo-3.svg',
     '/images/photo-4.svg',
   ]);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const loadVaultPhotos = async () => {
@@ -62,6 +71,32 @@ export const LoveLetterGift: React.FC = () => {
     },
   ];
 
+  const handleNext = useCallback(() => {
+    if (expandedIndex === null) return;
+    setExpandedIndex((prev) => ((prev ?? 0) + 1) % polaroids.length);
+  }, [expandedIndex, polaroids.length]);
+
+  const handlePrev = useCallback(() => {
+    if (expandedIndex === null) return;
+    setExpandedIndex((prev) => ((prev ?? 0) - 1 + polaroids.length) % polaroids.length);
+  }, [expandedIndex, polaroids.length]);
+
+  // Keyboard navigation for expanded photo
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (expandedIndex === null) return;
+      if (e.key === 'Escape') {
+        setExpandedIndex(null);
+      } else if (e.key === 'ArrowRight') {
+        handleNext();
+      } else if (e.key === 'ArrowLeft') {
+        handlePrev();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [expandedIndex, handleNext, handlePrev]);
+
   return (
     <div className="w-full flex flex-col items-center py-1 sm:py-2 select-none">
       {/* Header */}
@@ -81,17 +116,24 @@ export const LoveLetterGift: React.FC = () => {
       <div className="w-full max-w-4xl p-2.5 sm:p-4 rounded-3xl backdrop-blur-md bg-[#FAF6F0]/65 border border-rose-100/60 shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-center relative z-20">
         {/* ================= LEFT 2 POLAROIDS ================= */}
         <div className="lg:col-span-3 flex flex-row lg:flex-col items-center justify-around h-full gap-2.5 sm:gap-3 order-2 lg:order-1 py-1">
-          {polaroids.slice(0, 2).map((item) => (
+          {polaroids.slice(0, 2).map((item, idx) => (
             <motion.div
               key={item.id}
               whileHover={{ scale: 1.06, rotate: 0 }}
               style={{ rotate: `${item.rotation}deg` }}
               transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-              className="bg-white p-2 pb-2.5 sm:p-2.5 sm:pb-3 rounded-xl shadow-2xl border-2 border-white ring-2 ring-rose-300/80 w-26 sm:w-30 relative flex flex-col cursor-pointer z-20 transform transition-shadow hover:shadow-rose-200/80"
+              onClick={() => setExpandedIndex(idx)}
+              className="bg-white p-2 pb-2.5 sm:p-2.5 sm:pb-3 rounded-xl shadow-2xl border-2 border-white ring-2 ring-rose-300/80 w-26 sm:w-30 relative flex flex-col cursor-pointer z-20 transform transition-shadow hover:shadow-rose-200/80 group"
+              title="Click to expand"
             >
               {/* Pink Heart Pin at Top Center */}
               <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 w-5.5 h-5.5 rounded-full bg-[#F49CB4] border-2 border-white shadow-md flex items-center justify-center">
                 <Heart className="w-3 h-3 fill-[#801336] text-[#801336]" />
+              </div>
+
+              {/* Hover Expand Icon */}
+              <div className="absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 text-white p-0.5 rounded-full shadow-sm z-20">
+                <Maximize2 className="w-2.5 h-2.5" />
               </div>
 
               {/* Photo Frame */}
@@ -99,7 +141,7 @@ export const LoveLetterGift: React.FC = () => {
                 <img
                   src={item.imageUrl}
                   alt={item.caption}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
 
@@ -141,7 +183,7 @@ export const LoveLetterGift: React.FC = () => {
             My Bestie Hebziba ❤️
           </h2>
 
-          {/* Scrollable Letter Content (max-h-[220px] overflow-y-auto) */}
+          {/* Scrollable Letter Content */}
           <div className="max-h-[180px] sm:max-h-[220px] overflow-y-auto pr-2 space-y-2.5 font-dancing text-base sm:text-lg text-[#801336] leading-relaxed text-left">
             <p>
               To the person who knows my wildest stories, laughs at my dumbest jokes, and always stands by me no matter what—Happy 22nd Birthday!
@@ -177,17 +219,24 @@ export const LoveLetterGift: React.FC = () => {
 
         {/* ================= RIGHT 2 POLAROIDS ================= */}
         <div className="lg:col-span-3 flex flex-row lg:flex-col items-center justify-around h-full gap-2.5 sm:gap-3 order-3 py-1">
-          {polaroids.slice(2, 4).map((item) => (
+          {polaroids.slice(2, 4).map((item, idx) => (
             <motion.div
               key={item.id}
               whileHover={{ scale: 1.06, rotate: 0 }}
               style={{ rotate: `${item.rotation}deg` }}
               transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-              className="bg-white p-2 pb-2.5 sm:p-2.5 sm:pb-3 rounded-xl shadow-2xl border-2 border-white ring-2 ring-rose-300/80 w-26 sm:w-30 relative flex flex-col cursor-pointer z-20 transform transition-shadow hover:shadow-rose-200/80"
+              onClick={() => setExpandedIndex(idx + 2)}
+              className="bg-white p-2 pb-2.5 sm:p-2.5 sm:pb-3 rounded-xl shadow-2xl border-2 border-white ring-2 ring-rose-300/80 w-26 sm:w-30 relative flex flex-col cursor-pointer z-20 transform transition-shadow hover:shadow-rose-200/80 group"
+              title="Click to expand"
             >
               {/* Pink Heart Pin at Top Center */}
               <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 w-5.5 h-5.5 rounded-full bg-[#F49CB4] border-2 border-white shadow-md flex items-center justify-center">
                 <Heart className="w-3 h-3 fill-[#801336] text-[#801336]" />
+              </div>
+
+              {/* Hover Expand Icon */}
+              <div className="absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 text-white p-0.5 rounded-full shadow-sm z-20">
+                <Maximize2 className="w-2.5 h-2.5" />
               </div>
 
               {/* Photo Frame */}
@@ -195,7 +244,7 @@ export const LoveLetterGift: React.FC = () => {
                 <img
                   src={item.imageUrl}
                   alt={item.caption}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
 
@@ -210,6 +259,97 @@ export const LoveLetterGift: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* ================= FULLSCREEN SPOTLIGHT EXPAND MODAL ================= */}
+      <AnimatePresence>
+        {expandedIndex !== null && polaroids[expandedIndex] && (
+          <motion.div
+            key="letter-spotlight"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 select-none"
+            onClick={() => setExpandedIndex(null)}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setExpandedIndex(null)}
+              className="absolute top-4 right-4 z-[110] w-11 h-11 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors"
+              title="Close (Esc)"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Prev Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePrev();
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-[110] w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg"
+              title="Previous Photo (←)"
+            >
+              <ChevronLeft className="w-7 h-7" />
+            </button>
+
+            {/* Next Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNext();
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-[110] w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-lg"
+              title="Next Photo (→)"
+            >
+              <ChevronRight className="w-7 h-7" />
+            </button>
+
+            {/* Large Polaroid Card */}
+            <motion.div
+              key={expandedIndex}
+              initial={{ scale: 0.88, opacity: 0, y: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.88, opacity: 0, y: 15 }}
+              transition={{ type: 'spring', damping: 24, stiffness: 280 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white p-4 sm:p-5 pb-6 rounded-2xl sm:rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] flex flex-col items-center relative border-2 border-white"
+            >
+              {/* Pink Heart Pin */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 w-6 h-6 rounded-full bg-[#F49CB4] border-2 border-white shadow-md flex items-center justify-center">
+                <Heart className="w-3.5 h-3.5 fill-[#801336] text-[#801336]" />
+              </div>
+
+              {/* Tape Header Label */}
+              <div className="mb-2 bg-[#FFF8E7] px-3.5 py-1 rounded shadow-sm border border-amber-200/60 text-xs font-dancing font-bold text-[#801336] flex items-center gap-1.5">
+                <Sparkles className="w-3 h-3 text-[#F59E0B]" />
+                <span>
+                  Photo {expandedIndex + 1} of {polaroids.length}
+                </span>
+                <Heart className="w-2.5 h-2.5 fill-[#F49CB4] text-[#801336]" />
+              </div>
+
+              {/* Photo Display */}
+              <div className="w-full aspect-square rounded-xl overflow-hidden bg-slate-900 border border-slate-100 shadow-inner flex items-center justify-center">
+                <img
+                  src={polaroids[expandedIndex].imageUrl}
+                  alt={polaroids[expandedIndex].caption}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Caption */}
+              <div className="mt-3 text-center">
+                <h3 className="font-dancing text-xl sm:text-2xl font-bold text-[#801336]">
+                  {polaroids[expandedIndex].caption}
+                </h3>
+                <span className="text-xs text-[#801336]/60 font-jakarta mt-0.5 block">
+                  {polaroids[expandedIndex].dateText} • Forever Besties
+                </span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
