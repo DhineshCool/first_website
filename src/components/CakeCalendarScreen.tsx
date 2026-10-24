@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Sparkles, ArrowRight, Heart } from 'lucide-react';
+import { Sparkles, ArrowRight, Heart, Music, Volume2, VolumeX } from 'lucide-react';
+import { happyBirthdayAudio } from '../services/happyBirthdayAudio';
+import { FireworksCanvas } from './FireworksCanvas';
 
 interface CakeCalendarScreenProps {
   onContinue: () => void;
   targetDay?: number;
   monthName?: string;
   onCandlesBlown?: () => void;
+  alreadyBlown?: boolean;
 }
 
 export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
@@ -15,38 +18,80 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
   targetDay = 27,
   monthName = 'October',
   onCandlesBlown,
+  alreadyBlown = false,
 }) => {
-  const [candlesLit, setCandlesLit] = useState<boolean>(true);
+  const [candlesLit, setCandlesLit] = useState<boolean>(!alreadyBlown);
   const [smokeActive, setSmokeActive] = useState<boolean>(false);
+  const [fireworksActive, setFireworksActive] = useState<boolean>(alreadyBlown);
+  const [isMusicPlaying, setIsMusicPlaying] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(happyBirthdayAudio.getIsMuted());
+
+  // Autoplay Happy Birthday song upon entering the Cake screen (after passcode & countdown)
+  useEffect(() => {
+    let isMounted = true;
+
+    if (!alreadyBlown) {
+      happyBirthdayAudio
+        .play()
+        .then(() => {
+          if (isMounted) setIsMusicPlaying(true);
+        })
+        .catch(() => {
+          // If browser deferred autoplay, listen for the first user click/key on the screen
+          const unlockAudio = () => {
+            if (isMounted && candlesLit) {
+              happyBirthdayAudio.play();
+              setIsMusicPlaying(true);
+            }
+            window.removeEventListener('click', unlockAudio);
+            window.removeEventListener('keydown', unlockAudio);
+          };
+          window.addEventListener('click', unlockAudio, { once: true });
+          window.addEventListener('keydown', unlockAudio, { once: true });
+        });
+    }
+
+    return () => {
+      isMounted = false;
+      // Stop happy birthday song when navigating away from the Cake screen
+      happyBirthdayAudio.stop();
+    };
+  }, [alreadyBlown]);
 
   const handleBlowCandles = () => {
     if (!candlesLit) return;
     setCandlesLit(false);
     setSmokeActive(true);
+    setFireworksActive(true);
+
+    // Stop Happy Birthday song immediately when user clicks to blow the candles
+    happyBirthdayAudio.stop();
+    setIsMusicPlaying(false);
+
     onCandlesBlown?.();
 
     // Celebratory pastel & maroon confetti blast
     try {
       confetti({
-        particleCount: 100,
-        spread: 80,
+        particleCount: 110,
+        spread: 85,
         origin: { y: 0.6 },
         colors: ['#801336', '#F49CB4', '#FCE4EC', '#F59E0B', '#FFFDF9'],
       });
       setTimeout(() => {
         confetti({
-          particleCount: 50,
+          particleCount: 65,
           angle: 60,
           spread: 60,
           origin: { x: 0.1, y: 0.65 },
-          colors: ['#F49CB4', '#801336'],
+          colors: ['#F49CB4', '#801336', '#FFD700'],
         });
         confetti({
-          particleCount: 50,
+          particleCount: 65,
           angle: 120,
           spread: 60,
           origin: { x: 0.9, y: 0.65 },
-          colors: ['#F49CB4', '#801336'],
+          colors: ['#F49CB4', '#801336', '#FFD700'],
         });
       }, 200);
     } catch {
@@ -54,7 +99,7 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
     }
   };
 
-  // Calendar dates for August (31 days, standard grid starting on Thursday)
+  // Calendar dates for October (31 days, standard grid starting on Thursday)
   const daysInMonth = 31;
   const startDayOffset = 4; // 0 = Sun, 1 = Mon ... 4 = Thu
   const calendarCells: (number | null)[] = [];
@@ -62,14 +107,46 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
   for (let d = 1; d <= daysInMonth; d++) calendarCells.push(d);
 
   return (
-    <div className="w-full flex flex-col items-center py-1 sm:py-2 select-none">
+    <div className="w-full flex flex-col items-center py-1 sm:py-2 select-none relative z-20">
+      {/* Background Fireworks bursting across the screen once candles are blown */}
+      <FireworksCanvas isActive={fireworksActive} />
       {/* Big Bold Maroon Serif Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-3 sm:mb-4"
+        className="text-center mb-3 sm:mb-4 flex flex-col items-center"
       >
+        {/* Soft Music Indicator while candles are lit */}
+        <AnimatePresence>
+          {candlesLit && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="mb-1.5 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm border border-rose-200/80 shadow-sm text-xs font-playfair font-semibold text-[#801336]"
+            >
+              <Music className={`w-3.5 h-3.5 text-[#F49CB4] ${isMusicPlaying && !isMuted ? 'animate-bounce' : 'opacity-70'}`} />
+              <span>{isMusicPlaying && !isMuted ? 'Happy Birthday Song Playing 🎶' : 'Happy Birthday Song 🎶'}</span>
+              <button
+                onClick={() => {
+                  const muted = happyBirthdayAudio.toggleMute();
+                  setIsMuted(muted);
+                }}
+                className="ml-1 p-0.5 rounded-full hover:bg-rose-50 text-[#801336]/80 hover:text-[#801336]"
+                title={isMuted ? 'Unmute' : 'Mute'}
+                aria-label={isMuted ? 'Unmute birthday song' : 'Mute birthday song'}
+              >
+                {isMuted ? (
+                  <VolumeX className="w-3.5 h-3.5 text-rose-400" />
+                ) : (
+                  <Volume2 className="w-3.5 h-3.5 text-[#801336]" />
+                )}
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <span className="font-dancing text-lg sm:text-xl text-[#801336] block mb-0.5">
           To My Favorite Person & Bestie
         </span>

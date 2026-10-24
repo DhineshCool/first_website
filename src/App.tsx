@@ -127,6 +127,7 @@ export const App: React.FC = () => {
               targetDay={27}
               monthName="October"
               onCandlesBlown={handleCandlesBlown}
+              alreadyBlown={candlesBlown}
             />
           )}
 
