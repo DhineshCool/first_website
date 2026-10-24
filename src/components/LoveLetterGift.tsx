@@ -78,16 +78,16 @@ export const LoveLetterGift: React.FC = () => {
       </div>
 
       {/* Main 3-Column Layout: 2 Polaroids Left, Center Parchment Card, 2 Polaroids Right */}
-      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-6 items-center">
+      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
         {/* ================= LEFT 2 POLAROIDS ================= */}
-        <div className="lg:col-span-3 flex flex-row lg:flex-col items-center justify-center gap-6 order-2 lg:order-1">
+        <div className="lg:col-span-3 flex flex-row lg:flex-col items-center justify-center gap-5 sm:gap-6 order-2 lg:order-1">
           {polaroids.slice(0, 2).map((item) => (
             <motion.div
               key={item.id}
               whileHover={{ scale: 1.05, rotate: 0 }}
               style={{ rotate: `${item.rotation}deg` }}
               transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-              className="bg-white p-3 pb-4 rounded-xl shadow-polaroid-scrap border border-rose-100 w-44 sm:w-52 relative flex flex-col cursor-pointer"
+              className="bg-white p-2.5 pb-3.5 sm:p-3 sm:pb-4 rounded-xl shadow-polaroid-scrap border border-rose-100 w-36 sm:w-44 relative flex flex-col cursor-pointer"
             >
               {/* Pink Heart Pin at Top Center */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 w-7 h-7 rounded-full bg-[#F49CB4] border-2 border-white shadow-md flex items-center justify-center">
@@ -183,7 +183,7 @@ export const LoveLetterGift: React.FC = () => {
               whileHover={{ scale: 1.05, rotate: 0 }}
               style={{ rotate: `${item.rotation}deg` }}
               transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-              className="bg-white p-3 pb-4 rounded-xl shadow-polaroid-scrap border border-rose-100 w-44 sm:w-52 relative flex flex-col cursor-pointer"
+              className="bg-white p-2.5 pb-3.5 sm:p-3 sm:pb-4 rounded-xl shadow-polaroid-scrap border border-rose-100 w-36 sm:w-44 relative flex flex-col cursor-pointer"
             >
               {/* Pink Heart Pin at Top Center */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 w-7 h-7 rounded-full bg-[#F49CB4] border-2 border-white shadow-md flex items-center justify-center">

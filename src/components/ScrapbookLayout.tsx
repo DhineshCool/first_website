@@ -208,7 +208,7 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
       )}
 
       {/* ================= PAGE CONTENT ================= */}
-      <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center px-4 sm:px-8 py-12 max-w-6xl mx-auto">
+      <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center px-4 sm:px-8 pt-20 sm:pt-24 pb-12 max-w-6xl mx-auto">
         {children}
       </div>
     </div>
