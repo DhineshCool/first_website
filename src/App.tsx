@@ -12,6 +12,7 @@ import { BouquetBuilderGift } from './components/BouquetBuilderGift';
 import { LoveLetterGift } from './components/LoveLetterGift';
 import { ScrapbookLayout } from './components/ScrapbookLayout';
 import { FloatingMemoryPhotos } from './components/FloatingMemoryPhotos';
+import { BackgroundMusicPlayer } from './components/BackgroundMusicPlayer';
 
 // Screen sequence for directional sliding (forward vs backward)
 const SCREEN_ORDER: Record<ScreenState, number> = {
@@ -145,6 +146,9 @@ export const App: React.FC = () => {
     'GIFT_LETTER',
   ].includes(screenState);
 
+  // Suppress background soundtrack on screens with spotlight audio (Cake candles song & Music Card Gift)
+  const isBackgroundMusicSuppressed = screenState === 'CAKE' || screenState === 'GIFT_MUSIC';
+
   return (
     <ScrapbookLayout showBackButton={showBackButton} onBack={handleBack}>
       <AnimatePresence mode="wait" custom={direction}>
@@ -230,6 +234,8 @@ export const App: React.FC = () => {
           }
         />
       )}
+      {/* Floating Background Soundtrack Controller */}
+      <BackgroundMusicPlayer isSuppressed={isBackgroundMusicSuppressed} />
     </ScrapbookLayout>
   );
 };
