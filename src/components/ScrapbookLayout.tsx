@@ -14,7 +14,7 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
   onBack,
 }) => {
   return (
-    <div className="relative min-h-screen w-full scrapbook-grid overflow-hidden flex flex-col justify-between selection:bg-[#F49CB4] selection:text-[#801336]">
+    <div className="relative min-h-screen w-full scrapbook-grid overflow-x-hidden flex flex-col justify-between selection:bg-[#F49CB4] selection:text-[#801336]">
       {/* ================= FIXED CORNER DECORATIONS ================= */}
 
       {/* TOP-LEFT: Torn Pink Paper Wave + Taped Label "sweet" (Subtle background accent) */}
@@ -195,11 +195,11 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
-          className="fixed top-6 left-6 z-40"
+          className="fixed top-4 left-4 sm:top-6 sm:left-6 z-40"
         >
           <button
             onClick={onBack}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#801336] text-[#FAF6F0] font-jakarta font-semibold text-xs tracking-wide shadow-pill-maroon hover:bg-[#9E1B43] active:scale-95 transition-all duration-200"
+            className="flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#801336] text-[#FAF6F0] font-jakarta font-semibold text-xs tracking-wide shadow-pill-maroon hover:bg-[#9E1B43] active:scale-95 transition-all duration-200"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back</span>
@@ -208,7 +208,7 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
       )}
 
       {/* ================= PAGE CONTENT ================= */}
-      <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center px-4 sm:px-8 pt-20 sm:pt-24 pb-12 max-w-6xl mx-auto">
+      <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-14 sm:pt-16 pb-8 sm:pb-12 max-w-6xl mx-auto my-auto">
         {children}
       </div>
     </div>

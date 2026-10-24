@@ -82,13 +82,13 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
       </motion.div>
 
       {/* Two Column Layout: Left Cake Widget & Right Calendar Card */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 w-full max-w-4xl items-center justify-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 w-full max-w-4xl items-stretch justify-center">
         {/* ================= LEFT WIDGET: INTERACTIVE CAKE ================= */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 sm:p-8 shadow-scrapbook-card border border-rose-100 flex flex-col items-center relative overflow-hidden"
+          className="bg-white rounded-3xl p-6 sm:p-8 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between h-full relative overflow-hidden"
         >
           {/* Subtle paper tape */}
           <div className="absolute top-3 left-4 transform -rotate-6 bg-[#FFF8E7] px-3 py-1 rounded shadow-sm border border-amber-200/50 text-[10px] font-dancing font-bold text-[#801336]">
@@ -271,10 +271,10 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-3xl p-6 sm:p-8 shadow-scrapbook-card border border-rose-200/80 flex flex-col items-center relative"
+          className="bg-white rounded-3xl p-6 sm:p-8 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between h-full relative overflow-hidden"
         >
           {/* Calendar Header with month and subtitle */}
-          <div className="w-full text-center pb-4 mb-4 border-b border-rose-100">
+          <div className="w-full text-center pb-3 mb-2 border-b border-rose-100">
             <h2 className="font-playfair text-3xl sm:text-4xl font-bold text-[#801336]">
               {monthName}
             </h2>
@@ -283,52 +283,54 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
             </p>
           </div>
 
-          {/* 7-Column Day Names */}
-          <div className="grid grid-cols-7 gap-2 w-full max-w-[320px] text-center text-xs font-bold text-[#801336]/60 uppercase tracking-wider mb-2">
-            {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, idx) => (
-              <span key={idx}>{day}</span>
-            ))}
-          </div>
+          <div className="w-full flex-1 flex flex-col items-center justify-center my-auto py-2">
+            {/* 7-Column Day Names */}
+            <div className="grid grid-cols-7 gap-2 w-full max-w-[320px] text-center text-xs font-bold text-[#801336]/60 uppercase tracking-wider mb-2">
+              {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, idx) => (
+                <span key={idx}>{day}</span>
+              ))}
+            </div>
 
-          {/* 7-Column Grid of Calendar Dates */}
-          <div className="grid grid-cols-7 gap-1.5 sm:gap-2 w-full max-w-[320px] text-center font-playfair text-sm sm:text-base font-semibold">
-            {calendarCells.map((cell, idx) => {
-              if (cell === null) {
-                return <div key={`empty-${idx}`} className="h-8 sm:h-9" />;
-              }
+            {/* 7-Column Grid of Calendar Dates */}
+            <div className="grid grid-cols-7 gap-1.5 sm:gap-2 w-full max-w-[320px] text-center font-playfair text-sm sm:text-base font-semibold">
+              {calendarCells.map((cell, idx) => {
+                if (cell === null) {
+                  return <div key={`empty-${idx}`} className="h-8 sm:h-9" />;
+                }
 
-              const isTargetDay = cell === targetDay;
+                const isTargetDay = cell === targetDay;
 
-              return (
-                <div
-                  key={`day-${cell}`}
-                  className="relative h-8 sm:h-9 flex items-center justify-center"
-                >
-                  {isTargetDay ? (
-                    /* Encircled by Solid Maroon Heart Badge */
-                    <motion.div
-                      animate={{ scale: [1, 1.12, 1] }}
-                      transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-                      className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center cursor-pointer"
-                      title="Hebziba's Birthday!"
-                    >
-                      <Heart className="w-full h-full fill-[#801336] text-[#801336] drop-shadow-md" />
-                      <span className="absolute inset-0 flex items-center justify-center font-bold text-white text-xs sm:text-sm">
+                return (
+                  <div
+                    key={`day-${cell}`}
+                    className="relative h-8 sm:h-9 flex items-center justify-center"
+                  >
+                    {isTargetDay ? (
+                      /* Encircled by Solid Maroon Heart Badge */
+                      <motion.div
+                        animate={{ scale: [1, 1.12, 1] }}
+                        transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+                        className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center cursor-pointer"
+                        title="Hebziba's Birthday!"
+                      >
+                        <Heart className="w-full h-full fill-[#801336] text-[#801336] drop-shadow-md" />
+                        <span className="absolute inset-0 flex items-center justify-center font-bold text-white text-xs sm:text-sm">
+                          {cell}
+                        </span>
+                      </motion.div>
+                    ) : (
+                      <span className="text-[#801336]/80 hover:text-[#801336]">
                         {cell}
                       </span>
-                    </motion.div>
-                  ) : (
-                    <span className="text-[#801336]/80 hover:text-[#801336]">
-                      {cell}
-                    </span>
-                  )}
-                </div>
-              );
-            })}
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Bestie Birthday Note footer */}
-          <div className="mt-6 pt-4 border-t border-rose-100 w-full flex items-center justify-center gap-2">
+          <div className="mt-4 pt-3 border-t border-rose-100 w-full flex items-center justify-center gap-2">
             <Heart className="w-4 h-4 fill-[#801336] text-[#801336]" />
             <span className="font-dancing text-lg text-[#801336] font-bold">
               {monthName} {targetDay} — Celebrating my bestie turning 22! ✨

@@ -146,14 +146,14 @@ export const BouquetBuilderGift: React.FC = () => {
             </p>
 
             {/* 6 Bouquets Responsive Grid (3 columns on desktop, 2 on tablet, 1 on mobile) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full px-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full px-2 items-stretch">
               {curatedBouquets.map((b) => (
                 <motion.div
                   key={b.id}
                   whileHover={{ y: -6, scale: 1.02 }}
                   transition={{ duration: 0.25 }}
                   onClick={() => handleSelectBouquet(b)}
-                  className="bg-white rounded-3xl p-5 shadow-scrapbook-card border border-rose-100 flex flex-col items-center text-center cursor-pointer group relative overflow-hidden transition-all hover:border-[#801336]/40 hover:shadow-xl"
+                  className="bg-white rounded-3xl p-5 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between text-center cursor-pointer group relative overflow-hidden transition-all hover:border-[#801336]/40 hover:shadow-xl h-full"
                 >
                   {/* Tape decoration at top */}
                   <div className="absolute top-3 left-4 transform -rotate-6 bg-[#FFF8E7] px-3 py-1 rounded shadow-sm border border-amber-200/50 text-[10px] font-dancing font-bold text-[#801336] z-10">
@@ -161,7 +161,7 @@ export const BouquetBuilderGift: React.FC = () => {
                   </div>
 
                   {/* Photo Container */}
-                  <div className="w-full aspect-square rounded-2xl overflow-hidden bg-rose-50/50 mb-4 relative shadow-inner">
+                  <div className="w-full aspect-square rounded-2xl overflow-hidden bg-rose-50/50 mb-3 relative shadow-inner">
                     <img
                       src={b.image}
                       alt={b.title}
@@ -177,19 +177,25 @@ export const BouquetBuilderGift: React.FC = () => {
                   </div>
 
                   {/* Bouquet Title */}
-                  <h3 className="font-playfair text-xl font-bold text-[#801336] mb-1 group-hover:text-[#9E1B43] transition-colors">
-                    {b.title}
-                  </h3>
+                  <div className="min-h-[28px] flex items-center justify-center mb-1 w-full">
+                    <h3 className="font-playfair text-xl font-bold text-[#801336] group-hover:text-[#9E1B43] transition-colors leading-tight">
+                      {b.title}
+                    </h3>
+                  </div>
 
                   {/* Flowers list */}
-                  <p className="text-xs font-semibold text-[#801336]/75 mb-2 line-clamp-1">
-                    {b.flowers}
-                  </p>
+                  <div className="min-h-[20px] flex items-center justify-center mb-2 w-full">
+                    <p className="text-xs font-semibold text-[#801336]/75 line-clamp-1">
+                      {b.flowers}
+                    </p>
+                  </div>
 
                   {/* Meaning */}
-                  <p className="font-dancing text-base sm:text-lg text-slate-700 leading-snug line-clamp-2 mb-4 flex-grow">
-                    "{b.meaning}"
-                  </p>
+                  <div className="min-h-[48px] flex items-center justify-center mb-3 w-full">
+                    <p className="font-dancing text-base sm:text-lg text-slate-700 leading-snug line-clamp-2">
+                      "{b.meaning}"
+                    </p>
+                  </div>
 
                   {/* Select CTA Button */}
                   <button
@@ -197,7 +203,7 @@ export const BouquetBuilderGift: React.FC = () => {
                       e.stopPropagation();
                       handleSelectBouquet(b);
                     }}
-                    className="w-full py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs tracking-wider shadow-pill-maroon hover:bg-[#9E1B43] active:scale-95 transition-all flex items-center justify-center gap-1.5"
+                    className="w-full py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs tracking-wider shadow-pill-maroon hover:bg-[#9E1B43] active:scale-95 transition-all flex items-center justify-center gap-1.5 mt-auto"
                   >
                     <Flower2 className="w-3.5 h-3.5 text-[#F49CB4]" />
                     <span>Present to Hebziba 💖</span>

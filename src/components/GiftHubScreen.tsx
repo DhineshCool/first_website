@@ -147,17 +147,17 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
       </motion.div>
 
       {/* 3 Interactive Gift Cards in Horizontal Row with hover bounce */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full max-w-4xl relative z-20">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full max-w-4xl relative z-20 items-stretch">
         {gifts.map((gift, idx) => (
           <motion.div
             key={gift.id}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: idx * 0.15 }}
-            whileHover={{ y: -10, scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ y: -8, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={gift.action}
-            className="bg-white rounded-3xl p-6 sm:p-7 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between cursor-pointer group hover:border-[#801336]/40 transition-all duration-300 relative z-20 overflow-hidden"
+            className="bg-white rounded-3xl p-6 sm:p-7 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between cursor-pointer group hover:border-[#801336]/40 transition-all duration-300 relative z-20 overflow-hidden h-full"
           >
             {/* Taped label on top corner */}
             <div className="absolute top-3 right-3 bg-[#FFF8E7] px-2.5 py-0.5 rounded shadow-sm border border-amber-200/50 text-[10px] font-dancing font-bold text-[#801336]">
@@ -165,22 +165,24 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
             </div>
 
             {/* Illustration Container with pulse/hover wiggle */}
-            <div className="w-full h-36 flex items-center justify-center my-3 group-hover:scale-108 transition-transform duration-300">
+            <div className="w-full h-36 flex items-center justify-center my-2 group-hover:scale-108 transition-transform duration-300">
               {gift.renderGraphic()}
             </div>
 
             {/* Text Information */}
-            <div className="text-center w-full mt-2">
+            <div className="text-center w-full my-2">
               <h3 className="font-playfair text-xl sm:text-2xl font-bold text-[#801336] group-hover:text-[#9E1B43] transition-colors">
                 {gift.title}
               </h3>
-              <p className="font-jakarta text-xs text-[#801336]/70 mt-1 line-clamp-2">
-                {gift.subtitle}
-              </p>
+              <div className="min-h-[38px] flex items-center justify-center mt-1">
+                <p className="font-jakarta text-xs text-[#801336]/75 line-clamp-2">
+                  {gift.subtitle}
+                </p>
+              </div>
             </div>
 
             {/* Bottom Open Pill */}
-            <div className="mt-5 w-full">
+            <div className="mt-4 w-full">
               <div className="w-full py-2.5 rounded-full bg-[#FAF6F0] group-hover:bg-[#801336] text-[#801336] group-hover:text-[#FAF6F0] border border-[#801336]/20 font-playfair font-bold text-xs tracking-wider transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>OPEN GIFT</span>
@@ -195,22 +197,22 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.4 }}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
         onClick={() => setShowAlbum(true)}
-        className="mt-8 w-full max-w-4xl bg-gradient-to-r from-[#FFF8E7] via-white to-[#FDE8EF] rounded-3xl p-5 sm:p-6 shadow-scrapbook-card border-2 border-[#801336]/20 flex flex-col sm:flex-row items-center justify-between gap-4 cursor-pointer hover:border-[#801336]/50 hover:shadow-xl transition-all duration-300 relative z-20 overflow-hidden group"
+        className="mt-8 w-full max-w-4xl bg-gradient-to-r from-[#FFF8E7] via-white to-[#FDE8EF] rounded-3xl p-5 sm:p-6 shadow-scrapbook-card border-2 border-[#801336]/20 flex flex-col sm:flex-row items-center justify-between gap-4 cursor-pointer hover:border-[#801336]/50 hover:shadow-xl transition-all duration-300 relative z-20 overflow-hidden group text-center sm:text-left"
       >
         {/* Taped label */}
         <div className="absolute top-2.5 right-4 bg-[#F49CB4] text-[#801336] px-3 py-0.5 rounded-full text-[11px] font-dancing font-bold shadow-sm">
           ✨ 110 Memories Vault
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
           <div className="w-14 h-14 rounded-2xl bg-[#801336] text-white flex items-center justify-center shrink-0 shadow-md group-hover:rotate-6 transition-transform">
             <Images className="w-7 h-7 text-[#F49CB4]" />
           </div>
-          <div className="text-left">
-            <div className="flex items-center gap-2">
+          <div>
+            <div className="flex items-center justify-center sm:justify-start gap-2">
               <h3 className="font-playfair text-xl sm:text-2xl font-bold text-[#801336]">
                 Our Bestie Memory Album 📖
               </h3>

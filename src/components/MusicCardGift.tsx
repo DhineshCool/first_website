@@ -189,11 +189,11 @@ export const MusicCardGift: React.FC = () => {
       </div>
 
       {/* Two Column Layout: Left Vinyl Player & Right Foldable Card */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 w-full max-w-4xl items-start justify-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 w-full max-w-4xl items-stretch justify-center">
         {/* ================= LEFT SIDE: VINYL PLAYER ================= */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-scrapbook-card border border-rose-100 flex flex-col items-center">
+        <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between h-full">
           {/* Maroon Player Frame */}
-          <div className="w-full aspect-[4/3] rounded-2xl bg-[#801336] p-6 flex flex-col items-center justify-between shadow-inner relative overflow-hidden">
+          <div className="w-full aspect-[4/3] rounded-2xl bg-[#801336] p-5 sm:p-6 flex flex-col items-center justify-between shadow-inner relative overflow-hidden">
             {/* Background texture line */}
             <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/5 pointer-events-none" />
 
@@ -269,7 +269,7 @@ export const MusicCardGift: React.FC = () => {
           </div>
 
           {/* Audio Controls Card Below Player */}
-          <div className="w-full mt-6 flex flex-col">
+          <div className="w-full mt-5 flex flex-col">
             <div className="flex items-center justify-between mb-2">
               <div className="pr-2">
                 <div className="flex items-center gap-1.5">
@@ -330,10 +330,10 @@ export const MusicCardGift: React.FC = () => {
             </div>
 
             {/* Playback Action Buttons */}
-            <div className="flex items-center justify-center gap-6 mt-3">
+            <div className="flex items-center justify-center gap-6 mt-2">
               <button
                 onClick={handleSkipBack}
-                className="p-2.5 rounded-full hover:bg-rose-50 text-[#801336] transition-all hover:scale-110 active:scale-95"
+                className="p-2 rounded-full hover:bg-rose-50 text-[#801336] transition-all hover:scale-110 active:scale-95"
                 title="Rewind 10 seconds"
                 aria-label="Rewind 10 seconds"
               >
@@ -342,7 +342,7 @@ export const MusicCardGift: React.FC = () => {
 
               <button
                 onClick={handlePlayToggle}
-                className="w-14 h-14 rounded-full bg-[#801336] text-white shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-108 active:scale-95 transition-all duration-200 flex items-center justify-center"
+                className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#801336] text-white shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-108 active:scale-95 transition-all duration-200 flex items-center justify-center"
                 aria-label={isPlaying ? 'Pause' : 'Play'}
               >
                 {isPlaying ? (
@@ -354,7 +354,7 @@ export const MusicCardGift: React.FC = () => {
 
               <button
                 onClick={handleSkipForward}
-                className="p-2.5 rounded-full hover:bg-rose-50 text-[#801336] transition-all hover:scale-110 active:scale-95"
+                className="p-2 rounded-full hover:bg-rose-50 text-[#801336] transition-all hover:scale-110 active:scale-95"
                 title="Forward 10 seconds"
                 aria-label="Forward 10 seconds"
               >
@@ -365,9 +365,9 @@ export const MusicCardGift: React.FC = () => {
             {/* Synchronized Live Lyrics Snippet Banner */}
             <div
               onClick={() => setShowLyricsModal(true)}
-              className="mt-4 p-3 rounded-2xl bg-rose-50/80 border border-rose-200/60 cursor-pointer hover:bg-rose-100/60 transition-colors text-center"
+              className="mt-3 p-2.5 rounded-2xl bg-rose-50/80 border border-rose-200/60 cursor-pointer hover:bg-rose-100/60 transition-colors text-center"
             >
-              <div className="flex items-center justify-center gap-1.5 text-[10px] text-[#801336]/70 uppercase tracking-wider font-bold mb-1">
+              <div className="flex items-center justify-center gap-1.5 text-[10px] text-[#801336]/70 uppercase tracking-wider font-bold mb-0.5">
                 <Music className="w-3 h-3 text-[#801336]" />
                 <span>Live Lyrics • Tap to view all</span>
               </div>
@@ -382,8 +382,19 @@ export const MusicCardGift: React.FC = () => {
         </div>
 
         {/* ================= RIGHT SIDE: FOLDABLE CARD ================= */}
-        <div className="flex flex-col items-center">
-          <div className="w-full max-w-[350px] sm:max-w-[400px] aspect-[4/5] perspective-1000">
+        <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between h-full relative overflow-hidden">
+          {/* Top subtle header ribbon */}
+          <div className="w-full flex justify-between items-center mb-3 z-10">
+            <div className="bg-[#FFF8E7] px-3 py-1 rounded shadow-sm border border-amber-200/50 text-[11px] font-dancing font-bold text-[#801336] transform -rotate-1">
+              handcrafted card 💌
+            </div>
+            <span className="text-[11px] font-dancing text-[#801336]/70 font-semibold">
+              tap to flip & open
+            </span>
+          </div>
+
+          {/* 3D Foldable Card Wrapper */}
+          <div className="w-full max-w-[340px] sm:max-w-[360px] aspect-[4/5] perspective-1000 my-auto flex items-center justify-center">
             <motion.div
               animate={{ rotateY: isCardOpen ? 180 : 0 }}
               transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
@@ -391,7 +402,7 @@ export const MusicCardGift: React.FC = () => {
               className="w-full h-full relative preserve-3d cursor-pointer rounded-3xl shadow-scrapbook-card"
             >
               {/* FRONT: Closed Maroon Textured Card */}
-              <div className="absolute inset-0 backface-hidden bg-[#801336] rounded-3xl p-8 flex flex-col items-center justify-between border-4 border-[#9E1B43] text-[#FAF6F0] shadow-xl">
+              <div className="absolute inset-0 backface-hidden bg-[#801336] rounded-3xl p-7 sm:p-8 flex flex-col items-center justify-between border-4 border-[#9E1B43] text-[#FAF6F0] shadow-xl">
                 <div className="w-full flex justify-between items-center text-xs font-dancing opacity-80">
                   <span>For Hebziba 💖</span>
                   <span>Tap to open</span>
@@ -399,7 +410,7 @@ export const MusicCardGift: React.FC = () => {
 
                 {/* Center Dashed White Heart reading "OPEN" */}
                 <div className="flex flex-col items-center my-auto">
-                  <div className="relative w-36 h-36 flex items-center justify-center">
+                  <div className="relative w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center">
                     <svg viewBox="0 0 160 160" className="w-full h-full overflow-visible">
                       <path
                         d="M80 30 C50 -5 10 20 10 60 C10 100 80 145 80 150 C80 145 150 100 150 60 C150 20 110 -5 80 30 Z"
@@ -436,9 +447,9 @@ export const MusicCardGift: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Cute Chibi Besties Photo - Bigger sizing */}
+                {/* Cute Chibi Besties Photo - Sized cleanly */}
                 <div className="relative my-auto flex-1 w-full flex items-center justify-center py-1">
-                  <div className="relative w-64 h-64 sm:w-76 sm:h-76 max-w-full max-h-full flex items-center justify-center">
+                  <div className="relative w-56 h-56 sm:w-64 sm:h-64 max-w-full max-h-full flex items-center justify-center">
                     {/* Soft glowing aura behind photo */}
                     <div className="absolute inset-0 bg-[#FDE8EF] rounded-full blur-2xl opacity-75 transform scale-95" />
                     <img
@@ -462,9 +473,11 @@ export const MusicCardGift: React.FC = () => {
             </motion.div>
           </div>
 
-          <p className="font-dancing text-sm text-[#801336]/70 mt-4 text-center">
-            {isCardOpen ? 'Click anywhere on the card to fold it back' : 'Click the card to unfold the secret inside'}
-          </p>
+          <div className="mt-3 text-center">
+            <p className="font-dancing text-sm text-[#801336]/80 font-bold">
+              {isCardOpen ? 'Click anywhere on the card to fold it back' : 'Click the card to unfold the secret inside'}
+            </p>
+          </div>
         </div>
       </div>
 

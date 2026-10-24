@@ -105,12 +105,12 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
       </motion.div>
 
       {/* 4 Polaroid-Style Countdown Cards */}
-      <div className="w-full max-w-2xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 my-4">
+      <div className="w-full max-w-2xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 my-4">
         {[
-          { label: 'DAYS', value: timeLeft.days, rotation: -3 },
-          { label: 'HOURS', value: timeLeft.hours, rotation: 2 },
-          { label: 'MINUTES', value: timeLeft.minutes, rotation: -2 },
-          { label: 'SECONDS', value: timeLeft.seconds, rotation: 3 },
+          { label: 'DAYS', value: timeLeft.days, rotation: -1.5 },
+          { label: 'HOURS', value: timeLeft.hours, rotation: 1.5 },
+          { label: 'MINUTES', value: timeLeft.minutes, rotation: -1.5 },
+          { label: 'SECONDS', value: timeLeft.seconds, rotation: 1.5 },
         ].map((unit, idx) => (
           <motion.div
             key={unit.label}
@@ -119,7 +119,7 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
             transition={{ duration: 0.4, delay: idx * 0.1 }}
             whileHover={{ scale: 1.05, rotate: 0 }}
             style={{ rotate: `${unit.rotation}deg` }}
-            className="bg-white rounded-3xl p-4 sm:p-6 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-center relative cursor-default"
+            className="bg-white rounded-3xl p-4 sm:p-5 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-center relative cursor-default h-32 sm:h-36"
           >
             {/* Pink Heart Pin at Top Center */}
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-[#F49CB4] border border-white shadow-sm flex items-center justify-center">
@@ -127,12 +127,12 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
             </div>
 
             {/* Numerical Digit */}
-            <span className="font-playfair text-4xl sm:text-6xl font-extrabold text-[#801336] tabular-nums mt-1 leading-tight">
+            <span className="font-playfair text-4xl sm:text-5xl font-extrabold text-[#801336] tabular-nums mt-1 leading-tight">
               {String(unit.value).padStart(2, '0')}
             </span>
 
             {/* Label */}
-            <span className="font-playfair text-xs sm:text-sm font-bold tracking-widest text-[#801336]/70 uppercase mt-2">
+            <span className="font-playfair text-[11px] sm:text-xs font-bold tracking-widest text-[#801336]/70 uppercase mt-2">
               {unit.label}
             </span>
           </motion.div>

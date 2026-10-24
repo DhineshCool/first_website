@@ -80,7 +80,7 @@ export const LoveLetterGift: React.FC = () => {
       {/* Main 3-Column Layout: 2 Polaroids Left, Center Parchment Card, 2 Polaroids Right */}
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
         {/* ================= LEFT 2 POLAROIDS ================= */}
-        <div className="lg:col-span-3 flex flex-row lg:flex-col items-center justify-center gap-5 sm:gap-6 order-2 lg:order-1">
+        <div className="lg:col-span-3 flex flex-row lg:flex-col items-center justify-around h-full gap-5 sm:gap-6 order-2 lg:order-1 py-2">
           {polaroids.slice(0, 2).map((item) => (
             <motion.div
               key={item.id}
@@ -142,7 +142,7 @@ export const LoveLetterGift: React.FC = () => {
           </h2>
 
           {/* Scrollable Letter Content (max-h-[420px] overflow-y-auto) */}
-          <div className="max-h-[380px] sm:max-h-[420px] overflow-y-auto pr-3 space-y-4 font-dancing text-xl sm:text-2xl text-[#801336] leading-relaxed text-justify">
+          <div className="max-h-[380px] sm:max-h-[420px] overflow-y-auto pr-3 space-y-4 font-dancing text-xl sm:text-2xl text-[#801336] leading-relaxed text-left">
             <p>
               To the person who knows my wildest stories, laughs at my dumbest jokes, and always stands by me no matter what—Happy 22nd Birthday!
             </p>
@@ -176,7 +176,7 @@ export const LoveLetterGift: React.FC = () => {
         </motion.div>
 
         {/* ================= RIGHT 2 POLAROIDS ================= */}
-        <div className="lg:col-span-3 flex flex-row lg:flex-col items-center justify-center gap-6 order-3">
+        <div className="lg:col-span-3 flex flex-row lg:flex-col items-center justify-around h-full gap-5 sm:gap-6 order-3 py-2">
           {polaroids.slice(2, 4).map((item) => (
             <motion.div
               key={item.id}
