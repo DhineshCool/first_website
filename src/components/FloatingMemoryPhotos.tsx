@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Heart } from 'lucide-react';
-import { vaultService } from '../services/vaultService';
+import { vaultService, VaultPhoto } from '../services/vaultService';
 
 interface BackgroundPhoto {
   id: string;
@@ -342,45 +342,61 @@ const initialSlots: BackgroundPhoto[] = [
 
 export const FloatingMemoryPhotos: React.FC = () => {
   const [photos, setPhotos] = useState<BackgroundPhoto[]>(initialSlots);
+  const vaultListRef = useRef<VaultPhoto[]>([]);
 
-  // Decrypt 22 vault photos on mount
+  // Function to pick and decrypt a random set of 22 photos from the 110 vault photos
+  const randomizePhotos = useCallback(async () => {
+    const list = vaultListRef.current;
+    if (!list || list.length === 0) return;
+
+    // Pick 22 randomized photos without duplicates
+    const shuffled = [...list].sort(() => Math.random() - 0.5);
+    const selected = initialSlots.map((_, i) => shuffled[i % shuffled.length]);
+
+    const decryptedUrls = await Promise.all(
+      selected.map((item) =>
+        vaultService.getDecryptedUrl(item.file).catch(() => '')
+      )
+    );
+
+    setPhotos((prev) =>
+      prev.map((item, idx) => ({
+        ...item,
+        imageUrl: decryptedUrls[idx] || item.imageUrl,
+      }))
+    );
+  }, []);
+
+  // Initialize vault and cycle random photos every 15 seconds
   useEffect(() => {
     let isMounted = true;
 
-    const loadVaultMemories = async () => {
+    const setup = async () => {
       try {
         const vaultList = await vaultService.init('2710');
-        if (vaultList.length > 0 && isMounted) {
-          // Select 22 evenly distributed photos across the 110 photos
-          const step = Math.max(1, Math.floor(vaultList.length / initialSlots.length));
-          const selected = initialSlots.map((_, i) => vaultList[(i * step) % vaultList.length]);
-
-          const decryptedUrls = await Promise.all(
-            selected.map((item) =>
-              vaultService.getDecryptedUrl(item.file).catch(() => '')
-            )
-          );
-
-          if (isMounted) {
-            setPhotos((prev) =>
-              prev.map((item, idx) => ({
-                ...item,
-                imageUrl: decryptedUrls[idx] || item.imageUrl,
-              }))
-            );
-          }
+        if (isMounted && vaultList && vaultList.length > 0) {
+          vaultListRef.current = vaultList;
+          await randomizePhotos();
         }
       } catch (err) {
-        console.warn('Vault photo loading in background photos fallback:', err);
+        console.warn('Vault photo setup error:', err);
       }
     };
 
-    loadVaultMemories();
+    setup();
+
+    // 15-second timer to randomize background photos
+    const intervalId = setInterval(() => {
+      if (isMounted) {
+        randomizePhotos();
+      }
+    }, 15000);
 
     return () => {
       isMounted = false;
+      clearInterval(intervalId);
     };
-  }, []);
+  }, [randomizePhotos]);
 
   return (
     // STRICT BACKGROUND LAYER: z-0, pointer-events-none, sits behind z-20 content cards
@@ -442,14 +458,21 @@ export const FloatingMemoryPhotos: React.FC = () => {
                 <Heart className="w-2.5 h-2.5 fill-[#801336] text-[#801336]" />
               </div>
 
-              {/* Square Photo Frame with subtle shadow border */}
-              <div className="w-full aspect-square rounded-lg overflow-hidden bg-rose-50/50 shadow-inner border border-rose-100">
-                <img
-                  src={item.imageUrl}
-                  alt={item.caption}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+              {/* Square Photo Frame with smooth cross-fade animation between randomized photos */}
+              <div className="w-full aspect-square rounded-lg overflow-hidden bg-rose-50/50 shadow-inner border border-rose-100 relative">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={item.imageUrl}
+                    src={item.imageUrl}
+                    alt={item.caption}
+                    initial={{ opacity: 0.2 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0.2 }}
+                    transition={{ duration: 0.8, ease: 'easeInOut' }}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </AnimatePresence>
               </div>
 
               {/* Handwritten Scrapbook Caption */}
