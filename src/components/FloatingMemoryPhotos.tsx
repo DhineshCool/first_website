@@ -434,13 +434,13 @@ export const FloatingMemoryPhotos: React.FC = () => {
             ? { left: `${item.xPercent}%`, top: `${item.yPercent}%` }
             : { right: `${item.xPercent}%`, top: `${item.yPercent}%` };
 
-        // Enlarged card widths for clear, prominent visibility
+        // Adjusted card widths to frame edges without overlapping center cards on laptop displays
         const sizeClasses =
           item.size === 'lg'
-            ? 'w-28 sm:w-32 lg:w-36'
+            ? 'w-22 sm:w-26 lg:w-28'
             : item.size === 'md'
-            ? 'w-24 sm:w-28 lg:w-30'
-            : 'w-20 sm:w-24 lg:w-26';
+            ? 'w-18 sm:w-22 lg:w-24'
+            : 'w-16 sm:w-18 lg:w-20';
 
         // Stagger ripple delay based on card position
         const rippleDelay = (index % 8) * 0.07;

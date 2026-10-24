@@ -160,7 +160,7 @@ export const MusicCardGift: React.FC = () => {
   const activeLyric = [...LYRICS].reverse().find((l) => currentTime >= l.time) || LYRICS[0];
 
   return (
-    <div className="w-full flex flex-col items-center py-6 select-none">
+    <div className="w-full flex flex-col items-center py-1 sm:py-2 select-none">
       {/* Hidden HTML5 Audio Element */}
       <audio
         ref={audioRef}
@@ -176,34 +176,34 @@ export const MusicCardGift: React.FC = () => {
       </audio>
 
       {/* Header */}
-      <div className="text-center mb-8 sm:mb-10">
-        <span className="font-dancing text-2xl text-[#801336] block mb-1">
+      <div className="text-center mb-3 sm:mb-4">
+        <span className="font-dancing text-lg sm:text-xl text-[#801336] block mb-0.5">
           Gift 1 of 3
         </span>
-        <h1 className="font-playfair text-3xl sm:text-5xl font-extrabold text-[#801336] tracking-tight">
+        <h1 className="font-playfair text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#801336] tracking-tight">
           Our Special Song & Card
         </h1>
-        <p className="font-dancing text-xl text-[#801336]/80 mt-1">
+        <p className="font-dancing text-xs sm:text-sm text-[#801336]/80 mt-0.5">
           "The soundtrack to our bestie memories, Hebziba"
         </p>
       </div>
 
       {/* Two Column Layout: Left Vinyl Player & Right Foldable Card */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 w-full max-w-4xl items-stretch justify-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 w-full max-w-3xl items-stretch justify-center">
         {/* ================= LEFT SIDE: VINYL PLAYER ================= */}
-        <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between h-full">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between h-full">
           {/* Maroon Player Frame */}
-          <div className="w-full aspect-[4/3] rounded-2xl bg-[#801336] p-5 sm:p-6 flex flex-col items-center justify-between shadow-inner relative overflow-hidden">
+          <div className="w-full aspect-[4/3] rounded-xl bg-[#801336] p-3 sm:p-4 flex flex-col items-center justify-between shadow-inner relative overflow-hidden">
             {/* Background texture line */}
             <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/5 pointer-events-none" />
 
             {/* Inscription at top of frame */}
-            <p className="font-dancing text-base sm:text-lg text-[#FAF6F0] text-center font-bold tracking-wide z-10">
+            <p className="font-dancing text-xs sm:text-sm text-[#FAF6F0] text-center font-bold tracking-wide z-10">
               "only the best tunes for my bestie"
             </p>
 
             {/* Black Vinyl Record Graphic with rotation */}
-            <div className="relative w-40 h-40 sm:w-48 sm:h-48 my-auto flex items-center justify-center">
+            <div className="relative w-28 h-28 sm:w-32 sm:h-32 my-auto flex items-center justify-center">
               <motion.div
                 animate={{ rotate: isPlaying ? 360 : 0 }}
                 transition={
@@ -215,108 +215,107 @@ export const MusicCardGift: React.FC = () => {
               >
                 {/* Vinyl Grooves */}
                 <div className="absolute inset-2 rounded-full border border-white/10" />
-                <div className="absolute inset-5 rounded-full border border-white/5" />
-                <div className="absolute inset-8 rounded-full border border-white/10" />
-                <div className="absolute inset-11 rounded-full border border-white/5" />
-                <div className="absolute inset-14 rounded-full border border-white/10" />
+                <div className="absolute inset-4 rounded-full border border-white/5" />
+                <div className="absolute inset-6 rounded-full border border-white/10" />
+                <div className="absolute inset-8 rounded-full border border-white/5" />
 
                 {/* Vinyl Light Glare */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/10 pointer-events-none" />
 
                 {/* Center Label (Pink & Maroon) */}
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#F49CB4] border-2 border-white flex flex-col items-center justify-center text-center p-1 shadow-inner">
-                  <Heart className="w-4 h-4 fill-[#801336] text-[#801336] mb-0.5 animate-pulse" />
-                  <span className="text-[10px] font-dancing font-bold text-[#801336] leading-none">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F49CB4] border-2 border-white flex flex-col items-center justify-center text-center p-1 shadow-inner">
+                  <Heart className="w-3.5 h-3.5 fill-[#801336] text-[#801336] mb-0.5 animate-pulse" />
+                  <span className="text-[9px] font-dancing font-bold text-[#801336] leading-none">
                     Hebziba
                   </span>
-                  <span className="text-[7px] text-[#801336]/80 font-bold uppercase tracking-tight mt-0.5">
+                  <span className="text-[6.5px] text-[#801336]/80 font-bold uppercase tracking-tight mt-0.5">
                     22nd B'day • Side A
                   </span>
                 </div>
 
                 {/* Spindle hole */}
-                <div className="absolute w-3.5 h-3.5 rounded-full bg-[#801336] border border-white/40" />
+                <div className="absolute w-2.5 h-2.5 rounded-full bg-[#801336] border border-white/40" />
               </motion.div>
 
               {/* Tonearm Needle Illustration */}
               <div
-                className={`absolute top-0 right-1 w-12 sm:w-16 h-20 origin-top-right transition-transform duration-700 pointer-events-none ${
+                className={`absolute top-0 right-1 w-9 sm:w-12 h-16 origin-top-right transition-transform duration-700 pointer-events-none ${
                   isPlaying ? 'rotate-12' : '-rotate-12 opacity-80'
                 }`}
               >
-                <div className="w-3.5 h-3.5 rounded-full bg-slate-300 border border-slate-500 absolute -top-1 -right-1 shadow-sm" />
-                <div className="w-1.5 h-16 bg-slate-200 border border-slate-400 rounded-full mx-auto transform -rotate-12 shadow-sm" />
-                <div className="w-3.5 h-6 bg-slate-800 rounded-sm -bottom-1 left-1 absolute" />
+                <div className="w-3 h-3 rounded-full bg-slate-300 border border-slate-500 absolute -top-1 -right-1 shadow-sm" />
+                <div className="w-1.5 h-12 bg-slate-200 border border-slate-400 rounded-full mx-auto transform -rotate-12 shadow-sm" />
+                <div className="w-3 h-5 bg-slate-800 rounded-sm -bottom-1 left-1 absolute" />
               </div>
             </div>
 
             {/* Sound Waves & Live Indicator */}
-            <div className="flex items-center gap-2 text-xs text-[#F49CB4] z-10">
+            <div className="flex items-center gap-1.5 text-[11px] text-[#F49CB4] z-10">
               {isPlaying ? (
                 <div className="flex items-center gap-1">
-                  <span className="w-1 h-3 bg-amber-300 rounded-full animate-bounce [animation-delay:0ms]" />
-                  <span className="w-1 h-4 bg-amber-300 rounded-full animate-bounce [animation-delay:150ms]" />
+                  <span className="w-1 h-2.5 bg-amber-300 rounded-full animate-bounce [animation-delay:0ms]" />
+                  <span className="w-1 h-3.5 bg-amber-300 rounded-full animate-bounce [animation-delay:150ms]" />
                   <span className="w-1 h-2 bg-amber-300 rounded-full animate-bounce [animation-delay:300ms]" />
-                  <span className="w-1 h-5 bg-amber-300 rounded-full animate-bounce [animation-delay:200ms]" />
+                  <span className="w-1 h-4 bg-amber-300 rounded-full animate-bounce [animation-delay:200ms]" />
                 </div>
               ) : (
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                <Sparkles className="w-3 h-3 text-amber-300" />
               )}
-              <span className="font-jakarta tracking-wider text-[11px] font-semibold text-rose-100">
+              <span className="font-jakarta tracking-wider text-[10px] sm:text-[11px] font-semibold text-rose-100">
                 {isPlaying ? 'Playing Our Anthem • கதைப்போமா' : 'Paused · Click Play To Listen'}
               </span>
             </div>
           </div>
 
           {/* Audio Controls Card Below Player */}
-          <div className="w-full mt-5 flex flex-col">
-            <div className="flex items-center justify-between mb-2">
+          <div className="w-full mt-3 flex flex-col">
+            <div className="flex items-center justify-between mb-1">
               <div className="pr-2">
                 <div className="flex items-center gap-1.5">
-                  <h4 className="font-playfair text-lg font-bold text-[#801336]">
+                  <h4 className="font-playfair text-base font-bold text-[#801336]">
                     Kadhaippoma (கதைப்போமா)
                   </h4>
-                  <span className="text-[10px] bg-rose-100 text-[#801336] px-2 py-0.5 rounded-full font-bold">
+                  <span className="text-[9px] bg-rose-100 text-[#801336] px-1.5 py-0.5 rounded-full font-bold">
                     Melody
                   </span>
                 </div>
-                <p className="font-dancing text-sm text-[#801336]/80 mt-0.5">
+                <p className="font-dancing text-xs text-[#801336]/80 mt-0.5">
                   Leon James & Sid Sriram • Dedicated to Hebziba ✨
                 </p>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 {/* Mute button */}
                 <button
                   onClick={handleToggleMute}
-                  className="p-1.5 rounded-full hover:bg-rose-50 text-[#801336]/70 hover:text-[#801336] transition-colors"
+                  className="p-1 rounded-full hover:bg-rose-50 text-[#801336]/70 hover:text-[#801336] transition-colors"
                   title={isMuted ? 'Unmute' : 'Mute'}
                   aria-label="Toggle mute"
                 >
-                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                  {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
                 </button>
 
                 {/* Lyrics modal toggle */}
                 <button
                   onClick={() => setShowLyricsModal(true)}
-                  className="p-1.5 rounded-full hover:bg-rose-50 text-[#801336]/70 hover:text-[#801336] transition-colors"
+                  className="p-1 rounded-full hover:bg-rose-50 text-[#801336]/70 hover:text-[#801336] transition-colors"
                   title="View Lyrics"
                   aria-label="View lyrics"
                 >
-                  <BookOpen className="w-4 h-4" />
+                  <BookOpen className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
 
             {/* Scrubber Bar */}
-            <div className="w-full flex items-center gap-3 my-2">
-              <span className="text-[11px] font-mono text-[#801336]/70 w-8 text-right">
+            <div className="w-full flex items-center gap-2 my-1">
+              <span className="text-[10px] font-mono text-[#801336]/70 w-7 text-right">
                 {formatTime(currentTime)}
               </span>
               <div
                 ref={scrubberRef}
                 onClick={handleScrubberClick}
-                className="flex-grow h-2.5 rounded-full bg-rose-100 overflow-hidden relative cursor-pointer group hover:h-3 transition-all"
+                className="flex-grow h-2 rounded-full bg-rose-100 overflow-hidden relative cursor-pointer group hover:h-2.5 transition-all"
                 title="Click to seek"
               >
                 <div
@@ -324,57 +323,57 @@ export const MusicCardGift: React.FC = () => {
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
-              <span className="text-[11px] font-mono text-[#801336]/70 w-8">
+              <span className="text-[10px] font-mono text-[#801336]/70 w-7">
                 {formatTime(duration)}
               </span>
             </div>
 
             {/* Playback Action Buttons */}
-            <div className="flex items-center justify-center gap-6 mt-2">
+            <div className="flex items-center justify-center gap-4 mt-1.5">
               <button
                 onClick={handleSkipBack}
-                className="p-2 rounded-full hover:bg-rose-50 text-[#801336] transition-all hover:scale-110 active:scale-95"
+                className="p-1.5 rounded-full hover:bg-rose-50 text-[#801336] transition-all hover:scale-110 active:scale-95"
                 title="Rewind 10 seconds"
                 aria-label="Rewind 10 seconds"
               >
-                <SkipBack className="w-5 h-5" />
+                <SkipBack className="w-4 h-4" />
               </button>
 
               <button
                 onClick={handlePlayToggle}
-                className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#801336] text-white shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-108 active:scale-95 transition-all duration-200 flex items-center justify-center"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#801336] text-white shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-108 active:scale-95 transition-all duration-200 flex items-center justify-center"
                 aria-label={isPlaying ? 'Pause' : 'Play'}
               >
                 {isPlaying ? (
-                  <Pause className="w-6 h-6 fill-white" />
+                  <Pause className="w-4.5 h-4.5 fill-white" />
                 ) : (
-                  <Play className="w-6 h-6 fill-white ml-0.5" />
+                  <Play className="w-4.5 h-4.5 fill-white ml-0.5" />
                 )}
               </button>
 
               <button
                 onClick={handleSkipForward}
-                className="p-2 rounded-full hover:bg-rose-50 text-[#801336] transition-all hover:scale-110 active:scale-95"
+                className="p-1.5 rounded-full hover:bg-rose-50 text-[#801336] transition-all hover:scale-110 active:scale-95"
                 title="Forward 10 seconds"
                 aria-label="Forward 10 seconds"
               >
-                <SkipForward className="w-5 h-5" />
+                <SkipForward className="w-4 h-4" />
               </button>
             </div>
 
             {/* Synchronized Live Lyrics Snippet Banner */}
             <div
               onClick={() => setShowLyricsModal(true)}
-              className="mt-3 p-2.5 rounded-2xl bg-rose-50/80 border border-rose-200/60 cursor-pointer hover:bg-rose-100/60 transition-colors text-center"
+              className="mt-2 p-2 rounded-xl bg-rose-50/80 border border-rose-200/60 cursor-pointer hover:bg-rose-100/60 transition-colors text-center"
             >
-              <div className="flex items-center justify-center gap-1.5 text-[10px] text-[#801336]/70 uppercase tracking-wider font-bold mb-0.5">
-                <Music className="w-3 h-3 text-[#801336]" />
+              <div className="flex items-center justify-center gap-1.5 text-[9px] text-[#801336]/70 uppercase tracking-wider font-bold mb-0.5">
+                <Music className="w-2.5 h-2.5 text-[#801336]" />
                 <span>Live Lyrics • Tap to view all</span>
               </div>
-              <p className="font-jakarta text-xs sm:text-sm font-semibold text-[#801336] leading-snug line-clamp-1">
+              <p className="font-jakarta text-xs font-semibold text-[#801336] leading-snug line-clamp-1">
                 "{activeLyric.tamil}"
               </p>
-              <p className="font-dancing text-xs text-[#801336]/75 mt-0.5 line-clamp-1">
+              <p className="font-dancing text-[11px] text-[#801336]/75 mt-0.5 line-clamp-1">
                 {activeLyric.meaning}
               </p>
             </div>
@@ -382,35 +381,35 @@ export const MusicCardGift: React.FC = () => {
         </div>
 
         {/* ================= RIGHT SIDE: FOLDABLE CARD ================= */}
-        <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between h-full relative overflow-hidden">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between h-full relative overflow-hidden">
           {/* Top subtle header ribbon */}
-          <div className="w-full flex justify-between items-center mb-3 z-10">
-            <div className="bg-[#FFF8E7] px-3 py-1 rounded shadow-sm border border-amber-200/50 text-[11px] font-dancing font-bold text-[#801336] transform -rotate-1">
+          <div className="w-full flex justify-between items-center mb-2 z-10">
+            <div className="bg-[#FFF8E7] px-2.5 py-0.5 rounded shadow-sm border border-amber-200/50 text-[10px] font-dancing font-bold text-[#801336] transform -rotate-1">
               handcrafted card 💌
             </div>
-            <span className="text-[11px] font-dancing text-[#801336]/70 font-semibold">
+            <span className="text-[10px] font-dancing text-[#801336]/70 font-semibold">
               tap to flip & open
             </span>
           </div>
 
           {/* 3D Foldable Card Wrapper */}
-          <div className="w-full max-w-[340px] sm:max-w-[360px] aspect-[4/5] perspective-1000 my-auto flex items-center justify-center">
+          <div className="w-full max-w-[270px] sm:max-w-[290px] aspect-[4/5] perspective-1000 my-auto flex items-center justify-center">
             <motion.div
               animate={{ rotateY: isCardOpen ? 180 : 0 }}
               transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
               onClick={() => setIsCardOpen(!isCardOpen)}
-              className="w-full h-full relative preserve-3d cursor-pointer rounded-3xl shadow-scrapbook-card"
+              className="w-full h-full relative preserve-3d cursor-pointer rounded-2xl shadow-scrapbook-card"
             >
               {/* FRONT: Closed Maroon Textured Card */}
-              <div className="absolute inset-0 backface-hidden bg-[#801336] rounded-3xl p-7 sm:p-8 flex flex-col items-center justify-between border-4 border-[#9E1B43] text-[#FAF6F0] shadow-xl">
-                <div className="w-full flex justify-between items-center text-xs font-dancing opacity-80">
+              <div className="absolute inset-0 backface-hidden bg-[#801336] rounded-2xl p-5 sm:p-6 flex flex-col items-center justify-between border-3 border-[#9E1B43] text-[#FAF6F0] shadow-xl">
+                <div className="w-full flex justify-between items-center text-[11px] font-dancing opacity-80">
                   <span>For Hebziba 💖</span>
                   <span>Tap to open</span>
                 </div>
 
                 {/* Center Dashed White Heart reading "OPEN" */}
                 <div className="flex flex-col items-center my-auto">
-                  <div className="relative w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center">
+                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
                     <svg viewBox="0 0 160 160" className="w-full h-full overflow-visible">
                       <path
                         d="M80 30 C50 -5 10 20 10 60 C10 100 80 145 80 150 C80 145 150 100 150 60 C150 20 110 -5 80 30 Z"
@@ -421,37 +420,37 @@ export const MusicCardGift: React.FC = () => {
                       />
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="font-playfair text-2xl font-bold tracking-widest text-[#FAF6F0]">
+                      <span className="font-playfair text-xl font-bold tracking-widest text-[#FAF6F0]">
                         OPEN
                       </span>
-                      <Sparkles className="w-4 h-4 text-amber-300 mt-1" />
+                      <Sparkles className="w-3.5 h-3.5 text-amber-300 mt-0.5" />
                     </div>
                   </div>
                 </div>
 
                 <div className="w-full text-center">
-                  <p className="font-dancing text-lg text-rose-200">
+                  <p className="font-dancing text-sm sm:text-base text-rose-200">
                     "Open to read what is inside"
                   </p>
                 </div>
               </div>
 
               {/* BACK: Unfolded White Inner Frame with Illustrated Besties Photo */}
-              <div className="absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-between border-2 border-rose-200 shadow-xl text-center overflow-hidden">
+              <div className="absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-between border-2 border-rose-200 shadow-xl text-center overflow-hidden">
                 <div className="w-full flex justify-between items-center z-20">
-                  <span className="text-[11px] font-dancing text-[#801336]/70 font-bold">
+                  <span className="text-[10px] font-dancing text-[#801336]/70 font-bold">
                     Dhinesh & Hebziba 💖
                   </span>
-                  <span className="text-[10px] bg-rose-50 text-[#801336] px-2.5 py-0.5 rounded-full font-bold">
+                  <span className="text-[9px] bg-rose-50 text-[#801336] px-2 py-0.5 rounded-full font-bold">
                     tap card to close
                   </span>
                 </div>
 
                 {/* Cute Chibi Besties Photo - Sized cleanly */}
-                <div className="relative my-auto flex-1 w-full flex items-center justify-center py-1">
-                  <div className="relative w-56 h-56 sm:w-64 sm:h-64 max-w-full max-h-full flex items-center justify-center">
+                <div className="relative my-auto flex-1 w-full flex items-center justify-center py-0.5">
+                  <div className="relative w-36 h-36 sm:w-40 sm:h-40 max-w-full max-h-full flex items-center justify-center">
                     {/* Soft glowing aura behind photo */}
-                    <div className="absolute inset-0 bg-[#FDE8EF] rounded-full blur-2xl opacity-75 transform scale-95" />
+                    <div className="absolute inset-0 bg-[#FDE8EF] rounded-full blur-xl opacity-75 transform scale-95" />
                     <img
                       src="/images/custom/card_besties.jpg"
                       alt="Dhinesh and Hebziba holding sparkler"
@@ -462,10 +461,10 @@ export const MusicCardGift: React.FC = () => {
 
                 {/* Caption: "Best Friends Forever, Hebziba" */}
                 <div className="z-20">
-                  <h3 className="font-playfair text-xl sm:text-2xl font-bold text-[#801336]">
+                  <h3 className="font-playfair text-base sm:text-lg font-bold text-[#801336]">
                     Best Friends Forever
                   </h3>
-                  <p className="font-dancing text-lg sm:text-xl text-[#801336]/80 font-bold mt-0.5">
+                  <p className="font-dancing text-xs sm:text-sm text-[#801336]/80 font-bold mt-0.5">
                     From Dhinesh to my favorite bestie, Hebziba ✨
                   </p>
                 </div>
@@ -473,8 +472,8 @@ export const MusicCardGift: React.FC = () => {
             </motion.div>
           </div>
 
-          <div className="mt-3 text-center">
-            <p className="font-dancing text-sm text-[#801336]/80 font-bold">
+          <div className="mt-2 text-center">
+            <p className="font-dancing text-xs text-[#801336]/80 font-bold">
               {isCardOpen ? 'Click anywhere on the card to fold it back' : 'Click the card to unfold the secret inside'}
             </p>
           </div>

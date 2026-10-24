@@ -79,22 +79,22 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
   });
 
   return (
-    <div className="min-h-screen w-full bg-[#FCE4EC] flex items-center justify-center p-4 sm:p-6 select-none">
+    <div className="min-h-screen w-full bg-[#FCE4EC] flex items-center justify-center p-3 sm:p-4 select-none">
       {/* Centered Two-Column Scrapbook Card */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="w-full max-w-4xl bg-white rounded-3xl shadow-scrapbook-card border border-rose-200/60 overflow-hidden grid grid-cols-1 md:grid-cols-2"
+        className="w-full max-w-3xl bg-white rounded-3xl shadow-scrapbook-card border border-rose-200/60 overflow-hidden grid grid-cols-1 md:grid-cols-2"
       >
         {/* ================= LEFT COLUMN: CUTE BEAR & BUNNY ================= */}
-        <div className="p-8 sm:p-12 flex flex-col items-center justify-center bg-gradient-to-b from-[#FFFDF9] to-[#FAF6F0] border-b md:border-b-0 md:border-r border-rose-100 relative">
+        <div className="p-4 sm:p-6 flex flex-col items-center justify-center bg-gradient-to-b from-[#FFFDF9] to-[#FAF6F0] border-b md:border-b-0 md:border-r border-rose-100 relative">
           {/* Decorative Corner Tape */}
-          <div className="absolute top-4 left-4 transform -rotate-12 bg-[#FFF8E7] px-4 py-1 rounded shadow-sm border border-amber-200/50 text-[11px] font-dancing font-bold text-[#801336]">
+          <div className="absolute top-3 left-3 transform -rotate-12 bg-[#FFF8E7] px-3 py-0.5 rounded shadow-sm border border-amber-200/50 text-[10px] font-dancing font-bold text-[#801336]">
             Hebziba's 22nd 💌
           </div>
 
-          <div className="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
+          <div className="relative w-40 h-40 sm:w-48 sm:h-48 flex items-center justify-center my-auto">
             {/* SVG Illustration: Bear and Bunny hugging a big heart */}
             <svg viewBox="0 0 320 320" className="w-full h-full drop-shadow-md">
               {/* Soft background aura */}
@@ -173,19 +173,19 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
             </svg>
           </div>
 
-          <h2 className="font-playfair text-xl sm:text-2xl font-bold text-[#801336] mt-4 text-center">
+          <h2 className="font-playfair text-lg sm:text-xl font-bold text-[#801336] mt-2 text-center">
             A Special Gift For My Bestie
           </h2>
-          <p className="font-dancing text-lg text-[#801336]/80 text-center mt-1">
+          <p className="font-dancing text-sm sm:text-base text-[#801336]/80 text-center mt-0.5">
             "Only for my favorite human, Hebziba..."
           </p>
         </div>
 
         {/* ================= RIGHT COLUMN: PINK PASSCODE PANEL ================= */}
-        <div className="bg-[#F49CB4] p-8 sm:p-10 flex flex-col items-center justify-between">
+        <div className="bg-[#F49CB4] p-5 sm:p-6 flex flex-col items-center justify-between">
           <div className="w-full flex flex-col items-center">
             {/* Script Title */}
-            <h1 className="font-dancing text-4xl sm:text-5xl font-bold text-[#801336] tracking-wide mb-6">
+            <h1 className="font-dancing text-3xl sm:text-4xl font-bold text-[#801336] tracking-wide mb-3">
               Enter the Passcode
             </h1>
 
@@ -193,7 +193,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
             <motion.div
               animate={isShaking ? { x: [-10, 10, -8, 8, -4, 4, 0] } : {}}
               transition={{ duration: 0.5 }}
-              className="flex items-center gap-4 my-2"
+              className="flex items-center gap-3 my-1"
             >
               {[0, 1, 2, 3].map((index) => {
                 const isFilled = index < pin.length;
@@ -202,10 +202,10 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
                     key={index}
                     animate={{ scale: isFilled ? [1, 1.25, 1] : 1 }}
                     transition={{ duration: 0.2 }}
-                    className="w-10 h-10 rounded-full flex items-center justify-center bg-white/40 border-2 border-[#801336]/30 shadow-inner"
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center bg-white/40 border-2 border-[#801336]/30 shadow-inner"
                   >
                     <Heart
-                      className={`w-6 h-6 transition-all duration-200 ${
+                      className={`w-5 h-5 transition-all duration-200 ${
                         isFilled
                           ? 'fill-[#801336] text-[#801336] scale-110'
                           : 'fill-transparent text-[#801336]/30'
@@ -217,7 +217,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
             </motion.div>
 
             {/* Error or Hint feedback */}
-            <div className="h-6 mt-2 mb-4 text-xs font-medium text-center">
+            <div className="h-5 my-1 text-[11px] font-medium text-center">
               {errorMessage ? (
                 <span className="text-[#801336] font-bold animate-pulse">{errorMessage}</span>
               ) : (
@@ -228,12 +228,12 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
             </div>
 
             {/* 3x4 Circular Button Keypad */}
-            <div className="grid grid-cols-3 gap-3.5 sm:gap-4 w-full max-w-[280px]">
+            <div className="grid grid-cols-3 gap-2 sm:gap-2.5 w-full max-w-[220px]">
               {['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'].map((btn) => (
                 <button
                   key={btn}
                   onClick={() => handleKeyPress(btn)}
-                  className="w-16 h-16 sm:w-18 sm:h-18 mx-auto rounded-full bg-white text-[#801336] font-playfair text-2xl font-bold shadow-md hover:bg-[#FAF6F0] hover:scale-105 active:scale-95 transition-all duration-150 flex items-center justify-center border border-[#801336]/10"
+                  className="w-11 h-11 sm:w-12 sm:h-12 mx-auto rounded-full bg-white text-[#801336] font-playfair text-lg sm:text-xl font-bold shadow-md hover:bg-[#FAF6F0] hover:scale-105 active:scale-95 transition-all duration-150 flex items-center justify-center border border-[#801336]/10"
                 >
                   {btn}
                 </button>
@@ -241,40 +241,40 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
             </div>
 
             {/* Action Row: Delete & Quick Hint Fill */}
-            <div className="w-full max-w-[280px] flex items-center justify-between mt-3 px-2">
+            <div className="w-full max-w-[220px] flex items-center justify-between mt-2 px-1">
               <button
                 onClick={() => {
                   setPin('2710');
                   verifyPin('2710');
                 }}
-                className="text-[11px] font-dancing text-[#801336] underline hover:opacity-80"
+                className="text-[10px] font-dancing text-[#801336] underline hover:opacity-80 font-bold"
               >
                 Quick Unlock (2710)
               </button>
               <button
                 onClick={handleDelete}
-                className="flex items-center gap-1 text-xs text-[#801336] font-bold hover:opacity-80 p-1"
+                className="flex items-center gap-1 text-[11px] text-[#801336] font-bold hover:opacity-80 p-0.5"
                 aria-label="Delete digit"
               >
-                <Delete className="w-4 h-4" />
+                <Delete className="w-3.5 h-3.5" />
                 <span>Clear</span>
               </button>
             </div>
           </div>
 
           {/* Bottom Pill Button: UNLOCK */}
-          <div className="w-full mt-6 flex flex-col items-center justify-center gap-2">
+          <div className="w-full mt-3 flex flex-col items-center justify-center gap-1">
             <button
               onClick={handleUnlockClick}
-              className="w-full max-w-[240px] py-3.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-sm tracking-widest shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2"
+              className="w-full max-w-[210px] py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs tracking-widest shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center gap-1.5"
             >
-              <Lock className="w-4 h-4" />
+              <Lock className="w-3.5 h-3.5" />
               <span>UNLOCK</span>
             </button>
             {onBackToCountdown && (
               <button
                 onClick={onBackToCountdown}
-                className="text-xs font-dancing font-bold text-[#801336]/75 hover:text-[#801336] hover:underline transition-all mt-1"
+                className="text-[11px] font-dancing font-bold text-[#801336]/75 hover:text-[#801336] hover:underline transition-all mt-0.5"
               >
                 ← Back to Birthday Countdown
               </button>

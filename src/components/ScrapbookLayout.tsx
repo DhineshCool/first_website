@@ -195,11 +195,11 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
-          className="fixed top-4 left-4 sm:top-6 sm:left-6 z-40"
+          className="fixed top-3 left-3 sm:top-4 sm:left-4 z-40"
         >
           <button
             onClick={onBack}
-            className="flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#801336] text-[#FAF6F0] font-jakarta font-semibold text-xs tracking-wide shadow-pill-maroon hover:bg-[#9E1B43] active:scale-95 transition-all duration-200"
+            className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-full bg-[#801336] text-[#FAF6F0] font-jakarta font-semibold text-xs tracking-wide shadow-pill-maroon hover:bg-[#9E1B43] active:scale-95 transition-all duration-200"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back</span>
@@ -208,7 +208,7 @@ export const ScrapbookLayout: React.FC<ScrapbookLayoutProps> = ({
       )}
 
       {/* ================= PAGE CONTENT ================= */}
-      <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-14 sm:pt-16 pb-8 sm:pb-12 max-w-6xl mx-auto my-auto">
+      <div className="relative z-10 w-full flex-grow flex flex-col items-center justify-center px-3 sm:px-6 pt-5 sm:pt-6 pb-4 sm:pb-6 max-w-5xl mx-auto my-auto">
         {children}
       </div>
     </div>

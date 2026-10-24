@@ -25,7 +25,7 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
       tag: 'tap to listen 🎵',
       renderGraphic: () => (
         /* Pink Envelope with Heart Seal SVG */
-        <svg viewBox="0 0 160 140" className="w-28 sm:w-32 h-auto drop-shadow-md">
+        <svg viewBox="0 0 160 140" className="w-20 sm:w-24 h-auto drop-shadow-md">
           {/* Back flap */}
           <rect x="15" y="30" width="130" height="90" rx="8" fill="#FCE4EC" stroke="#F49CB4" strokeWidth="2" />
           {/* Envelope fold shadows */}
@@ -55,7 +55,7 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
       tag: 'pick your blooms 🌸',
       renderGraphic: () => (
         /* Rose Bouquet Illustration SVG */
-        <svg viewBox="0 0 160 140" className="w-28 sm:w-32 h-auto drop-shadow-md">
+        <svg viewBox="0 0 160 140" className="w-20 sm:w-24 h-auto drop-shadow-md">
           {/* Paper Wrap Cone */}
           <polygon points="40,65 120,65 80,130" fill="#E8D8C8" stroke="#D4B996" strokeWidth="1.5" />
           <polygon points="45,65 80,128 75,65" fill="#D4B996" opacity="0.4" />
@@ -95,7 +95,7 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
       tag: 'read my letter 💌',
       renderGraphic: () => (
         /* Pink Gift Box with Yellow Ribbon SVG */
-        <svg viewBox="0 0 160 140" className="w-28 sm:w-32 h-auto drop-shadow-md">
+        <svg viewBox="0 0 160 140" className="w-20 sm:w-24 h-auto drop-shadow-md">
           {/* Box Body */}
           <rect x="35" y="55" width="90" height="65" rx="6" fill="#F49CB4" stroke="#801336" strokeWidth="2" />
           {/* Box Lid */}
@@ -128,63 +128,63 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
   ];
 
   return (
-    <div className="w-full flex flex-col items-center py-8 select-none">
+    <div className="w-full flex flex-col items-center py-2 sm:py-3 select-none">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-10"
+        className="text-center mb-3 sm:mb-4"
       >
-        <span className="font-dancing text-2xl text-[#801336] block mb-1">
+        <span className="font-dancing text-lg sm:text-xl text-[#801336] block mb-0.5">
           Special surprises prepared for my best friend
         </span>
-        <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#801336] tracking-tight">
+        <h1 className="font-playfair text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#801336] tracking-tight">
           Choose Your Gifts!
         </h1>
-        <p className="font-dancing text-xl text-[#801336]/80 mt-2">
+        <p className="font-dancing text-sm sm:text-base text-[#801336]/80 mt-0.5">
           "Celebrating our laughter, inside jokes, and bond as besties"
         </p>
       </motion.div>
 
       {/* 3 Interactive Gift Cards in Horizontal Row with hover bounce */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full max-w-4xl relative z-20 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4 w-full max-w-3xl relative z-20 items-stretch">
         {gifts.map((gift, idx) => (
           <motion.div
             key={gift.id}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: idx * 0.15 }}
-            whileHover={{ y: -8, scale: 1.02 }}
+            whileHover={{ y: -6, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={gift.action}
-            className="bg-white rounded-3xl p-6 sm:p-7 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between cursor-pointer group hover:border-[#801336]/40 transition-all duration-300 relative z-20 overflow-hidden h-full"
+            className="bg-white rounded-2xl p-3.5 sm:p-4 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between cursor-pointer group hover:border-[#801336]/40 transition-all duration-300 relative z-20 overflow-hidden h-full"
           >
             {/* Taped label on top corner */}
-            <div className="absolute top-3 right-3 bg-[#FFF8E7] px-2.5 py-0.5 rounded shadow-sm border border-amber-200/50 text-[10px] font-dancing font-bold text-[#801336]">
+            <div className="absolute top-2.5 right-2.5 bg-[#FFF8E7] px-2 py-0.5 rounded shadow-sm border border-amber-200/50 text-[10px] font-dancing font-bold text-[#801336]">
               {gift.tag}
             </div>
 
             {/* Illustration Container with pulse/hover wiggle */}
-            <div className="w-full h-36 flex items-center justify-center my-2 group-hover:scale-108 transition-transform duration-300">
+            <div className="w-full h-22 sm:h-24 flex items-center justify-center my-1 group-hover:scale-105 transition-transform duration-300">
               {gift.renderGraphic()}
             </div>
 
             {/* Text Information */}
-            <div className="text-center w-full my-2">
-              <h3 className="font-playfair text-xl sm:text-2xl font-bold text-[#801336] group-hover:text-[#9E1B43] transition-colors">
+            <div className="text-center w-full my-1">
+              <h3 className="font-playfair text-lg sm:text-xl font-bold text-[#801336] group-hover:text-[#9E1B43] transition-colors">
                 {gift.title}
               </h3>
-              <div className="min-h-[38px] flex items-center justify-center mt-1">
-                <p className="font-jakarta text-xs text-[#801336]/75 line-clamp-2">
+              <div className="min-h-[28px] flex items-center justify-center mt-0.5">
+                <p className="font-jakarta text-[11px] sm:text-xs text-[#801336]/75 line-clamp-2">
                   {gift.subtitle}
                 </p>
               </div>
             </div>
 
             {/* Bottom Open Pill */}
-            <div className="mt-4 w-full">
-              <div className="w-full py-2.5 rounded-full bg-[#FAF6F0] group-hover:bg-[#801336] text-[#801336] group-hover:text-[#FAF6F0] border border-[#801336]/20 font-playfair font-bold text-xs tracking-wider transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm">
-                <Sparkles className="w-3.5 h-3.5" />
+            <div className="mt-2.5 w-full">
+              <div className="w-full py-1.5 sm:py-2 rounded-full bg-[#FAF6F0] group-hover:bg-[#801336] text-[#801336] group-hover:text-[#FAF6F0] border border-[#801336]/20 font-playfair font-bold text-[11px] sm:text-xs tracking-wider transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm">
+                <Sparkles className="w-3 h-3" />
                 <span>OPEN GIFT</span>
               </div>
             </div>
@@ -200,36 +200,36 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.99 }}
         onClick={() => setShowAlbum(true)}
-        className="mt-8 w-full max-w-4xl bg-gradient-to-r from-[#FFF8E7] via-white to-[#FDE8EF] rounded-3xl p-5 sm:p-6 shadow-scrapbook-card border-2 border-[#801336]/20 flex flex-col sm:flex-row items-center justify-between gap-4 cursor-pointer hover:border-[#801336]/50 hover:shadow-xl transition-all duration-300 relative z-20 overflow-hidden group text-center sm:text-left"
+        className="mt-3.5 sm:mt-4 w-full max-w-3xl bg-gradient-to-r from-[#FFF8E7] via-white to-[#FDE8EF] rounded-2xl p-3 sm:p-3.5 shadow-scrapbook-card border-2 border-[#801336]/20 flex flex-col sm:flex-row items-center justify-between gap-3 cursor-pointer hover:border-[#801336]/50 hover:shadow-xl transition-all duration-300 relative z-20 overflow-hidden group text-center sm:text-left"
       >
         {/* Taped label */}
-        <div className="absolute top-2.5 right-4 bg-[#F49CB4] text-[#801336] px-3 py-0.5 rounded-full text-[11px] font-dancing font-bold shadow-sm">
+        <div className="absolute top-2 right-3 bg-[#F49CB4] text-[#801336] px-2.5 py-0.5 rounded-full text-[10px] font-dancing font-bold shadow-sm">
           ✨ 110 Memories Vault
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-          <div className="w-14 h-14 rounded-2xl bg-[#801336] text-white flex items-center justify-center shrink-0 shadow-md group-hover:rotate-6 transition-transform">
-            <Images className="w-7 h-7 text-[#F49CB4]" />
+        <div className="flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#801336] text-white flex items-center justify-center shrink-0 shadow-md group-hover:rotate-6 transition-transform">
+            <Images className="w-5 h-5 sm:w-6 sm:h-6 text-[#F49CB4]" />
           </div>
           <div>
             <div className="flex items-center justify-center sm:justify-start gap-2">
-              <h3 className="font-playfair text-xl sm:text-2xl font-bold text-[#801336]">
+              <h3 className="font-playfair text-base sm:text-lg font-bold text-[#801336]">
                 Our Bestie Memory Album 📖
               </h3>
             </div>
-            <p className="font-dancing text-base sm:text-lg text-[#801336]/80 mt-0.5">
+            <p className="font-dancing text-xs sm:text-sm text-[#801336]/80">
               Flip through all 110 unforgettable moments & laughs with Hebziba
             </p>
           </div>
         </div>
 
-        <div className="shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs tracking-wider shadow-sm group-hover:bg-[#9E1B43] transition-colors">
-          <BookOpen className="w-4 h-4 text-[#F49CB4]" />
+        <div className="shrink-0 flex items-center gap-1.5 px-4 py-1.5 sm:py-2 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-[11px] sm:text-xs tracking-wider shadow-sm group-hover:bg-[#9E1B43] transition-colors">
+          <BookOpen className="w-3.5 h-3.5 text-[#F49CB4]" />
           <span>OPEN SCRAPBOOK</span>
         </div>
       </motion.div>
 
-      <div className="mt-8 flex items-center gap-2 text-xs text-[#801336]/70">
+      <div className="mt-3 sm:mt-4 flex items-center gap-2 text-xs text-[#801336]/70">
         <Heart className="w-3.5 h-3.5 fill-[#801336] text-[#801336]" />
         <span>Explore your gifts and relive every memory!</span>
       </div>
