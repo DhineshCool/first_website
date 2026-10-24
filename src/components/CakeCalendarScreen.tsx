@@ -60,7 +60,7 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
     };
   }, [alreadyBlown, candlesLit, startPlayback]);
 
-  // If autoplay was deferred by the browser, unlock on the very first user interaction
+  // If autoplay was deferred by the browser, unlock on user interaction
   useEffect(() => {
     if (!isMusicPlaying && candlesLit) {
       const handleUserGesture = () => {
@@ -69,16 +69,15 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
         }
       };
 
-      window.addEventListener('click', handleUserGesture, { capture: true, once: true });
-      window.addEventListener('touchstart', handleUserGesture, { capture: true, once: true });
-      window.addEventListener('pointerdown', handleUserGesture, { capture: true, once: true });
-      window.addEventListener('keydown', handleUserGesture, { capture: true, once: true });
+      const gestureEvents: (keyof WindowEventMap)[] = ['click', 'touchend', 'pointerup', 'keydown'];
+      gestureEvents.forEach((ev) => {
+        window.addEventListener(ev, handleUserGesture, { capture: true });
+      });
 
       return () => {
-        window.removeEventListener('click', handleUserGesture, { capture: true });
-        window.removeEventListener('touchstart', handleUserGesture, { capture: true });
-        window.removeEventListener('pointerdown', handleUserGesture, { capture: true });
-        window.removeEventListener('keydown', handleUserGesture, { capture: true });
+        gestureEvents.forEach((ev) => {
+          window.removeEventListener(ev, handleUserGesture, { capture: true });
+        });
       };
     }
   }, [isMusicPlaying, candlesLit, startPlayback]);

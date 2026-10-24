@@ -165,6 +165,7 @@ export const MusicCardGift: React.FC = () => {
       <audio
         ref={audioRef}
         preload="auto"
+        playsInline
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleEnded}

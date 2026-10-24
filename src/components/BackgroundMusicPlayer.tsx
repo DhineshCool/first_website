@@ -69,17 +69,25 @@ export const BackgroundMusicPlayer: React.FC<BackgroundMusicPlayerProps> = ({
 
   // Play handler with gesture fallback
   const startPlayback = useCallback(() => {
-    if (!audioRef.current || isSuppressed) return;
-    audioRef.current.volume = isMuted ? 0 : volume;
-    const promise = audioRef.current.play();
+    const audio = audioRef.current;
+    if (!audio || isSuppressed) return;
+
+    try {
+      audio.volume = isMuted ? 0 : volume;
+    } catch {
+      // iOS Safari ignores volume property and can throw
+    }
+
+    const promise = audio.play();
     if (promise !== undefined) {
       promise
         .then(() => {
           setIsPlaying(true);
           setHasInteracted(true);
         })
-        .catch(() => {
+        .catch((err) => {
           // Autoplay blocked by browser policy until gesture
+          console.warn('Audio waiting for user gesture:', err);
         });
     }
   }, [isSuppressed, isMuted, volume]);
@@ -106,38 +114,61 @@ export const BackgroundMusicPlayer: React.FC<BackgroundMusicPlayerProps> = ({
     setCurrentTrackIndex(nextIdx);
   };
 
-  // Switch audio track source
+  // Switch audio track source cleanly without resetting preloaded buffer on mount
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.src = track.src;
-      audioRef.current.load();
-      if (isPlaying && !isSuppressed) {
-        audioRef.current.play().catch(() => {});
+    const audio = audioRef.current;
+    if (audio) {
+      const currentSrc = audio.getAttribute('src');
+      if (currentSrc !== track.src) {
+        audio.src = track.src;
+        audio.load();
+        if (isPlaying && !isSuppressed) {
+          audio.play().catch(() => {});
+        }
       }
     }
   }, [currentTrackIndex, track.src, isPlaying, isSuppressed]);
 
-  // Auto-unlock background music on very first user interaction
+  // Robust Auto-unlock for Mobile (iOS Safari & Android Chrome) and Desktop
   useEffect(() => {
-    if (!hasInteracted) {
-      const handleFirstClick = () => {
-        setHasInteracted(true);
-        if (!isSuppressed) {
-          startPlayback();
-        }
-      };
+    if (hasInteracted) return;
 
-      window.addEventListener('click', handleFirstClick, { capture: true, once: true });
-      window.addEventListener('touchstart', handleFirstClick, { capture: true, once: true });
-      window.addEventListener('pointerdown', handleFirstClick, { capture: true, once: true });
+    const handleUserGesture = () => {
+      if (isSuppressed) return;
+      const audio = audioRef.current;
+      if (!audio) return;
 
-      return () => {
-        window.removeEventListener('click', handleFirstClick, { capture: true });
-        window.removeEventListener('touchstart', handleFirstClick, { capture: true });
-        window.removeEventListener('pointerdown', handleFirstClick, { capture: true });
-      };
-    }
-  }, [hasInteracted, isSuppressed, startPlayback]);
+      try {
+        audio.volume = isMuted ? 0 : volume;
+      } catch {
+        // safe
+      }
+
+      const promise = audio.play();
+      if (promise !== undefined) {
+        promise
+          .then(() => {
+            setIsPlaying(true);
+            setHasInteracted(true);
+          })
+          .catch(() => {
+            // Keep listener active if gesture was not accepted yet (e.g. passive scroll)
+          });
+      }
+    };
+
+    // Listen on completed user activations required by iOS WebKit and Mobile Chrome
+    const gestureEvents: (keyof WindowEventMap)[] = ['click', 'touchend', 'pointerup', 'keydown'];
+    gestureEvents.forEach((ev) => {
+      window.addEventListener(ev, handleUserGesture, { capture: true });
+    });
+
+    return () => {
+      gestureEvents.forEach((ev) => {
+        window.removeEventListener(ev, handleUserGesture, { capture: true });
+      });
+    };
+  }, [hasInteracted, isSuppressed, isMuted, volume]);
 
   return (
     <>
@@ -145,12 +176,19 @@ export const BackgroundMusicPlayer: React.FC<BackgroundMusicPlayerProps> = ({
         ref={audioRef}
         src={track.src}
         loop
-        preload="metadata"
+        preload="auto"
+        playsInline
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => {
+          if (!isSuppressed && audioRef.current?.paused) {
+            setIsPlaying(false);
+          }
+        }}
         onEnded={handleNextTrack}
       />
 
       {/* Floating Scrapbook Music Control Pill (Bottom Right) */}
-      <div className="fixed bottom-4 right-4 z-40 select-none">
+      <div className="fixed bottom-4 right-3 sm:right-4 z-40 select-none pb-safe">
         <motion.div
           layout
           className="bg-white/95 backdrop-blur-md rounded-full shadow-2xl border-2 border-rose-200/90 ring-1 ring-white/60 p-1 flex items-center gap-1.5 transition-all text-[#801336]"
@@ -158,10 +196,14 @@ export const BackgroundMusicPlayer: React.FC<BackgroundMusicPlayerProps> = ({
           {/* Main Pill Play/Pause button */}
           <button
             onClick={togglePlay}
-            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+            onTouchEnd={(e) => {
+              e.stopPropagation();
+              togglePlay();
+            }}
+            className={`w-9 h-9 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all touch-manipulation cursor-pointer ${
               isPlaying && !isSuppressed
                 ? 'bg-gradient-to-tr from-[#801336] to-[#9E1B43] text-white shadow-md'
-                : 'bg-rose-100 text-[#801336] hover:bg-rose-200'
+                : 'bg-rose-100 text-[#801336] hover:bg-rose-200 animate-pulse ring-2 ring-[#801336]/20'
             }`}
             title={isPlaying ? 'Pause Background Music' : 'Play Background Music'}
             aria-label={isPlaying ? 'Pause Background Music' : 'Play Background Music'}

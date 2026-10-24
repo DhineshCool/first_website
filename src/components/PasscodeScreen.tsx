@@ -57,7 +57,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
       onSuccess();
     } else {
       setIsShaking(true);
-      setErrorMessage('Oops! Incorrect passcode. Try 2710 ✨');
+      setErrorMessage('Oops! Incorrect passcode. Hint: 27 Oct ✨');
       setTimeout(() => {
         setIsShaking(false);
         setPin('');
@@ -235,7 +235,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
                 <span className="text-[#801336] font-bold animate-pulse">{errorMessage}</span>
               ) : (
                 <span className="text-[#801336]/70 flex items-center gap-1 justify-center">
-                  <Sparkles className="w-3 h-3" /> Hint: Tap 2710 (October 27) ✨
+                  <Sparkles className="w-3 h-3" /> Hint: 27 Oct ✨
                 </span>
               )}
             </div>
@@ -255,20 +255,14 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
               ))}
             </div>
 
-            {/* Action Row: Delete & Quick Hint Fill */}
+            {/* Action Row: Delete & Hint Badge */}
             <div className="w-full max-w-[220px] flex items-center justify-between mt-2 px-1">
-              <button
-                onClick={() => {
-                  setPin('2710');
-                  verifyPin('2710');
-                }}
-                className="text-[10px] font-dancing text-[#801336] underline hover:opacity-80 font-bold cursor-pointer"
-              >
-                Quick Unlock (2710)
-              </button>
+              <span className="text-[11px] font-dancing text-[#801336]/80 font-bold">
+                27 Oct 🎂
+              </span>
               <button
                 onClick={handleDelete}
-                className="flex items-center gap-1 text-[11px] text-[#801336] font-bold hover:opacity-80 p-0.5 cursor-pointer"
+                className="flex items-center gap-1 text-[11px] text-[#801336] font-bold hover:opacity-80 p-0.5 cursor-pointer ml-auto"
                 aria-label="Delete digit"
               >
                 <Delete className="w-3.5 h-3.5" />
