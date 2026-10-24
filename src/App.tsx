@@ -13,8 +13,56 @@ import { LoveLetterGift } from './components/LoveLetterGift';
 import { ScrapbookLayout } from './components/ScrapbookLayout';
 import { FloatingMemoryPhotos } from './components/FloatingMemoryPhotos';
 
+// Screen sequence for directional sliding (forward vs backward)
+const SCREEN_ORDER: Record<ScreenState, number> = {
+  BIRTHDAY_COUNTDOWN: 0,
+  LOCK: 1,
+  COUNTDOWN: 2,
+  CAKE: 3,
+  PROMPT_GIFT: 4,
+  REJECT_GIFT: 4.5,
+  GIFT_HUB: 5,
+  GIFT_MUSIC: 6,
+  GIFT_BOUQUET: 6,
+  GIFT_LETTER: 6,
+};
+
+// Smooth scrapbook page-turn variants with 3D perspective and velvety cubic-bezier deceleration
+const pageVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 42 : -42,
+    opacity: 0,
+    scale: 0.96,
+    rotateY: direction > 0 ? 4 : -4,
+    filter: 'blur(6px)',
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    rotateY: 0,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.48,
+      ease: [0.22, 1, 0.36, 1], // Velvety smooth Apple-style easeOut
+    },
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? -42 : 42,
+    opacity: 0,
+    scale: 0.96,
+    rotateY: direction > 0 ? -4 : 4,
+    filter: 'blur(6px)',
+    transition: {
+      duration: 0.35,
+      ease: [0.32, 0, 0.67, 0], // Smooth acceleration into exit
+    },
+  }),
+};
+
 export const App: React.FC = () => {
   const [screenState, setScreenState] = useState<ScreenState>('BIRTHDAY_COUNTDOWN');
+  const [direction, setDirection] = useState<number>(1);
   const [candlesBlown, setCandlesBlown] = useState<boolean>(false);
 
   // Clear any legacy session flag on mount so every run starts clean
@@ -26,6 +74,13 @@ export const App: React.FC = () => {
     }
   }, []);
 
+  const navigateTo = (nextState: ScreenState) => {
+    const currentOrder = SCREEN_ORDER[screenState] ?? 0;
+    const nextOrder = SCREEN_ORDER[nextState] ?? 0;
+    setDirection(nextOrder >= currentOrder ? 1 : -1);
+    setScreenState(nextState);
+  };
+
   const handleCandlesBlown = () => {
     setCandlesBlown(true);
   };
@@ -33,43 +88,46 @@ export const App: React.FC = () => {
   // Handle navigation transitions
   const handleEnterPasscode = () => {
     setCandlesBlown(false);
-    setScreenState('LOCK');
+    navigateTo('LOCK');
   };
   const handleBackToCountdown = () => {
     setCandlesBlown(false);
-    setScreenState('BIRTHDAY_COUNTDOWN');
+    navigateTo('BIRTHDAY_COUNTDOWN');
   };
   const handlePasscodeSuccess = () => {
     setCandlesBlown(false);
-    setScreenState('COUNTDOWN');
+    navigateTo('COUNTDOWN');
   };
-  const handleCountdownComplete = () => setScreenState('CAKE');
-  const handleCakeContinue = () => setScreenState('PROMPT_GIFT');
-  const handleAcceptGift = () => setScreenState('GIFT_HUB');
-  const handleRejectGift = () => setScreenState('REJECT_GIFT');
-  const handleTryAgain = () => setScreenState('PROMPT_GIFT');
+  const handleCountdownComplete = () => navigateTo('CAKE');
+  const handleCakeContinue = () => navigateTo('PROMPT_GIFT');
+  const handleAcceptGift = () => navigateTo('GIFT_HUB');
+  const handleRejectGift = () => navigateTo('REJECT_GIFT');
+  const handleTryAgain = () => navigateTo('PROMPT_GIFT');
 
   // Gift selections
-  const handleSelectMusic = () => setScreenState('GIFT_MUSIC');
-  const handleSelectBouquet = () => setScreenState('GIFT_BOUQUET');
-  const handleSelectLetter = () => setScreenState('GIFT_LETTER');
+  const handleSelectMusic = () => navigateTo('GIFT_MUSIC');
+  const handleSelectBouquet = () => navigateTo('GIFT_BOUQUET');
+  const handleSelectLetter = () => navigateTo('GIFT_LETTER');
 
   // Back button navigation (screens after Candle view)
   const handleBack = () => {
     switch (screenState) {
+      case 'LOCK':
+        navigateTo('BIRTHDAY_COUNTDOWN');
+        break;
       case 'GIFT_MUSIC':
       case 'GIFT_BOUQUET':
       case 'GIFT_LETTER':
-        setScreenState('GIFT_HUB');
+        navigateTo('GIFT_HUB');
         break;
       case 'GIFT_HUB':
-        setScreenState('PROMPT_GIFT');
+        navigateTo('PROMPT_GIFT');
         break;
       case 'REJECT_GIFT':
-        setScreenState('PROMPT_GIFT');
+        navigateTo('PROMPT_GIFT');
         break;
       case 'PROMPT_GIFT':
-        setScreenState('CAKE');
+        navigateTo('CAKE');
         break;
       default:
         break;
@@ -77,8 +135,8 @@ export const App: React.FC = () => {
   };
 
   // Whether the back button should appear
-  // "Render a pill button '← Back' at top-left on all screens after the Candle view."
   const showBackButton = [
+    'LOCK',
     'PROMPT_GIFT',
     'REJECT_GIFT',
     'GIFT_HUB',
@@ -87,33 +145,31 @@ export const App: React.FC = () => {
     'GIFT_LETTER',
   ].includes(screenState);
 
-  // If on LOCK screen, render without the scrapbook frame
-  if (screenState === 'LOCK') {
-    return (
-      <PasscodeScreen
-        correctPasscode="2710"
-        onSuccess={handlePasscodeSuccess}
-        onBackToCountdown={handleBackToCountdown}
-      />
-    );
-  }
-
   return (
     <ScrapbookLayout showBackButton={showBackButton} onBack={handleBack}>
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={screenState}
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -15 }}
-          transition={{ duration: 0.35, ease: 'easeInOut' }}
-          className="w-full flex flex-col items-center justify-center relative z-20"
+          custom={direction}
+          variants={pageVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          className="w-full flex flex-col items-center justify-center relative z-20 preserve-3d"
         >
           {screenState === 'BIRTHDAY_COUNTDOWN' && (
             <StartingCountdownScreen
               onEnterPasscode={handleEnterPasscode}
               targetDate="2026-10-27T00:00:00"
               recipientName="Hebziba"
+            />
+          )}
+
+          {screenState === 'LOCK' && (
+            <PasscodeScreen
+              correctPasscode="2710"
+              onSuccess={handlePasscodeSuccess}
+              onBackToCountdown={handleBackToCountdown}
             />
           )}
 
@@ -179,3 +235,4 @@ export const App: React.FC = () => {
 };
 
 export default App;
+

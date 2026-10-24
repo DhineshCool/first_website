@@ -89,12 +89,9 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
   });
 
   return (
-    <div className="min-h-screen w-full bg-[#FCE4EC] flex items-center justify-center p-3 sm:p-4 select-none">
+    <div className="w-full flex items-center justify-center py-1 sm:py-3 select-none my-auto">
       {/* Centered Two-Column Scrapbook Card */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 15 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+      <div
         className="w-full max-w-3xl bg-white rounded-3xl shadow-scrapbook-card border border-rose-200/60 overflow-hidden grid grid-cols-1 md:grid-cols-2"
       >
         {/* ================= LEFT COLUMN: CUTE BEAR & BUNNY ================= */}
@@ -301,7 +298,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
             )}
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

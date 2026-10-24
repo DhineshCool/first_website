@@ -122,10 +122,10 @@ export const BouquetBuilderGift: React.FC = () => {
           /* ================= VIEW 1: 6 CURATED BOUQUETS MENU ================= */
           <motion.div
             key="gallery"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 0, scale: 0.96, filter: 'blur(5px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, scale: 0.96, filter: 'blur(5px)' }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="w-full max-w-5xl flex flex-col items-center text-center"
           >
             {/* Washi Tape Header Badge */}
@@ -218,10 +218,10 @@ export const BouquetBuilderGift: React.FC = () => {
           /* ================= VIEW 2: PRESENTED SPOTLIGHT VIEW ================= */
           <motion.div
             key="presented"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 0, scale: 0.94, filter: 'blur(6px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, scale: 0.94, filter: 'blur(6px)' }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="w-full max-w-5xl flex flex-col items-center"
           >
             {/* Header Title */}
