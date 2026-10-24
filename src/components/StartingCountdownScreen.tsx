@@ -78,7 +78,7 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
       >
         <Sparkles className="w-4 h-4 text-[#801336]" />
         <span className="font-dancing text-xl sm:text-2xl font-bold text-[#801336]">
-          October 27 • Bestie Celebration 💖
+          Hebziba's 22nd Birthday • October 27 💖
         </span>
         <Heart className="w-4 h-4 fill-[#F49CB4] text-[#801336]" />
       </motion.div>
@@ -96,11 +96,11 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
         <h1 className="font-playfair text-4xl sm:text-6xl font-extrabold text-[#801336] tracking-tight">
           Counting Down to <br />
           <span className="bg-gradient-to-r from-[#801336] via-[#9E1B43] to-[#F49CB4] bg-clip-text text-transparent underline decoration-[#F49CB4]/40 decoration-wavy">
-            {recipientName}'s Birthday!
+            {recipientName} Turning 22!
           </span>
         </h1>
         <p className="font-dancing text-xl sm:text-2xl text-[#801336]/80 mt-3">
-          "Counting every second until October 27 arrives for my favorite human"
+          "Counting every second until 22 arrives for my favorite human"
         </p>
       </motion.div>
 
@@ -148,7 +148,7 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
             className="my-4 px-6 py-2.5 rounded-full bg-rose-100 border border-[#801336]/30 text-[#801336] font-dancing text-xl sm:text-2xl font-bold flex items-center gap-2"
           >
             <PartyPopper className="w-5 h-5 text-[#801336] animate-bounce" />
-            <span>IT'S HEBZIBA'S BIRTHDAY TODAY! HAPPY BIRTHDAY! 🎉</span>
+            <span>IT'S HEBZIBA'S 22ND BIRTHDAY TODAY! HAPPY 22ND! 🎉</span>
             <Sparkles className="w-5 h-5 text-amber-500" />
           </motion.div>
         )}

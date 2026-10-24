@@ -117,13 +117,13 @@ export const LoveLetterGift: React.FC = () => {
           {/* Scrollable Letter Content (max-h-[420px] overflow-y-auto) */}
           <div className="max-h-[380px] sm:max-h-[420px] overflow-y-auto pr-3 space-y-4 font-dancing text-xl sm:text-2xl text-[#801336] leading-relaxed text-justify">
             <p>
-              To the person who knows my wildest stories, laughs at my dumbest jokes, and always stands by me no matter what—Happy Birthday!
+              To the person who knows my wildest stories, laughs at my dumbest jokes, and always stands by me no matter what—Happy 22nd Birthday!
             </p>
             <p>
               Having you as my best friend has been one of the greatest blessings. From random spontaneous late-night conversations to all the unfiltered laughs that hurt our stomachs, every memory with you is pure gold. You have this rare gift of making even the most boring days feel fun and full of life.
             </p>
             <p>
-              You bring so much light, humor, and genuine joy into this world. I hope this new chapter brings you everything your heart desires—massive success, endless happiness, incredible adventures, and all the sweet moments you truly deserve.
+              As you step into 22, you bring so much light, humor, and genuine joy into this world. I hope being 22 brings you everything your heart desires—massive success, endless happiness, incredible adventures, and all the sweet moments you truly deserve.
             </p>
             <p>
               No matter where life takes us or how crazy things get, know that I’ll always have your back. Cheers to another year of inside jokes, surviving chaos together, and being the best duo ever!

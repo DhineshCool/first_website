@@ -661,7 +661,7 @@ export const BouquetBuilderGift: React.FC = () => {
                   {getActiveFlowerNames() || 'Custom Florist Bouquet'}
                 </span>
                 <span className="font-dancing text-base text-[#801336] font-bold">
-                  Hand-tied with love for my bestie • Celebrating October 27 ✨
+                  Hand-tied with love for my bestie • Celebrating her 22nd Birthday ✨
                 </span>
               </div>
             </div>

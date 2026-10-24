@@ -71,10 +71,10 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
           To My Favorite Person & Bestie
         </span>
         <h1 className="font-playfair text-4xl sm:text-6xl md:text-7xl font-extrabold text-[#801336] tracking-tight">
-          Happy Birthday Hebziba!
+          Happy 22nd Birthday Hebziba!
         </h1>
         <p className="font-dancing text-xl sm:text-2xl text-[#801336]/80 mt-2">
-          "Wishing my bestie a year filled with wild adventures, endless laughs, and sunshine"
+          "Wishing my bestie the happiest 22nd birthday filled with wild adventures, endless laughs, and sunshine"
         </p>
       </motion.div>
 
@@ -328,7 +328,7 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
           <div className="mt-6 pt-4 border-t border-rose-100 w-full flex items-center justify-center gap-2">
             <Heart className="w-4 h-4 fill-[#801336] text-[#801336]" />
             <span className="font-dancing text-lg text-[#801336] font-bold">
-              {monthName} {targetDay} — Celebrating my bestie's special day! ✨
+              {monthName} {targetDay} — Celebrating my bestie turning 22! ✨
             </span>
           </div>
         </motion.div>

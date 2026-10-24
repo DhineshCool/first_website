@@ -89,7 +89,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
         <div className="p-8 sm:p-12 flex flex-col items-center justify-center bg-gradient-to-b from-[#FFFDF9] to-[#FAF6F0] border-b md:border-b-0 md:border-r border-rose-100 relative">
           {/* Decorative Corner Tape */}
           <div className="absolute top-4 left-4 transform -rotate-12 bg-[#FFF8E7] px-4 py-1 rounded shadow-sm border border-amber-200/50 text-[11px] font-dancing font-bold text-[#801336]">
-            Hebziba's Day 💌
+            Hebziba's 22nd 💌
           </div>
 
           <div className="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
