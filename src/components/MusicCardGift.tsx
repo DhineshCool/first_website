@@ -425,40 +425,28 @@ export const MusicCardGift: React.FC = () => {
                 </div>
               </div>
 
-              {/* BACK: Unfolded White Inner Frame with Cute Panda */}
-              <div className="absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-between border-2 border-rose-200 shadow-xl text-center">
-                <div className="w-full flex justify-end">
+              {/* BACK: Unfolded White Inner Frame with Illustrated Besties Photo */}
+              <div className="absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-3xl p-5 sm:p-6 flex flex-col items-center justify-between border-2 border-rose-200 shadow-xl text-center overflow-hidden">
+                <div className="w-full flex justify-between items-center">
+                  <span className="text-[10px] font-dancing text-[#801336]/60 font-bold">
+                    Dhinesh & Hebziba 💖
+                  </span>
                   <span className="text-[10px] bg-rose-50 text-[#801336] px-2.5 py-0.5 rounded-full font-bold">
                     tap card to close
                   </span>
                 </div>
 
-                {/* Panda with hearts SVG */}
-                <div className="w-40 h-40 sm:w-48 sm:h-48 my-auto">
-                  <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow">
-                    <circle cx="100" cy="100" r="75" fill="#FDE8EF" opacity="0.6" />
-                    {/* Panda ears */}
-                    <circle cx="65" cy="55" r="16" fill="#2E1C0C" />
-                    <circle cx="135" cy="55" r="16" fill="#2E1C0C" />
-                    {/* Body */}
-                    <ellipse cx="100" cy="140" rx="45" ry="40" fill="#2E1C0C" />
-                    <ellipse cx="100" cy="144" rx="28" ry="30" fill="#FFFDF9" />
-                    {/* Head */}
-                    <ellipse cx="100" cy="90" rx="42" ry="35" fill="#FFFDF9" stroke="#CBD5E1" strokeWidth="1.5" />
-                    {/* Eye patches */}
-                    <ellipse cx="82" cy="86" rx="11" ry="14" transform="rotate(-15 82 86)" fill="#2E1C0C" />
-                    <ellipse cx="118" cy="86" rx="11" ry="14" transform="rotate(15 118 86)" fill="#2E1C0C" />
-                    <circle cx="83" cy="85" r="3.5" fill="#FFFFFF" />
-                    <circle cx="117" cy="85" r="3.5" fill="#FFFFFF" />
-                    {/* Nose & mouth */}
-                    <ellipse cx="100" cy="98" rx="5" ry="3.5" fill="#2E1C0C" />
-                    <path d="M100 102 V105 M100 105 Q96 109 93 107 M100 105 Q104 109 107 107" stroke="#2E1C0C" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                    {/* Cheeks */}
-                    <ellipse cx="70" cy="98" rx="6" ry="4" fill="#F49CB4" />
-                    <ellipse cx="130" cy="98" rx="6" ry="4" fill="#F49CB4" />
-                    {/* Hugging tiny heart */}
-                    <path d="M100 120 C92 105 76 115 76 128 C76 142 100 156 100 160 C100 156 124 142 124 128 C124 115 108 105 100 120 Z" fill="#801336" />
-                  </svg>
+                {/* Cute Chibi Besties Photo */}
+                <div className="relative my-auto flex items-center justify-center">
+                  <div className="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
+                    {/* Soft glowing aura behind photo */}
+                    <div className="absolute inset-0 bg-[#FDE8EF] rounded-full blur-xl opacity-70 transform scale-90" />
+                    <img
+                      src="/images/custom/card_besties.jpg"
+                      alt="Dhinesh and Hebziba holding sparkler"
+                      className="relative z-10 w-full h-full object-contain drop-shadow-lg transform hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
                 </div>
 
                 {/* Caption: "Best Friends Forever, Hebziba" */}
