@@ -383,7 +383,7 @@ export const MusicCardGift: React.FC = () => {
 
         {/* ================= RIGHT SIDE: FOLDABLE CARD ================= */}
         <div className="flex flex-col items-center">
-          <div className="w-full max-w-[340px] sm:max-w-[360px] aspect-[4/5] perspective-1000">
+          <div className="w-full max-w-[350px] sm:max-w-[400px] aspect-[4/5] perspective-1000">
             <motion.div
               animate={{ rotateY: isCardOpen ? 180 : 0 }}
               transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
@@ -426,9 +426,9 @@ export const MusicCardGift: React.FC = () => {
               </div>
 
               {/* BACK: Unfolded White Inner Frame with Illustrated Besties Photo */}
-              <div className="absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-3xl p-5 sm:p-6 flex flex-col items-center justify-between border-2 border-rose-200 shadow-xl text-center overflow-hidden">
-                <div className="w-full flex justify-between items-center">
-                  <span className="text-[10px] font-dancing text-[#801336]/60 font-bold">
+              <div className="absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-between border-2 border-rose-200 shadow-xl text-center overflow-hidden">
+                <div className="w-full flex justify-between items-center z-20">
+                  <span className="text-[11px] font-dancing text-[#801336]/70 font-bold">
                     Dhinesh & Hebziba 💖
                   </span>
                   <span className="text-[10px] bg-rose-50 text-[#801336] px-2.5 py-0.5 rounded-full font-bold">
@@ -436,25 +436,25 @@ export const MusicCardGift: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Cute Chibi Besties Photo */}
-                <div className="relative my-auto flex items-center justify-center">
-                  <div className="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
+                {/* Cute Chibi Besties Photo - Bigger sizing */}
+                <div className="relative my-auto flex-1 w-full flex items-center justify-center py-1">
+                  <div className="relative w-64 h-64 sm:w-76 sm:h-76 max-w-full max-h-full flex items-center justify-center">
                     {/* Soft glowing aura behind photo */}
-                    <div className="absolute inset-0 bg-[#FDE8EF] rounded-full blur-xl opacity-70 transform scale-90" />
+                    <div className="absolute inset-0 bg-[#FDE8EF] rounded-full blur-2xl opacity-75 transform scale-95" />
                     <img
                       src="/images/custom/card_besties.jpg"
                       alt="Dhinesh and Hebziba holding sparkler"
-                      className="relative z-10 w-full h-full object-contain drop-shadow-lg transform hover:scale-105 transition-transform duration-300"
+                      className="relative z-10 w-full h-full object-contain drop-shadow-xl transform hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                 </div>
 
                 {/* Caption: "Best Friends Forever, Hebziba" */}
-                <div>
-                  <h3 className="font-playfair text-2xl font-bold text-[#801336]">
+                <div className="z-20">
+                  <h3 className="font-playfair text-xl sm:text-2xl font-bold text-[#801336]">
                     Best Friends Forever
                   </h3>
-                  <p className="font-dancing text-xl text-[#F49CB4] font-bold mt-1">
+                  <p className="font-dancing text-lg sm:text-xl text-[#801336]/80 font-bold mt-0.5">
                     From Dhinesh to my favorite bestie, Hebziba ✨
                   </p>
                 </div>
