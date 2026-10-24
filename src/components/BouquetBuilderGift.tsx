@@ -8,17 +8,16 @@ type RibbonType = 'maroon' | 'gold' | 'rose';
 
 export const BouquetBuilderGift: React.FC = () => {
   const [step, setStep] = useState<'STUDIO' | 'PRESENTED'>('STUDIO');
+  const [viewMode, setViewMode] = useState<'CUSTOM' | 'REAL_PHOTO'>('CUSTOM');
 
   // Stems count per flower
   const [stems, setStems] = useState<Record<string, number>>({
     roses: 2,
+    peonies: 2,
+    sunflowers: 1,
     tulips: 2,
     babysbreath: 2,
-    sunflowers: 1,
-    peonies: 0,
-    lavender: 1,
-    lilies: 0,
-    orchids: 0,
+    lilies: 1,
   });
 
   const [wrapper, setWrapper] = useState<WrapperType>('kraft');
@@ -34,15 +33,17 @@ export const BouquetBuilderGift: React.FC = () => {
       svgColor: '#801336',
       accentColor: '#9E1B43',
       symbolism: 'Warm Joy & Loyalty',
+      image: '/images/flowers/rose_red.png',
     },
     {
-      id: 'tulips',
-      name: 'Pink Tulips',
-      colorName: 'Blush Pink',
-      emoji: '🌷',
-      svgColor: '#F49CB4',
-      accentColor: '#FCE4EC',
-      symbolism: 'Sweetest Friendship',
+      id: 'peonies',
+      name: 'Pink Roses',
+      colorName: 'Rose Petal',
+      emoji: '🌸',
+      svgColor: '#FB7185',
+      accentColor: '#FDA4AF',
+      symbolism: 'Big Smiles & Warm Hugs',
+      image: '/images/flowers/rose_pink.png',
     },
     {
       id: 'sunflowers',
@@ -51,34 +52,28 @@ export const BouquetBuilderGift: React.FC = () => {
       emoji: '🌻',
       svgColor: '#FBBF24',
       accentColor: '#F59E0B',
-      symbolism: 'Pure Laughter & Light',
+      symbolism: 'Pure Laughter & Sunshine',
+      image: '/images/flowers/sunflower.png',
+    },
+    {
+      id: 'tulips',
+      name: 'Spring Tulips',
+      colorName: 'Blush Pink',
+      emoji: '🌷',
+      svgColor: '#F49CB4',
+      accentColor: '#FCE4EC',
+      symbolism: 'Sweetest Friendship',
+      image: '/images/flowers/tulip.png',
     },
     {
       id: 'babysbreath',
-      name: "Baby's Breath",
+      name: "Daisies & Baby's Breath",
       colorName: 'Cloud White',
-      emoji: '🌾',
+      emoji: '🌼',
       svgColor: '#FFFFFF',
       accentColor: '#E2E8F0',
-      symbolism: 'Gentle Care & Fluff',
-    },
-    {
-      id: 'peonies',
-      name: 'Pink Peonies',
-      colorName: 'Rose Petal',
-      emoji: '🌸',
-      svgColor: '#FB7185',
-      accentColor: '#FDA4AF',
-      symbolism: 'Big Smiles & Cheer',
-    },
-    {
-      id: 'lavender',
-      name: 'French Lavender',
-      colorName: 'Soft Violet',
-      emoji: '🪻',
-      svgColor: '#A855F7',
-      accentColor: '#C084FC',
-      symbolism: 'Peace & Serenity',
+      symbolism: 'Gentle Care & Cheer',
+      image: '/images/flowers/daisy.png',
     },
     {
       id: 'lilies',
@@ -88,15 +83,7 @@ export const BouquetBuilderGift: React.FC = () => {
       svgColor: '#FFFDF9',
       accentColor: '#CBD5E1',
       symbolism: 'Devotion & Trust',
-    },
-    {
-      id: 'orchids',
-      name: 'White Orchids',
-      colorName: 'Ivory Cream',
-      emoji: '🌺',
-      svgColor: '#F1F5F9',
-      accentColor: '#E2E8F0',
-      symbolism: 'One in a Million',
+      image: '/images/flowers/lily.png',
     },
   ];
 
@@ -205,67 +192,93 @@ export const BouquetBuilderGift: React.FC = () => {
           />
         </g>
 
-        {/* ================= ARRANGED BLOOMS ================= */}
+        {/* ================= ARRANGED BLOOMS (REAL FLOWERS) ================= */}
         <g id="flower-arrangement">
-          {/* Lavender Spikes (if selected) */}
-          {stems.lavender > 0 && (
-            <g fill="#A855F7">
-              <circle cx="85" cy="65" r="4.5" />
-              <circle cx="89" cy="54" r="4" />
-              <circle cx="86" cy="43" r="3.5" />
-              <circle cx="235" cy="65" r="4.5" />
-              <circle cx="231" cy="54" r="4" />
-              <circle cx="233" cy="43" r="3.5" />
-            </g>
-          )}
-
-          {/* Baby's Breath airy clouds (if selected) */}
+          {/* Baby's Breath & Daisies sprays */}
           {stems.babysbreath > 0 && (
-            <g fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="0.5">
-              <circle cx="115" cy="55" r="3.5" />
-              <circle cx="125" cy="45" r="3" />
-              <circle cx="195" cy="55" r="3.5" />
-              <circle cx="205" cy="45" r="3" />
-              <circle cx="100" cy="110" r="3.5" />
-              <circle cx="220" cy="110" r="3.5" />
-              <circle cx="160" cy="40" r="3.5" />
+            <g opacity="0.95">
+              <image href="/images/flowers/daisy.png" x="72" y="38" width="48" height="48" />
+              <image href="/images/flowers/daisy.png" x="198" y="38" width="48" height="48" />
+              <image href="/images/flowers/daisy.png" x="136" y="15" width="48" height="48" />
             </g>
           )}
 
-          {/* White Lilies / Orchids Top Focal */}
-          {(stems.lilies > 0 || stems.orchids > 0) && (
-            <g transform="translate(160, 52)">
-              <circle cx="0" cy="0" r="22" fill="#FFFDF9" stroke="#E2E8F0" strokeWidth="1.5" />
-              <path d="M-16 0 L16 0 M0 -16 L0 16" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round" />
-              <circle cx="0" cy="0" r="5" fill="#F59E0B" />
-            </g>
+          {/* White Lilies (Top focal bloom) */}
+          {stems.lilies > 0 && (
+            <image
+              href="/images/flowers/lily.png"
+              x="120"
+              y="22"
+              width="80"
+              height="80"
+              className="drop-shadow-md"
+            />
           )}
 
-          {/* Sunflowers (if selected) */}
+          {/* Golden Sunflowers */}
           {stems.sunflowers > 0 && (
-            <g transform="translate(205, 95)">
-              <circle cx="0" cy="0" r="24" fill="#FBBF24" />
-              <circle cx="0" cy="0" r="14" fill="#78350F" />
-              <circle cx="0" cy="0" r="6" fill="#F59E0B" />
-            </g>
+            <image
+              href="/images/flowers/sunflower.png"
+              x="175"
+              y="58"
+              width="82"
+              height="82"
+              className="drop-shadow-md"
+            />
           )}
 
-          {/* Pink Tulips / Peonies (if selected) */}
-          {(stems.tulips > 0 || stems.peonies > 0) && (
-            <g transform="translate(110, 95)">
-              <circle cx="0" cy="0" r="24" fill="#F49CB4" />
-              <path d="M-12 -16 C-26 6 0 26 16 12 C22 -4 6 -20 -12 -16 Z" fill="#FCE4EC" />
-              <circle cx="0" cy="0" r="7" fill="#801336" />
-            </g>
+          {/* Spring Tulips */}
+          {stems.tulips > 0 && (
+            <image
+              href="/images/flowers/tulip.png"
+              x="65"
+              y="62"
+              width="75"
+              height="75"
+              className="drop-shadow-md"
+            />
+          )}
+
+          {/* Pink Roses & Peonies */}
+          {stems.peonies > 0 && (
+            <image
+              href="/images/flowers/rose_pink.png"
+              x="95"
+              y="60"
+              width="78"
+              height="78"
+              className="drop-shadow-md"
+            />
           )}
 
           {/* Red Velvet Roses (Central Focal Anchor) */}
           {stems.roses > 0 && (
-            <g transform="translate(160, 90)">
-              <circle cx="0" cy="0" r="28" fill="#801336" />
-              <circle cx="0" cy="0" r="20" fill="#9E1B43" />
-              <circle cx="0" cy="0" r="11" fill="#F49CB4" />
-              <circle cx="0" cy="0" r="4" fill="#FFFFFF" opacity="0.65" />
+            <>
+              {stems.roses > 1 && (
+                <image
+                  href="/images/flowers/rose_red.png"
+                  x="152"
+                  y="52"
+                  width="66"
+                  height="66"
+                  className="drop-shadow-md"
+                />
+              )}
+              <image
+                href="/images/flowers/rose_red.png"
+                x="122"
+                y="72"
+                width="82"
+                height="82"
+                className="drop-shadow-lg"
+              />
+            </>
+          )}
+
+          {/* Default placeholder if no stems are selected */}
+          {totalStems === 0 && (
+            <g opacity="0.35">
+              <image href="/images/flowers/rose_pink.png" x="130" y="65" width="60" height="60" />
             </g>
           )}
         </g>
@@ -368,7 +381,17 @@ export const BouquetBuilderGift: React.FC = () => {
                         }`}
                       >
                         <div className="flex items-center gap-2.5">
-                          <span className="text-2xl filter drop-shadow-sm">{f.emoji}</span>
+                          {f.image ? (
+                            <div className="w-10 h-10 rounded-full bg-white/90 p-0.5 border border-rose-100 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden">
+                              <img
+                                src={f.image}
+                                alt={f.name}
+                                className="w-full h-full object-contain filter drop-shadow-sm hover:scale-110 transition-transform"
+                              />
+                            </div>
+                          ) : (
+                            <span className="text-2xl filter drop-shadow-sm">{f.emoji}</span>
+                          )}
                           <div>
                             <div className="font-playfair text-sm font-bold text-[#801336] leading-tight">
                               {f.name}
@@ -582,9 +605,54 @@ export const BouquetBuilderGift: React.FC = () => {
             </div>
 
             {/* Center Column: Large Assembled Bouquet (5 cols) */}
-            <div className="lg:col-span-5 flex flex-col items-center bg-white rounded-3xl p-8 shadow-scrapbook-card border border-rose-100 order-1 lg:order-2">
-              <div className="flex items-center justify-center">
-                {renderBouquetIllustration(true)}
+            <div className="lg:col-span-5 flex flex-col items-center bg-white rounded-3xl p-6 sm:p-8 shadow-scrapbook-card border border-rose-100 order-1 lg:order-2">
+              {/* View Switcher Pill */}
+              <div className="mb-4 inline-flex p-1 bg-rose-50 rounded-full border border-rose-200/80">
+                <button
+                  onClick={() => setViewMode('CUSTOM')}
+                  className={`px-4 py-1.5 rounded-full text-xs font-playfair font-bold transition-all ${
+                    viewMode === 'CUSTOM'
+                      ? 'bg-[#801336] text-white shadow-sm'
+                      : 'text-[#801336] hover:bg-rose-100'
+                  }`}
+                >
+                  ✨ Handcrafted Bouquet
+                </button>
+                <button
+                  onClick={() => setViewMode('REAL_PHOTO')}
+                  className={`px-4 py-1.5 rounded-full text-xs font-playfair font-bold transition-all ${
+                    viewMode === 'REAL_PHOTO'
+                      ? 'bg-[#801336] text-white shadow-sm'
+                      : 'text-[#801336] hover:bg-rose-100'
+                  }`}
+                >
+                  📸 Studio Photo
+                </button>
+              </div>
+
+              <div className="flex items-center justify-center min-h-[300px]">
+                {viewMode === 'CUSTOM' ? (
+                  renderBouquetIllustration(true)
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="relative p-3 bg-white rounded-2xl shadow-md border border-rose-100 max-w-[300px]"
+                  >
+                    <div className="overflow-hidden rounded-xl">
+                      <img
+                        src="/images/flowers/real_luxury_bouquet.jpg"
+                        alt="Luxury Fresh Flower Bouquet"
+                        className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="pt-2 text-center">
+                      <span className="font-dancing text-sm text-[#801336] font-bold">
+                        Fresh Florist Stems for Hebziba 💐
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
               </div>
 
               {/* Bouquet Dedication Plaque */}
@@ -592,8 +660,8 @@ export const BouquetBuilderGift: React.FC = () => {
                 <span className="font-playfair text-xl font-bold text-[#801336] block">
                   {getActiveFlowerNames() || 'Custom Florist Bouquet'}
                 </span>
-                <span className="font-dancing text-base text-[#F49CB4] font-bold">
-                  Hand-tied with love for my bestie • Born Oct 27, 2004
+                <span className="font-dancing text-base text-[#801336] font-bold">
+                  Hand-tied with love for my bestie • Celebrating October 27 ✨
                 </span>
               </div>
             </div>

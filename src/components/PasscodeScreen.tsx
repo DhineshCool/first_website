@@ -34,7 +34,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
   };
 
   const verifyPin = useCallback((currentPin: string) => {
-    // Accepts 2710 (DD/MM), 1027 (MM/DD), or 2004 (birth year)
+    // Accepts 2710 (DD/MM), 1027 (MM/DD)
     if (
       currentPin === correctPasscode ||
       currentPin === '1027' ||

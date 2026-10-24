@@ -78,7 +78,7 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
       >
         <Sparkles className="w-4 h-4 text-[#801336]" />
         <span className="font-dancing text-xl sm:text-2xl font-bold text-[#801336]">
-          Born October 27, 2004 • Bestie Celebration 💖
+          October 27 • Bestie Celebration 💖
         </span>
         <Heart className="w-4 h-4 fill-[#F49CB4] text-[#801336]" />
       </motion.div>
@@ -148,7 +148,7 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
             className="my-4 px-6 py-2.5 rounded-full bg-rose-100 border border-[#801336]/30 text-[#801336] font-dancing text-xl sm:text-2xl font-bold flex items-center gap-2"
           >
             <PartyPopper className="w-5 h-5 text-[#801336] animate-bounce" />
-            <span>IT'S HEBZIBA'S BIRTHDAY TODAY! HAPPY 22ND! 🎉</span>
+            <span>IT'S HEBZIBA'S BIRTHDAY TODAY! HAPPY BIRTHDAY! 🎉</span>
             <Sparkles className="w-5 h-5 text-amber-500" />
           </motion.div>
         )}

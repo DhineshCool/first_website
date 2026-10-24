@@ -18,6 +18,7 @@ export interface FlowerOption {
   svgColor: string;
   accentColor: string;
   symbolism: string;
+  image?: string;
 }
 
 export interface PolaroidPhoto {

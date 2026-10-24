@@ -328,7 +328,7 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
           <div className="mt-6 pt-4 border-t border-rose-100 w-full flex items-center justify-center gap-2">
             <Heart className="w-4 h-4 fill-[#801336] text-[#801336]" />
             <span className="font-dancing text-lg text-[#801336] font-bold">
-              {monthName} {targetDay}, 2004 — The day my bestie was born! ✨
+              {monthName} {targetDay} — Celebrating my bestie's special day! ✨
             </span>
           </div>
         </motion.div>
