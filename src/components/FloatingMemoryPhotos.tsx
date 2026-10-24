@@ -20,9 +20,9 @@ const defaultMemories: FloatingPhoto[] = [
     imageUrl: '/images/memories/memory_laughter.jpg',
     caption: 'Pure Laughs ✨',
     rotation: -4,
-    xOffset: 4,
-    yOffset: 12,
-    floatDistance: 18,
+    xOffset: 1,
+    yOffset: 14,
+    floatDistance: 15,
     duration: 6,
   },
   {
@@ -30,9 +30,9 @@ const defaultMemories: FloatingPhoto[] = [
     imageUrl: '/images/memories/memory_sunset.jpg',
     caption: 'Golden Hour 🌅',
     rotation: 5,
-    xOffset: 84,
-    yOffset: 15,
-    floatDistance: -20,
+    xOffset: 90,
+    yOffset: 16,
+    floatDistance: -16,
     duration: 7,
   },
   {
@@ -40,9 +40,9 @@ const defaultMemories: FloatingPhoto[] = [
     imageUrl: '/images/memories/memory_cafe.jpg',
     caption: 'Cafe Hangouts 🍰',
     rotation: -3,
-    xOffset: 3,
-    yOffset: 55,
-    floatDistance: 16,
+    xOffset: 1.5,
+    yOffset: 50,
+    floatDistance: 14,
     duration: 6.5,
   },
   {
@@ -50,9 +50,9 @@ const defaultMemories: FloatingPhoto[] = [
     imageUrl: '/images/memories/memory_roadtrip.jpg',
     caption: 'Road Trip Vibes 🚗',
     rotation: 6,
-    xOffset: 85,
-    yOffset: 52,
-    floatDistance: -18,
+    xOffset: 89.5,
+    yOffset: 48,
+    floatDistance: -15,
     duration: 7.5,
   },
   {
@@ -60,9 +60,9 @@ const defaultMemories: FloatingPhoto[] = [
     imageUrl: '/images/memories/memory_picnic.jpg',
     caption: 'Sunny Picnics 🍓',
     rotation: -5,
-    xOffset: 6,
-    yOffset: 80,
-    floatDistance: 15,
+    xOffset: 2,
+    yOffset: 76,
+    floatDistance: 12,
     duration: 8,
   },
   {
@@ -70,9 +70,9 @@ const defaultMemories: FloatingPhoto[] = [
     imageUrl: '/images/memories/memory_stargazing.jpg',
     caption: 'Late Night Talks 🌌',
     rotation: 4,
-    xOffset: 83,
-    yOffset: 78,
-    floatDistance: -16,
+    xOffset: 90,
+    yOffset: 75,
+    floatDistance: -14,
     duration: 7.2,
   },
 ];
@@ -149,7 +149,7 @@ export const FloatingMemoryPhotos: React.FC = () => {
   return (
     <>
       {/* ================= AMBIENT FLOATING POLAROIDS LAYER ================= */}
-      <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden select-none">
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
         {photos.map((item, index) => (
           <motion.div
             key={item.id}
@@ -179,17 +179,13 @@ export const FloatingMemoryPhotos: React.FC = () => {
               left: `${item.xOffset}%`,
               top: `${item.yOffset}%`,
             }}
-            className="hidden md:flex pointer-events-auto cursor-pointer group"
+            className="hidden xl:flex pointer-events-none"
           >
             {/* Scrapbook Mini Polaroid Card */}
-            <motion.div
-              whileHover={{ scale: 1.18, zIndex: 40, rotate: 0 }}
-              transition={{ type: 'spring', damping: 15, stiffness: 300 }}
-              className="bg-white p-2 pb-3 rounded-xl shadow-polaroid-scrap border border-rose-100/90 w-28 lg:w-36 flex flex-col items-center relative transition-shadow hover:shadow-2xl opacity-85 hover:opacity-100"
-            >
+            <div className="bg-white/95 p-2 pb-2.5 rounded-xl shadow-md border border-rose-100/90 w-24 lg:w-28 flex flex-col items-center relative opacity-80 transition-opacity">
               {/* Pink Heart Pin at Top Center */}
-              <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 w-5 h-5 rounded-full bg-[#F49CB4] border border-white shadow-sm flex items-center justify-center">
-                <Heart className="w-2.5 h-2.5 fill-[#801336] text-[#801336]" />
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-10 w-4 h-4 rounded-full bg-[#F49CB4] border border-white shadow-sm flex items-center justify-center">
+                <Heart className="w-2 h-2 fill-[#801336] text-[#801336]" />
               </div>
 
               {/* Square Photo Frame */}
@@ -197,15 +193,15 @@ export const FloatingMemoryPhotos: React.FC = () => {
                 <img
                   src={item.imageUrl}
                   alt={item.caption}
-                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-300"
+                  className="w-full h-full object-cover"
                 />
               </div>
 
               {/* Caption */}
-              <span className="font-dancing text-xs sm:text-sm font-bold text-[#801336] text-center mt-1.5 leading-tight truncate max-w-full px-1">
+              <span className="font-dancing text-xs font-bold text-[#801336] text-center mt-1 leading-tight truncate max-w-full px-0.5">
                 {item.caption}
               </span>
-            </motion.div>
+            </div>
           </motion.div>
         ))}
       </div>

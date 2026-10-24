@@ -145,7 +145,7 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
       </motion.div>
 
       {/* 3 Interactive Gift Cards in Horizontal Row with hover bounce */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full max-w-4xl">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full max-w-4xl relative z-20">
         {gifts.map((gift, idx) => (
           <motion.div
             key={gift.id}
@@ -155,7 +155,7 @@ export const GiftHubScreen: React.FC<GiftHubScreenProps> = ({
             whileHover={{ y: -10, scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={gift.action}
-            className="bg-white rounded-3xl p-6 sm:p-7 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between cursor-pointer group hover:border-[#801336]/40 transition-all duration-300 relative overflow-hidden"
+            className="bg-white rounded-3xl p-6 sm:p-7 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between cursor-pointer group hover:border-[#801336]/40 transition-all duration-300 relative z-20 overflow-hidden"
           >
             {/* Taped label on top corner */}
             <div className="absolute top-3 right-3 bg-[#FFF8E7] px-2.5 py-0.5 rounded shadow-sm border border-amber-200/50 text-[10px] font-dancing font-bold text-[#801336]">

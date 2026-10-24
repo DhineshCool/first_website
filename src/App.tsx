@@ -85,7 +85,7 @@ export const App: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -15 }}
           transition={{ duration: 0.35, ease: 'easeInOut' }}
-          className="w-full flex flex-col items-center justify-center"
+          className="w-full flex flex-col items-center justify-center relative z-20"
         >
           {screenState === 'BIRTHDAY_COUNTDOWN' && (
             <StartingCountdownScreen
