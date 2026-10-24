@@ -236,27 +236,18 @@ export const BouquetBuilderGift: React.FC = () => {
 
             {/* 3-Column Display: Left Panda, Center Chosen Bouquet, Right 7 Bestie Compliments */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 w-full items-center justify-center">
-              {/* Left Column: Cute Bestie Panda (3 cols) */}
+              {/* Left Column: Dhinesh Delivering Blooms Photo Card (3 cols) */}
               <div className="lg:col-span-3 flex flex-col items-center text-center order-2 lg:order-1 bg-white/95 backdrop-blur-sm rounded-2xl p-3.5 sm:p-4 shadow-xl border-2 border-white ring-1 ring-rose-200/80">
-                <div className="w-24 h-24 relative mb-1.5">
-                  <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow">
-                    <circle cx="100" cy="100" r="70" fill="#FCE4EC" opacity="0.6" />
-                    <circle cx="65" cy="55" r="16" fill="#2E1C0C" />
-                    <circle cx="135" cy="55" r="16" fill="#2E1C0C" />
-                    <ellipse cx="100" cy="135" rx="42" ry="38" fill="#2E1C0C" />
-                    <ellipse cx="100" cy="140" rx="26" ry="28" fill="#FFFDF9" />
-                    <ellipse cx="100" cy="90" rx="40" ry="32" fill="#FFFDF9" stroke="#E2E8F0" strokeWidth="1.5" />
-                    <ellipse cx="82" cy="88" rx="10" ry="14" transform="rotate(-15 82 88)" fill="#2E1C0C" />
-                    <ellipse cx="118" cy="88" rx="10" ry="14" transform="rotate(15 118 88)" fill="#2E1C0C" />
-                    <circle cx="83" cy="87" r="3" fill="#FFFFFF" />
-                    <circle cx="117" cy="87" r="3" fill="#FFFFFF" />
-                    <polygon points="100,98 97,101 103,101" fill="#F49CB4" />
-                    <ellipse cx="70" cy="95" rx="6" ry="4" fill="#F49CB4" />
-                    <ellipse cx="130" cy="95" rx="6" ry="4" fill="#F49CB4" />
-                    <line x1="120" y1="125" x2="135" y2="105" stroke="#4A6B53" strokeWidth="2.5" />
-                    <circle cx="136" cy="103" r="10" fill="#F49CB4" />
-                    <circle cx="136" cy="103" r="4" fill="#801336" />
-                  </svg>
+                <div className="relative w-28 h-36 sm:w-32 sm:h-40 rounded-xl overflow-hidden shadow-md border-2 border-rose-100 bg-rose-50/50 mb-2 group">
+                  <img
+                    src="/images/custom/dhinesh_plushie.jpg"
+                    alt="Dhinesh holding cute plushie"
+                    className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                  />
+                  {/* Subtle cute sticker overlay */}
+                  <div className="absolute top-1.5 right-1.5 bg-[#FFF8E7] px-1.5 py-0.5 rounded shadow text-[9px] font-dancing font-bold text-[#801336] border border-amber-200/50">
+                    bestie 💖
+                  </div>
                 </div>
                 <h4 className="font-playfair text-base font-bold text-[#801336]">
                   Forever Besties
