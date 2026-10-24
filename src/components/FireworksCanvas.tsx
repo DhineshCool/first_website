@@ -2,6 +2,225 @@ import React, { useEffect, useRef } from 'react';
 
 interface FireworksCanvasProps {
   isActive: boolean;
+  isMuted?: boolean;
+}
+
+// Spatial 3D Fireworks Audio Engine with decoded samples and procedural fallback
+class FireworkSoundManager {
+  private audioCtx: AudioContext | null = null;
+  private burstBuffers: AudioBuffer[] = [];
+  private whistleBuffer: AudioBuffer | null = null;
+  private isLoaded = false;
+  private lastPlayTime = 0;
+  private isMuted = false;
+
+  constructor(muted: boolean = false) {
+    this.isMuted = muted;
+  }
+
+  public setMuted(muted: boolean) {
+    this.isMuted = muted;
+  }
+
+  public init() {
+    if (this.audioCtx) {
+      if (this.audioCtx.state === 'suspended') {
+        this.audioCtx.resume().catch(() => {});
+      }
+      return;
+    }
+
+    try {
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!AudioCtx) return;
+      this.audioCtx = new AudioCtx();
+      this.loadSounds();
+    } catch (e) {
+      console.warn('Web Audio initialization note:', e);
+    }
+  }
+
+  private async loadSounds() {
+    if (!this.audioCtx) return;
+    const urls = [
+      '/audio/firework_burst_1.mp3',
+      '/audio/firework_burst_2.mp3',
+      '/audio/firework_burst_3.mp3',
+    ];
+
+    try {
+      const promises = urls.map(async (url) => {
+        const resp = await fetch(url);
+        const arrayBuf = await resp.arrayBuffer();
+        return await this.audioCtx!.decodeAudioData(arrayBuf);
+      });
+      this.burstBuffers = await Promise.all(promises);
+
+      const whistleResp = await fetch('/audio/firework_whistle.mp3');
+      const whistleBuf = await whistleResp.arrayBuffer();
+      this.whistleBuffer = await this.audioCtx.decodeAudioData(whistleBuf);
+
+      this.isLoaded = true;
+    } catch {
+      // Procedural synthesis fallback is seamlessly active
+      this.isLoaded = false;
+    }
+  }
+
+  public playExplosion(x: number) {
+    if (this.isMuted) return;
+    const now = performance.now();
+    // Rate limit to prevent sound clipping during simultaneous cluster explosions
+    if (now - this.lastPlayTime < 80) return;
+    this.lastPlayTime = now;
+
+    if (!this.audioCtx) {
+      this.init();
+    }
+    if (!this.audioCtx) return;
+
+    if (this.audioCtx.state === 'suspended') {
+      this.audioCtx.resume().catch(() => {});
+    }
+
+    const pan = Math.max(-0.85, Math.min(0.85, (x / (window.innerWidth || 1000)) * 2 - 1));
+
+    if (this.isLoaded && this.burstBuffers.length > 0) {
+      try {
+        const buffer = this.burstBuffers[Math.floor(Math.random() * this.burstBuffers.length)];
+        const source = this.audioCtx.createBufferSource();
+        source.buffer = buffer;
+        source.playbackRate.value = 0.92 + Math.random() * 0.16;
+
+        const gain = this.audioCtx.createGain();
+        gain.gain.value = 0.32 + Math.random() * 0.1;
+
+        if (this.audioCtx.createStereoPanner) {
+          const panner = this.audioCtx.createStereoPanner();
+          panner.pan.value = pan;
+          source.connect(gain);
+          gain.connect(panner);
+          panner.connect(this.audioCtx.destination);
+        } else {
+          source.connect(gain);
+          gain.connect(this.audioCtx.destination);
+        }
+        source.start();
+        return;
+      } catch {
+        // Fall back to synth below
+      }
+    }
+
+    // Procedural synthesis fallback
+    this.playProceduralExplosion(pan);
+  }
+
+  public playWhistle(x: number) {
+    if (this.isMuted || !this.audioCtx || this.audioCtx.state === 'suspended') return;
+    if (this.isLoaded && this.whistleBuffer) {
+      try {
+        const source = this.audioCtx.createBufferSource();
+        source.buffer = this.whistleBuffer;
+        source.playbackRate.value = 0.94 + Math.random() * 0.14;
+        const gain = this.audioCtx.createGain();
+        gain.gain.value = 0.12;
+
+        const pan = Math.max(-0.8, Math.min(0.8, (x / (window.innerWidth || 1000)) * 2 - 1));
+        if (this.audioCtx.createStereoPanner) {
+          const panner = this.audioCtx.createStereoPanner();
+          panner.pan.value = pan;
+          source.connect(gain);
+          gain.connect(panner);
+          panner.connect(this.audioCtx.destination);
+        } else {
+          source.connect(gain);
+          gain.connect(this.audioCtx.destination);
+        }
+        source.start();
+      } catch {
+        // safe
+      }
+    }
+  }
+
+  private playProceduralExplosion(pan: number) {
+    if (!this.audioCtx) return;
+    const ctx = this.audioCtx;
+    const now = ctx.currentTime;
+
+    try {
+      // 1. Resonant Bass Thump
+      const osc = ctx.createOscillator();
+      const boomGain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(130 + Math.random() * 30, now);
+      osc.frequency.exponentialRampToValueAtTime(32, now + 0.32);
+
+      boomGain.gain.setValueAtTime(0.38, now);
+      boomGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+      osc.connect(boomGain);
+
+      // 2. High Frequency Sparkling Crackle
+      const bufferSize = Math.floor(ctx.sampleRate * 0.45);
+      const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const whiteNoise = ctx.createBufferSource();
+      whiteNoise.buffer = noiseBuffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(2600 + Math.random() * 600, now);
+      filter.Q.setValueAtTime(3.2, now);
+
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.24, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
+
+      whiteNoise.connect(filter);
+      filter.connect(noiseGain);
+
+      // Master output
+      const master = ctx.createGain();
+      master.gain.value = 0.35;
+      boomGain.connect(master);
+      noiseGain.connect(master);
+
+      if (ctx.createStereoPanner) {
+        const panner = ctx.createStereoPanner();
+        panner.pan.value = pan;
+        master.connect(panner);
+        panner.connect(ctx.destination);
+      } else {
+        master.connect(ctx.destination);
+      }
+
+      osc.start(now);
+      whiteNoise.start(now);
+      osc.stop(now + 0.65);
+      whiteNoise.stop(now + 0.45);
+    } catch {
+      // safe
+    }
+  }
+
+  public dispose() {
+    if (this.audioCtx && this.audioCtx.state !== 'closed') {
+      try {
+        this.audioCtx.close().catch(() => {});
+      } catch {
+        // safe
+      }
+      this.audioCtx = null;
+    }
+  }
 }
 
 interface Particle {
@@ -41,8 +260,19 @@ const CELEBRATION_COLORS = [
   '#FFFDF9', // Starlight White
 ];
 
-export const FireworksCanvas: React.FC<FireworksCanvasProps> = ({ isActive }) => {
+export const FireworksCanvas: React.FC<FireworksCanvasProps> = ({
+  isActive,
+  isMuted = false,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const soundManagerRef = useRef<FireworkSoundManager | null>(null);
+
+  // Sync mute state dynamically
+  useEffect(() => {
+    if (soundManagerRef.current) {
+      soundManagerRef.current.setMuted(isMuted);
+    }
+  }, [isMuted]);
 
   useEffect(() => {
     if (!isActive) return;
@@ -51,6 +281,12 @@ export const FireworksCanvas: React.FC<FireworksCanvasProps> = ({ isActive }) =>
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    // Initialize 3D firework sound engine
+    const sound = soundManagerRef.current || new FireworkSoundManager(isMuted);
+    sound.setMuted(isMuted);
+    sound.init();
+    soundManagerRef.current = sound;
 
     let animationFrameId: number;
     let launchInterval: number;
@@ -71,6 +307,9 @@ export const FireworksCanvas: React.FC<FireworksCanvasProps> = ({ isActive }) =>
     const particles: Particle[] = [];
 
     const createExplosion = (x: number, y: number, baseColor: string) => {
+      // Play spatial burst sound effect with stereo panning
+      sound.playExplosion(x);
+
       // 50-70 sparkles per explosion
       const particleCount = 55 + Math.floor(Math.random() * 25);
       const isHeart = Math.random() < 0.25; // 25% chance of a heart-shaped firework burst!
@@ -119,6 +358,11 @@ export const FireworksCanvas: React.FC<FireworksCanvasProps> = ({ isActive }) =>
       const targetY = targetApexY !== undefined ? targetApexY : height * (0.15 + Math.random() * 0.45);
       const vy = - (9 + Math.random() * 3.5);
       const color = colorChoice || CELEBRATION_COLORS[Math.floor(Math.random() * CELEBRATION_COLORS.length)];
+
+      // 35% chance to play gentle ascending launch whistle
+      if (Math.random() < 0.35) {
+        sound.playWhistle(x);
+      }
 
       rockets.push({
         x,
@@ -248,6 +492,7 @@ export const FireworksCanvas: React.FC<FireworksCanvasProps> = ({ isActive }) =>
       window.removeEventListener('resize', resize);
       clearInterval(launchInterval);
       cancelAnimationFrame(animationFrameId);
+      sound.dispose();
     };
   }, [isActive]);
 

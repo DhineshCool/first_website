@@ -151,7 +151,7 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
       </audio>
 
       {/* Background Fireworks bursting across the screen once candles are blown */}
-      <FireworksCanvas isActive={fireworksActive} />
+      <FireworksCanvas isActive={fireworksActive} isMuted={isMuted} />
       {/* Big Bold Maroon Serif Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -204,6 +204,35 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
                   <span>▶ Tap to Play Birthday Song 🎶</span>
                 </motion.button>
               )}
+            </motion.div>
+          )}
+
+          {/* Fireworks Sound Indicator pill when candles are blown */}
+          {!candlesLit && fireworksActive && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="mb-1.5 flex items-center justify-center"
+            >
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-sm border-2 border-white ring-1 ring-rose-300 shadow-md text-xs font-playfair font-bold text-[#801336]">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-spin-slow" />
+                <span>Fireworks Sound Active 🎆</span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMuted(!isMuted);
+                  }}
+                  className="ml-1 p-1 rounded-full hover:bg-rose-50 text-[#801336] transition-colors"
+                  title={isMuted ? 'Unmute fireworks' : 'Mute fireworks'}
+                  aria-label={isMuted ? 'Unmute fireworks' : 'Mute fireworks'}
+                >
+                  {isMuted ? (
+                    <VolumeX className="w-4 h-4 text-rose-400" />
+                  ) : (
+                    <Volume2 className="w-4 h-4 text-[#801336]" />
+                  )}
+                </button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

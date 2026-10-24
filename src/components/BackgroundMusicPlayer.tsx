@@ -12,18 +12,18 @@ interface SoundtrackTrack {
 
 const TRACKS: SoundtrackTrack[] = [
   {
-    id: 'kadhaippoma',
-    name: 'Kadhaippoma (கதைப்போமா)',
-    artist: 'Leon James & Sid Sriram',
-    src: '/audio/birthday_song.mp3',
-    badge: 'Our Song 💖',
-  },
-  {
     id: 'musicbox',
     name: 'Celestial Music Box',
     artist: 'Acoustic Birthday Melody',
     src: '/audio/background.mp3',
     badge: 'Lo-Fi ✨',
+  },
+  {
+    id: 'starlight',
+    name: 'Starlight Serenade',
+    artist: 'Acoustic Guitar Lullaby',
+    src: '/audio/starlight_serenade.mp3',
+    badge: 'Acoustic 🌙',
   },
   {
     id: 'birthday',
