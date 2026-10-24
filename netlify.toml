@@ -1,0 +1,28 @@
+# Netlify Configuration for Vite + React SPA
+
+[build]
+  # Build command
+  command = "npm run build"
+  # Directory where built files are located
+  publish = "dist"
+
+# Redirect rules for Single Page Applications (SPA)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security & Performance Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Immutable caching for hashed Vite asset bundles
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
