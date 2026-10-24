@@ -11,7 +11,7 @@ interface LetterEnvelopeProps {
 
 export const LetterEnvelope: React.FC<LetterEnvelopeProps> = ({
   onOpenLetter,
-  recipientName = 'Dearest One',
+  recipientName = 'Dearest Hebziba',
   senderName = 'With all our love & admiration',
 }) => {
   const [state, setState] = useState<EnvelopeState>('sealed');

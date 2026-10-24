@@ -13,7 +13,7 @@ interface CountdownHeroProps {
 
 export const CountdownHero: React.FC<CountdownHeroProps> = ({
   targetDate,
-  recipientName = 'Alex',
+  recipientName = 'Hebziba',
   onEnterExperience,
   onScrollToExplore,
 }) => {

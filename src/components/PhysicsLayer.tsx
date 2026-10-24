@@ -78,7 +78,7 @@ export const PhysicsLayer: React.FC<PhysicsLayerProps> = ({
       '#FDE047', // Light Amber
     ];
 
-    const polaroidLabels = ['✨ Joy', '🎂 Alex', '💖 2026', '🌟 Wish', '🎉 Smile', '🥂 Cheers'];
+    const polaroidLabels = ['✨ Joy', '🎂 Hebziba', '💖 2026', '🌟 Wish', '🎉 Smile', '🥂 Cheers'];
 
     for (let i = 0; i < particleCount; i++) {
       const type = types[i % types.length];

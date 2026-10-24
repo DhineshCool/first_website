@@ -16,7 +16,7 @@ export const App: React.FC = () => {
 
   // Set default target date: 2026-11-15T00:00:00 as suggested in the SPEC
   const targetDate = '2026-11-15T00:00:00';
-  const recipientName = 'Alex';
+  const recipientName = 'Hebziba';
 
   const handleStartAudio = () => {
     setAudioTrigger(true);
@@ -116,7 +116,7 @@ export const App: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-6">
-            <span>© {new Date().getFullYear()} Alex’s Celestial Birthday</span>
+            <span>© {new Date().getFullYear()} Hebziba’s Celestial Birthday</span>
             <button
               onClick={scrollToTop}
               className="flex items-center gap-1 text-slate-300 hover:text-accent-primary transition-colors"
