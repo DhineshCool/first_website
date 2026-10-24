@@ -43,9 +43,9 @@ const bestieCaptions = [
   'Unforgettable 🍰',
 ];
 
-// 22 Distinct ambient background slots with rich, high-visibility opacity and size
+// 22 High-visibility ambient background slots: 100% crisp solid cards with rich contrast
 const initialSlots: BackgroundPhoto[] = [
-  // ================= OUTER LEFT COLUMN (Vibrant side memories) =================
+  // ================= OUTER LEFT COLUMN (Crisp, fully vivid side memories) =================
   {
     id: 'bg-ol-1',
     imageUrl: '/images/memories/memory_laughter.jpg',
@@ -55,7 +55,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.2,
     yPercent: 8,
     size: 'lg',
-    opacity: 0.92,
+    opacity: 1.0,
     floatDistance: 14,
     duration: 6.5,
     showOnMobile: true,
@@ -69,7 +69,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.5,
     yPercent: 28,
     size: 'md',
-    opacity: 0.88,
+    opacity: 0.98,
     floatDistance: -12,
     duration: 7.2,
     showOnMobile: false,
@@ -83,7 +83,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1,
     yPercent: 48,
     size: 'lg',
-    opacity: 0.92,
+    opacity: 1.0,
     floatDistance: 14,
     duration: 8,
     showOnMobile: true,
@@ -97,7 +97,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.8,
     yPercent: 68,
     size: 'md',
-    opacity: 0.88,
+    opacity: 0.98,
     floatDistance: -13,
     duration: 6.8,
     showOnMobile: false,
@@ -111,13 +111,13 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.2,
     yPercent: 86,
     size: 'lg',
-    opacity: 0.92,
+    opacity: 1.0,
     floatDistance: 12,
     duration: 7.5,
     showOnMobile: true,
   },
 
-  // ================= OUTER RIGHT COLUMN (Vibrant side memories) =================
+  // ================= OUTER RIGHT COLUMN (Crisp, fully vivid side memories) =================
   {
     id: 'bg-or-1',
     imageUrl: '/images/memories/memory_sunset.jpg',
@@ -127,7 +127,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.2,
     yPercent: 7,
     size: 'lg',
-    opacity: 0.92,
+    opacity: 1.0,
     floatDistance: -13,
     duration: 7,
     showOnMobile: true,
@@ -141,7 +141,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.6,
     yPercent: 27,
     size: 'md',
-    opacity: 0.88,
+    opacity: 0.98,
     floatDistance: 12,
     duration: 6.6,
     showOnMobile: false,
@@ -155,7 +155,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1,
     yPercent: 47,
     size: 'lg',
-    opacity: 0.92,
+    opacity: 1.0,
     floatDistance: -14,
     duration: 8.2,
     showOnMobile: true,
@@ -169,7 +169,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.8,
     yPercent: 67,
     size: 'md',
-    opacity: 0.88,
+    opacity: 0.98,
     floatDistance: 11,
     duration: 7.4,
     showOnMobile: false,
@@ -183,7 +183,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 1.2,
     yPercent: 85,
     size: 'lg',
-    opacity: 0.92,
+    opacity: 1.0,
     floatDistance: -12,
     duration: 6.9,
     showOnMobile: true,
@@ -199,7 +199,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 8,
     yPercent: 18,
     size: 'md',
-    opacity: 0.78,
+    opacity: 0.92,
     floatDistance: 10,
     duration: 8.5,
     showOnMobile: false,
@@ -213,7 +213,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 8.5,
     yPercent: 38,
     size: 'sm',
-    opacity: 0.75,
+    opacity: 0.90,
     floatDistance: -11,
     duration: 9.1,
     showOnMobile: false,
@@ -227,7 +227,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 7.8,
     yPercent: 58,
     size: 'md',
-    opacity: 0.78,
+    opacity: 0.92,
     floatDistance: 11,
     duration: 7.8,
     showOnMobile: false,
@@ -241,7 +241,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 8.2,
     yPercent: 78,
     size: 'sm',
-    opacity: 0.75,
+    opacity: 0.90,
     floatDistance: -10,
     duration: 8.7,
     showOnMobile: false,
@@ -257,7 +257,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 8,
     yPercent: 17,
     size: 'md',
-    opacity: 0.78,
+    opacity: 0.92,
     floatDistance: -10,
     duration: 8.3,
     showOnMobile: false,
@@ -271,7 +271,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 8.5,
     yPercent: 37,
     size: 'sm',
-    opacity: 0.75,
+    opacity: 0.90,
     floatDistance: 12,
     duration: 7.6,
     showOnMobile: false,
@@ -285,7 +285,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 7.8,
     yPercent: 57,
     size: 'md',
-    opacity: 0.78,
+    opacity: 0.92,
     floatDistance: -11,
     duration: 8.9,
     showOnMobile: false,
@@ -299,7 +299,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 8.2,
     yPercent: 77,
     size: 'sm',
-    opacity: 0.75,
+    opacity: 0.90,
     floatDistance: 10,
     duration: 8.1,
     showOnMobile: false,
@@ -315,7 +315,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 23,
     yPercent: 3,
     size: 'sm',
-    opacity: 0.72,
+    opacity: 0.88,
     floatDistance: 9,
     duration: 9.5,
     showOnMobile: false,
@@ -329,7 +329,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 23,
     yPercent: 3,
     size: 'sm',
-    opacity: 0.72,
+    opacity: 0.88,
     floatDistance: -9,
     duration: 9.8,
     showOnMobile: false,
@@ -343,7 +343,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 21,
     yPercent: 90,
     size: 'sm',
-    opacity: 0.72,
+    opacity: 0.88,
     floatDistance: 8,
     duration: 9.2,
     showOnMobile: false,
@@ -357,7 +357,7 @@ const initialSlots: BackgroundPhoto[] = [
     xPercent: 21,
     yPercent: 90,
     size: 'sm',
-    opacity: 0.72,
+    opacity: 0.88,
     floatDistance: -8,
     duration: 9.6,
     showOnMobile: false,
@@ -434,13 +434,13 @@ export const FloatingMemoryPhotos: React.FC = () => {
             ? { left: `${item.xPercent}%`, top: `${item.yPercent}%` }
             : { right: `${item.xPercent}%`, top: `${item.yPercent}%` };
 
-        // Card width classes
+        // Enlarged card widths for clear, prominent visibility
         const sizeClasses =
           item.size === 'lg'
-            ? 'w-24 sm:w-28 lg:w-32'
+            ? 'w-28 sm:w-32 lg:w-36'
             : item.size === 'md'
-            ? 'w-22 sm:w-26 lg:w-28'
-            : 'w-18 sm:w-22 lg:w-24';
+            ? 'w-24 sm:w-28 lg:w-30'
+            : 'w-20 sm:w-24 lg:w-26';
 
         // Stagger ripple delay based on card position
         const rippleDelay = (index % 8) * 0.07;
@@ -471,7 +471,7 @@ export const FloatingMemoryPhotos: React.FC = () => {
               item.showOnMobile ? 'flex' : 'hidden md:flex'
             }`}
           >
-            {/* Scrapbook 3D Polaroid Card with Ripple Flip & Film Developing Animation */}
+            {/* Crisp, solid white Scrapbook 3D Polaroid Card */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={item.imageUrl}
@@ -503,7 +503,7 @@ export const FloatingMemoryPhotos: React.FC = () => {
                   transformPerspective: 900,
                   transformStyle: 'preserve-3d',
                 }}
-                className={`bg-white p-2 pb-2.5 rounded-xl shadow-md border border-rose-200/90 flex flex-col items-center relative ${sizeClasses}`}
+                className={`bg-white p-2.5 pb-3 rounded-2xl shadow-lg border-2 border-rose-200/90 flex flex-col items-center relative ${sizeClasses}`}
               >
                 {/* Pink Heart Pin with subtle landing bounce */}
                 <motion.div
@@ -515,26 +515,26 @@ export const FloatingMemoryPhotos: React.FC = () => {
                     damping: 14,
                     delay: rippleDelay + 0.15,
                   }}
-                  className="absolute -top-2 left-1/2 -translate-x-1/2 z-10 w-4 h-4 rounded-full bg-[#F49CB4] border border-white shadow-xs flex items-center justify-center"
+                  className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10 w-5 h-5 rounded-full bg-[#F49CB4] border-2 border-white shadow-sm flex items-center justify-center"
                 >
                   <Heart className="w-2.5 h-2.5 fill-[#801336] text-[#801336]" />
                 </motion.div>
 
                 {/* Photo Frame with Vintage Film Exposure Developing Bloom */}
-                <div className="w-full aspect-square rounded-lg overflow-hidden bg-rose-50/50 shadow-inner border border-rose-100 relative">
+                <div className="w-full aspect-square rounded-xl overflow-hidden bg-rose-50/50 shadow-inner border border-rose-200/80 relative">
                   <motion.img
                     src={item.imageUrl}
                     alt={item.caption}
                     initial={{
-                      filter: 'brightness(1.3) contrast(0.85)',
-                      scale: 1.06,
+                      filter: 'brightness(1.2) contrast(0.95)',
+                      scale: 1.05,
                     }}
                     animate={{
                       filter: 'brightness(1) contrast(1)',
                       scale: 1,
                     }}
                     transition={{
-                      duration: 0.7,
+                      duration: 0.6,
                       ease: 'easeOut',
                       delay: rippleDelay + 0.1,
                     }}
@@ -551,7 +551,7 @@ export const FloatingMemoryPhotos: React.FC = () => {
                     duration: 0.4,
                     delay: rippleDelay + 0.2,
                   }}
-                  className="font-dancing text-xs sm:text-[13px] font-bold text-[#801336] text-center mt-1 leading-tight truncate max-w-full px-0.5"
+                  className="font-dancing text-xs sm:text-sm font-bold text-[#801336] text-center mt-1 leading-tight truncate max-w-full px-0.5"
                 >
                   {item.caption}
                 </motion.span>
