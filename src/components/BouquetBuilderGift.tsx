@@ -116,7 +116,7 @@ export const BouquetBuilderGift: React.FC = () => {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center py-2 sm:py-3 select-none">
+    <div className="w-full flex flex-col items-center py-2 sm:py-3 select-none relative z-20">
       <AnimatePresence mode="wait">
         {step === 'GALLERY' ? (
           /* ================= VIEW 1: 6 CURATED BOUQUETS MENU ================= */
@@ -153,7 +153,7 @@ export const BouquetBuilderGift: React.FC = () => {
                   whileHover={{ y: -6, scale: 1.02 }}
                   transition={{ duration: 0.25 }}
                   onClick={() => handleSelectBouquet(b)}
-                  className="bg-white rounded-2xl p-3.5 sm:p-4 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between text-center cursor-pointer group relative overflow-hidden transition-all hover:border-[#801336]/40 hover:shadow-xl h-full"
+                  className="bg-white/95 backdrop-blur-sm rounded-2xl p-3.5 sm:p-4 shadow-xl border-2 border-white ring-1 ring-rose-200/80 flex flex-col items-center justify-between text-center cursor-pointer group relative overflow-hidden transition-all hover:border-[#801336]/40 hover:shadow-2xl h-full"
                 >
                   {/* Tape decoration at top */}
                   <div className="absolute top-2.5 left-3 transform -rotate-6 bg-[#FFF8E7] px-2.5 py-0.5 rounded shadow-sm border border-amber-200/50 text-[9px] font-dancing font-bold text-[#801336] z-10">
@@ -235,7 +235,7 @@ export const BouquetBuilderGift: React.FC = () => {
             {/* 3-Column Display: Left Panda, Center Chosen Bouquet, Right 7 Bestie Compliments */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 w-full items-center justify-center">
               {/* Left Column: Cute Bestie Panda (3 cols) */}
-              <div className="lg:col-span-3 flex flex-col items-center text-center order-2 lg:order-1 bg-white/80 backdrop-blur-sm rounded-2xl p-3.5 sm:p-4 shadow-sm border border-rose-100">
+              <div className="lg:col-span-3 flex flex-col items-center text-center order-2 lg:order-1 bg-white/95 backdrop-blur-sm rounded-2xl p-3.5 sm:p-4 shadow-xl border-2 border-white ring-1 ring-rose-200/80">
                 <div className="w-24 h-24 relative mb-1.5">
                   <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow">
                     <circle cx="100" cy="100" r="70" fill="#FCE4EC" opacity="0.6" />
@@ -269,7 +269,7 @@ export const BouquetBuilderGift: React.FC = () => {
               </div>
 
               {/* Center Column: Large Selected Bouquet Polaroid (5 cols) */}
-              <div className="lg:col-span-5 flex flex-col items-center bg-white rounded-2xl p-4 sm:p-5 shadow-scrapbook-card border border-rose-100 order-1 lg:order-2">
+              <div className="lg:col-span-5 flex flex-col items-center bg-white/95 backdrop-blur-sm rounded-2xl p-4 sm:p-5 shadow-2xl border-2 border-white ring-1 ring-rose-200/80 order-1 lg:order-2">
                 {/* Polaroid Frame */}
                 <div className="relative p-2.5 bg-white rounded-xl shadow-md border border-rose-100 w-full max-w-[270px]">
                   {/* Decorative Washi Tape */}
@@ -322,7 +322,7 @@ export const BouquetBuilderGift: React.FC = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: idx * 0.1 }}
                     whileHover={{ scale: 1.05, x: 5 }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-[#801336] shadow-sm border border-rose-200/80 font-dancing text-xs sm:text-sm font-bold cursor-default hover:bg-[#FCE4EC] transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-sm text-[#801336] shadow-md border-2 border-white ring-1 ring-rose-200/80 font-dancing text-xs sm:text-sm font-bold cursor-default hover:bg-[#FCE4EC] transition-colors"
                   >
                     <Heart className="w-3 h-3 fill-[#801336] text-[#801336] flex-shrink-0" />
                     <span className="leading-tight">{compliment}</span>

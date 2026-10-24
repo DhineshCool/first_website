@@ -189,9 +189,9 @@ export const MusicCardGift: React.FC = () => {
       </div>
 
       {/* Two Column Layout: Left Vinyl Player & Right Foldable Card */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 w-full max-w-3xl items-stretch justify-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 w-full max-w-3xl items-stretch justify-center relative z-20">
         {/* ================= LEFT SIDE: VINYL PLAYER ================= */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between h-full">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 sm:p-5 shadow-2xl border-2 border-white ring-1 ring-rose-200/80 flex flex-col items-center justify-between h-full">
           {/* Maroon Player Frame */}
           <div className="w-full aspect-[4/3] rounded-xl bg-[#801336] p-3 sm:p-4 flex flex-col items-center justify-between shadow-inner relative overflow-hidden">
             {/* Background texture line */}
@@ -381,7 +381,7 @@ export const MusicCardGift: React.FC = () => {
         </div>
 
         {/* ================= RIGHT SIDE: FOLDABLE CARD ================= */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-between h-full relative overflow-hidden">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 sm:p-5 shadow-2xl border-2 border-white ring-1 ring-rose-200/80 flex flex-col items-center justify-between h-full relative overflow-hidden">
           {/* Top subtle header ribbon */}
           <div className="w-full flex justify-between items-center mb-2 z-10">
             <div className="bg-[#FFF8E7] px-2.5 py-0.5 rounded shadow-sm border border-amber-200/50 text-[10px] font-dancing font-bold text-[#801336] transform -rotate-1">
