@@ -24,8 +24,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Netlify build output
+# Deployment build output
 .netlify
+.vercel
 
 # Personal unencrypted photos (NEVER commit raw personal photos to git)
 public/images/mine/
