@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Sparkles, ArrowRight, Heart, Music, Volume2, VolumeX } from 'lucide-react';
-import { happyBirthdayAudio } from '../services/happyBirthdayAudio';
 import { FireworksCanvas } from './FireworksCanvas';
 
 interface CakeCalendarScreenProps {
@@ -24,39 +23,65 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
   const [smokeActive, setSmokeActive] = useState<boolean>(false);
   const [fireworksActive, setFireworksActive] = useState<boolean>(alreadyBlown);
   const [isMusicPlaying, setIsMusicPlaying] = useState<boolean>(false);
-  const [isMuted, setIsMuted] = useState<boolean>(happyBirthdayAudio.getIsMuted());
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Autoplay Happy Birthday song upon entering the Cake screen (after passcode & countdown)
-  useEffect(() => {
-    let isMounted = true;
+  // Core playback starter
+  const startPlayback = useCallback(() => {
+    if (!candlesLit || !audioRef.current) return;
+    const audio = audioRef.current;
+    audio.volume = 1.0;
+    audio.muted = isMuted;
 
-    if (!alreadyBlown) {
-      happyBirthdayAudio
-        .play()
+    const promise = audio.play();
+    if (promise !== undefined) {
+      promise
         .then(() => {
-          if (isMounted) setIsMusicPlaying(true);
+          setIsMusicPlaying(true);
         })
-        .catch(() => {
-          // If browser deferred autoplay, listen for the first user click/key on the screen
-          const unlockAudio = () => {
-            if (isMounted && candlesLit) {
-              happyBirthdayAudio.play();
-              setIsMusicPlaying(true);
-            }
-            window.removeEventListener('click', unlockAudio);
-            window.removeEventListener('keydown', unlockAudio);
-          };
-          window.addEventListener('click', unlockAudio, { once: true });
-          window.addEventListener('keydown', unlockAudio, { once: true });
+        .catch((err) => {
+          console.warn('Audio waiting for user gesture to start playback:', err);
+          setIsMusicPlaying(false);
         });
+    }
+  }, [candlesLit, isMuted]);
+
+  // Attempt autoplay immediately on mount
+  useEffect(() => {
+    if (!alreadyBlown && candlesLit) {
+      startPlayback();
     }
 
     return () => {
-      isMounted = false;
-      // Stop happy birthday song when navigating away from the Cake screen
-      happyBirthdayAudio.stop();
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
     };
-  }, [alreadyBlown]);
+  }, [alreadyBlown, candlesLit, startPlayback]);
+
+  // If autoplay was deferred by the browser, unlock on the very first user interaction
+  useEffect(() => {
+    if (!isMusicPlaying && candlesLit) {
+      const handleUserGesture = () => {
+        if (candlesLit && audioRef.current && audioRef.current.paused) {
+          startPlayback();
+        }
+      };
+
+      window.addEventListener('click', handleUserGesture, { capture: true, once: true });
+      window.addEventListener('touchstart', handleUserGesture, { capture: true, once: true });
+      window.addEventListener('pointerdown', handleUserGesture, { capture: true, once: true });
+      window.addEventListener('keydown', handleUserGesture, { capture: true, once: true });
+
+      return () => {
+        window.removeEventListener('click', handleUserGesture, { capture: true });
+        window.removeEventListener('touchstart', handleUserGesture, { capture: true });
+        window.removeEventListener('pointerdown', handleUserGesture, { capture: true });
+        window.removeEventListener('keydown', handleUserGesture, { capture: true });
+      };
+    }
+  }, [isMusicPlaying, candlesLit, startPlayback]);
 
   const handleBlowCandles = () => {
     if (!candlesLit) return;
@@ -65,7 +90,10 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
     setFireworksActive(true);
 
     // Stop Happy Birthday song immediately when user clicks to blow the candles
-    happyBirthdayAudio.stop();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
     setIsMusicPlaying(false);
 
     onCandlesBlown?.();
@@ -108,6 +136,20 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
 
   return (
     <div className="w-full flex flex-col items-center py-1 sm:py-2 select-none relative z-20">
+      {/* Hidden HTML5 Audio Element for Happy Birthday */}
+      <audio
+        ref={audioRef}
+        loop
+        preload="auto"
+        playsInline
+        onPlay={() => setIsMusicPlaying(true)}
+        onPause={() => setIsMusicPlaying(false)}
+      >
+        <source src="/audio/happy_birthday.mp3" type="audio/mpeg" />
+        <source src="/audio/happy_birthday.m4a" type="audio/mp4" />
+        <source src="/audio/happy_birthday.wav" type="audio/wav" />
+      </audio>
+
       {/* Background Fireworks bursting across the screen once candles are blown */}
       <FireworksCanvas isActive={fireworksActive} />
       {/* Big Bold Maroon Serif Header */}
@@ -117,32 +159,51 @@ export const CakeCalendarScreen: React.FC<CakeCalendarScreenProps> = ({
         transition={{ duration: 0.6 }}
         className="text-center mb-3 sm:mb-4 flex flex-col items-center"
       >
-        {/* Soft Music Indicator while candles are lit */}
+        {/* Soft Music Indicator / Play Button while candles are lit */}
         <AnimatePresence>
           {candlesLit && (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className="mb-1.5 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm border border-rose-200/80 shadow-sm text-xs font-playfair font-semibold text-[#801336]"
+              className="mb-1.5 flex items-center justify-center"
             >
-              <Music className={`w-3.5 h-3.5 text-[#F49CB4] ${isMusicPlaying && !isMuted ? 'animate-bounce' : 'opacity-70'}`} />
-              <span>{isMusicPlaying && !isMuted ? 'Happy Birthday Song Playing 🎶' : 'Happy Birthday Song 🎶'}</span>
-              <button
-                onClick={() => {
-                  const muted = happyBirthdayAudio.toggleMute();
-                  setIsMuted(muted);
-                }}
-                className="ml-1 p-0.5 rounded-full hover:bg-rose-50 text-[#801336]/80 hover:text-[#801336]"
-                title={isMuted ? 'Unmute' : 'Mute'}
-                aria-label={isMuted ? 'Unmute birthday song' : 'Mute birthday song'}
-              >
-                {isMuted ? (
-                  <VolumeX className="w-3.5 h-3.5 text-rose-400" />
-                ) : (
-                  <Volume2 className="w-3.5 h-3.5 text-[#801336]" />
-                )}
-              </button>
+              {isMusicPlaying ? (
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-sm border-2 border-white ring-1 ring-rose-300 shadow-md text-xs font-playfair font-bold text-[#801336]">
+                  <Music className="w-3.5 h-3.5 text-[#801336] animate-bounce" />
+                  <span>Happy Birthday Song Playing 🎶</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const nextMuted = !isMuted;
+                      setIsMuted(nextMuted);
+                      if (audioRef.current) audioRef.current.muted = nextMuted;
+                    }}
+                    className="ml-1 p-1 rounded-full hover:bg-rose-50 text-[#801336] transition-colors"
+                    title={isMuted ? 'Unmute' : 'Mute'}
+                    aria-label={isMuted ? 'Unmute birthday song' : 'Mute birthday song'}
+                  >
+                    {isMuted ? (
+                      <VolumeX className="w-4 h-4 text-rose-400" />
+                    ) : (
+                      <Volume2 className="w-4 h-4 text-[#801336]" />
+                    )}
+                  </button>
+                </div>
+              ) : (
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    startPlayback();
+                  }}
+                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#801336] to-[#9E1B43] text-[#FAF6F0] shadow-pill-maroon border border-white text-xs font-playfair font-bold animate-pulse cursor-pointer"
+                >
+                  <Volume2 className="w-4 h-4 text-amber-200" />
+                  <span>▶ Tap to Play Birthday Song 🎶</span>
+                </motion.button>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

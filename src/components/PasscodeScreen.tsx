@@ -43,6 +43,16 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
       currentPin === '2004' ||
       currentPin === '0819'
     ) {
+      try {
+        const prime = new Audio('/audio/happy_birthday.mp3');
+        prime.volume = 0.001;
+        prime.play().then(() => {
+          prime.pause();
+          prime.currentTime = 0;
+        }).catch(() => {});
+      } catch {
+        // safe
+      }
       vaultService.init('2710');
       onSuccess();
     } else {
