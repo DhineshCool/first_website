@@ -48,7 +48,7 @@ const initialSlots: BackgroundPhoto[] = [
   // ================= OUTER LEFT COLUMN (Crisp, fully vivid edge rail) =================
   {
     id: 'bg-ol-1',
-    imageUrl: '/images/memories/memory_laughter.jpg',
+    imageUrl: '/images/photo-1.svg',
     caption: 'Laughter ✨',
     rotation: -3,
     anchor: 'left',
@@ -62,7 +62,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-ol-2',
-    imageUrl: '/images/memories/memory_cafe.jpg',
+    imageUrl: '/images/photo-2.svg',
     caption: 'Bestie Cafe 🍰',
     rotation: 3,
     anchor: 'left',
@@ -76,7 +76,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-ol-3',
-    imageUrl: '/images/memories/memory_picnic.jpg',
+    imageUrl: '/images/photo-3.svg',
     caption: 'Sunny Days 🍓',
     rotation: -2,
     anchor: 'left',
@@ -90,7 +90,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-ol-4',
-    imageUrl: '/images/memories/memory_roadtrip.jpg',
+    imageUrl: '/images/photo-4.svg',
     caption: 'Road Trips 🚗',
     rotation: 4,
     anchor: 'left',
@@ -106,7 +106,7 @@ const initialSlots: BackgroundPhoto[] = [
   // ================= INNER LEFT COLUMN (Stepped inward with zero overlap) =================
   {
     id: 'bg-ml-1',
-    imageUrl: '/images/memories/memory_stargazing.jpg',
+    imageUrl: '/images/photo-5.svg',
     caption: 'Always ✨',
     rotation: -4,
     anchor: 'left',
@@ -120,7 +120,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-ml-2',
-    imageUrl: '/images/memories/memory_sunset.jpg',
+    imageUrl: '/images/photo-6.svg',
     caption: 'Precious 🍰',
     rotation: 2,
     anchor: 'left',
@@ -134,7 +134,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-ml-3',
-    imageUrl: '/images/memories/memory_laughter.jpg',
+    imageUrl: '/images/photo-1.svg',
     caption: 'Moments 🍓',
     rotation: -3,
     anchor: 'left',
@@ -150,7 +150,7 @@ const initialSlots: BackgroundPhoto[] = [
   // ================= OUTER RIGHT COLUMN (Crisp, fully vivid edge rail) =================
   {
     id: 'bg-or-1',
-    imageUrl: '/images/memories/memory_sunset.jpg',
+    imageUrl: '/images/photo-2.svg',
     caption: 'Golden Hour 🌅',
     rotation: 3,
     anchor: 'right',
@@ -164,7 +164,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-or-2',
-    imageUrl: '/images/memories/memory_laughter.jpg',
+    imageUrl: '/images/photo-3.svg',
     caption: 'Sweet Vibes 🌸',
     rotation: -3,
     anchor: 'right',
@@ -178,7 +178,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-or-3',
-    imageUrl: '/images/memories/memory_cafe.jpg',
+    imageUrl: '/images/photo-4.svg',
     caption: 'Happy Times 💖',
     rotation: 2,
     anchor: 'right',
@@ -192,7 +192,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-or-4',
-    imageUrl: '/images/memories/memory_picnic.jpg',
+    imageUrl: '/images/photo-5.svg',
     caption: 'Unfiltered 💫',
     rotation: -4,
     anchor: 'right',
@@ -208,7 +208,7 @@ const initialSlots: BackgroundPhoto[] = [
   // ================= INNER RIGHT COLUMN (Stepped inward with zero overlap) =================
   {
     id: 'bg-mr-1',
-    imageUrl: '/images/memories/memory_stargazing.jpg',
+    imageUrl: '/images/photo-6.svg',
     caption: 'Best Duo 💖',
     rotation: 4,
     anchor: 'right',
@@ -222,7 +222,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-mr-2',
-    imageUrl: '/images/memories/memory_roadtrip.jpg',
+    imageUrl: '/images/photo-1.svg',
     caption: 'Smiles 🌙',
     rotation: -2,
     anchor: 'right',
@@ -236,7 +236,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-mr-3',
-    imageUrl: '/images/memories/memory_cafe.jpg',
+    imageUrl: '/images/photo-2.svg',
     caption: 'Forever 🌸',
     rotation: 3,
     anchor: 'right',
@@ -252,7 +252,7 @@ const initialSlots: BackgroundPhoto[] = [
   // ================= TOP & BOTTOM AMBIENT DRIFTERS (Framing top title and bottom cards) =================
   {
     id: 'bg-tb-1',
-    imageUrl: '/images/memories/memory_laughter.jpg',
+    imageUrl: '/images/photo-3.svg',
     caption: 'Timeless ✨',
     rotation: -2,
     anchor: 'left',
@@ -266,7 +266,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-tb-2',
-    imageUrl: '/images/memories/memory_cafe.jpg',
+    imageUrl: '/images/photo-4.svg',
     caption: 'Sweet 🍰',
     rotation: 3,
     anchor: 'right',
@@ -280,7 +280,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-tb-3',
-    imageUrl: '/images/memories/memory_picnic.jpg',
+    imageUrl: '/images/photo-5.svg',
     caption: 'Cherished 🌸',
     rotation: 2,
     anchor: 'left',
@@ -294,7 +294,7 @@ const initialSlots: BackgroundPhoto[] = [
   },
   {
     id: 'bg-tb-4',
-    imageUrl: '/images/memories/memory_roadtrip.jpg',
+    imageUrl: '/images/photo-6.svg',
     caption: 'Hebziba & Dhinesh 💫',
     rotation: -3,
     anchor: 'right',
