@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ScreenState } from './types';
+import { StartingCountdownScreen } from './components/StartingCountdownScreen';
 import { PasscodeScreen } from './components/PasscodeScreen';
 import { CountdownScreen } from './components/CountdownScreen';
 import { CakeCalendarScreen } from './components/CakeCalendarScreen';
@@ -12,9 +13,11 @@ import { LoveLetterGift } from './components/LoveLetterGift';
 import { ScrapbookLayout } from './components/ScrapbookLayout';
 
 export const App: React.FC = () => {
-  const [screenState, setScreenState] = useState<ScreenState>('LOCK');
+  const [screenState, setScreenState] = useState<ScreenState>('BIRTHDAY_COUNTDOWN');
 
   // Handle navigation transitions
+  const handleEnterPasscode = () => setScreenState('LOCK');
+  const handleBackToCountdown = () => setScreenState('BIRTHDAY_COUNTDOWN');
   const handlePasscodeSuccess = () => setScreenState('COUNTDOWN');
   const handleCountdownComplete = () => setScreenState('CAKE');
   const handleCakeContinue = () => setScreenState('PROMPT_GIFT');
@@ -64,8 +67,9 @@ export const App: React.FC = () => {
   if (screenState === 'LOCK') {
     return (
       <PasscodeScreen
-        correctPasscode="0819"
+        correctPasscode="2710"
         onSuccess={handlePasscodeSuccess}
+        onBackToCountdown={handleBackToCountdown}
       />
     );
   }
@@ -81,6 +85,14 @@ export const App: React.FC = () => {
           transition={{ duration: 0.35, ease: 'easeInOut' }}
           className="w-full flex flex-col items-center justify-center"
         >
+          {screenState === 'BIRTHDAY_COUNTDOWN' && (
+            <StartingCountdownScreen
+              onEnterPasscode={handleEnterPasscode}
+              targetDate="2026-10-27T00:00:00"
+              recipientName="Hebziba"
+            />
+          )}
+
           {screenState === 'COUNTDOWN' && (
             <CountdownScreen onComplete={handleCountdownComplete} />
           )}

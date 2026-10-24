@@ -5,11 +5,13 @@ import { Heart, Delete, Lock, Sparkles } from 'lucide-react';
 interface PasscodeScreenProps {
   correctPasscode?: string;
   onSuccess: () => void;
+  onBackToCountdown?: () => void;
 }
 
 export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
   correctPasscode = '2710',
   onSuccess,
+  onBackToCountdown,
 }) => {
   const [pin, setPin] = useState<string>('');
   const [isShaking, setIsShaking] = useState<boolean>(false);
@@ -259,7 +261,7 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
           </div>
 
           {/* Bottom Pill Button: UNLOCK */}
-          <div className="w-full mt-6 flex justify-center">
+          <div className="w-full mt-6 flex flex-col items-center justify-center gap-2">
             <button
               onClick={handleUnlockClick}
               className="w-full max-w-[240px] py-3.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-sm tracking-widest shadow-pill-maroon hover:bg-[#9E1B43] hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2"
@@ -267,6 +269,14 @@ export const PasscodeScreen: React.FC<PasscodeScreenProps> = ({
               <Lock className="w-4 h-4" />
               <span>UNLOCK</span>
             </button>
+            {onBackToCountdown && (
+              <button
+                onClick={onBackToCountdown}
+                className="text-xs font-dancing font-bold text-[#801336]/75 hover:text-[#801336] hover:underline transition-all mt-1"
+              >
+                ← Back to Birthday Countdown
+              </button>
+            )}
           </div>
         </div>
       </motion.div>

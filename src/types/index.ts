@@ -1,4 +1,5 @@
 export type ScreenState =
+  | 'BIRTHDAY_COUNTDOWN'
   | 'LOCK'
   | 'COUNTDOWN'
   | 'CAKE'
