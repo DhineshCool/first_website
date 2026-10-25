@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, Sparkles, Heart, Gift, PartyPopper } from 'lucide-react';
+import { Lock, Sparkles, Heart, Gift, PartyPopper, X, Hourglass } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 interface StartingCountdownScreenProps {
   onEnterPasscode: () => void;
@@ -29,8 +30,9 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
     isPassed: false,
   });
 
-  const [overrideArrival, setOverrideArrival] = useState<boolean | null>(null);
+  const [showLockedModal, setShowLockedModal] = useState<boolean>(false);
 
+  // Live countdown to target date
   useEffect(() => {
     const calculateTime = () => {
       const now = new Date().getTime();
@@ -66,7 +68,39 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  const isCelebrationToday = overrideArrival !== null ? overrideArrival : timeLeft.isPassed;
+  const isCelebrationToday = timeLeft.isPassed;
+
+  // Values shown on the 4 countdown cards
+  const displayDays = isCelebrationToday ? 0 : timeLeft.days;
+  const displayHours = isCelebrationToday ? 0 : timeLeft.hours;
+  const displayMinutes = isCelebrationToday ? 0 : timeLeft.minutes;
+  const displaySeconds = isCelebrationToday ? 0 : timeLeft.seconds;
+
+  // Trigger celebration confetti when countdown completes
+  useEffect(() => {
+    if (isCelebrationToday) {
+      try {
+        confetti({
+          particleCount: 90,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#801336', '#F49CB4', '#FFD700', '#FFFDF9'],
+        });
+      } catch {
+        // safe
+      }
+    }
+  }, [isCelebrationToday]);
+
+  const handleUnlockClick = () => {
+    if (isCelebrationToday) {
+      // Countdown ended! Proceed smoothly to passcode screen
+      onEnterPasscode();
+    } else {
+      // Countdown still active: show locked notice with countdown info
+      setShowLockedModal(true);
+    }
+  };
 
   return (
     <div className="w-full flex flex-col items-center py-2 sm:py-3 select-none text-center">
@@ -100,7 +134,9 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
           </span>
         </h1>
         <p className="font-dancing text-xs sm:text-sm text-[#801336]/80 mt-1">
-          "Counting every second until 22 arrives for my favorite human"
+          {isCelebrationToday
+            ? "✨ The wait is over! It's your 22nd Birthday today! ✨"
+            : '"Counting every second until 22 arrives for my favorite human"'}
         </p>
       </motion.div>
 
@@ -136,10 +172,10 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
       {/* 4 Polaroid-Style Countdown Cards */}
       <div className="w-full max-w-xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 my-2">
         {[
-          { label: 'DAYS', value: timeLeft.days, rotation: -1.5 },
-          { label: 'HOURS', value: timeLeft.hours, rotation: 1.5 },
-          { label: 'MINUTES', value: timeLeft.minutes, rotation: -1.5 },
-          { label: 'SECONDS', value: timeLeft.seconds, rotation: 1.5 },
+          { label: 'DAYS', value: displayDays, rotation: -1.5 },
+          { label: 'HOURS', value: displayHours, rotation: 1.5 },
+          { label: 'MINUTES', value: displayMinutes, rotation: -1.5 },
+          { label: 'SECONDS', value: displaySeconds, rotation: 1.5 },
         ].map((unit, idx) => (
           <motion.div
             key={unit.label}
@@ -148,7 +184,11 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
             transition={{ duration: 0.4, delay: idx * 0.1 }}
             whileHover={{ scale: 1.05, rotate: 0 }}
             style={{ rotate: `${unit.rotation}deg` }}
-            className="bg-white rounded-2xl p-3 sm:p-3.5 shadow-scrapbook-card border border-rose-100 flex flex-col items-center justify-center relative cursor-default h-22 sm:h-24 overflow-hidden"
+            className={`rounded-2xl p-3 sm:p-3.5 shadow-scrapbook-card border flex flex-col items-center justify-center relative cursor-default h-22 sm:h-24 overflow-hidden transition-all ${
+              isCelebrationToday
+                ? 'bg-gradient-to-b from-[#FFFDF9] to-[#FDE8EF] border-[#F49CB4]'
+                : 'bg-white border-rose-100'
+            }`}
           >
             {/* Pink Heart Pin at Top Center */}
             <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-[#F49CB4] border border-white shadow-sm flex items-center justify-center">
@@ -197,28 +237,95 @@ export const StartingCountdownScreen: React.FC<StartingCountdownScreenProps> = (
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={onEnterPasscode}
-          className="animate-shimmer px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#801336] via-[#9E1B43] to-[#801336] text-[#FAF6F0] font-playfair font-bold text-sm sm:text-base tracking-wider shadow-pill-maroon hover:shadow-lg transition-all flex items-center gap-2 border border-rose-300/40 cursor-pointer"
+          onClick={handleUnlockClick}
+          className={`px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-full font-playfair font-bold text-sm sm:text-base tracking-wider transition-all flex items-center gap-2 border cursor-pointer ${
+            isCelebrationToday
+              ? 'animate-shimmer bg-gradient-to-r from-[#801336] via-[#9E1B43] to-[#801336] text-[#FAF6F0] shadow-pill-maroon hover:shadow-xl border-rose-300/40 ring-2 ring-amber-300/50'
+              : 'bg-white/95 text-[#801336] border-rose-300/80 shadow-md hover:bg-rose-50/80'
+          }`}
         >
-          <Lock className="w-4 h-4 text-[#F49CB4] animate-pulse" />
-          <span>Unlock Bestie's Surprise 💌</span>
-          <Gift className="w-4 h-4 text-amber-300" />
+          {isCelebrationToday ? (
+            <>
+              <Sparkles className="w-4 h-4 text-amber-300 animate-spin-slow" />
+              <span>Unlock Bestie's Surprise 💌</span>
+              <Gift className="w-4 h-4 text-amber-300 animate-bounce" />
+            </>
+          ) : (
+            <>
+              <Lock className="w-4 h-4 text-[#801336] animate-pulse" />
+              <span>Unlock Bestie's Surprise 🔒</span>
+              <span className="text-[10px] font-dancing bg-rose-100 text-[#801336] px-2 py-0.5 rounded-full font-bold">
+                Unlocks Oct 27
+              </span>
+            </>
+          )}
         </motion.button>
 
-        <p className="font-dancing text-xs sm:text-sm text-[#801336]/70">
-          "Tap to enter the secret passcode and reveal your gifts"
+        <p className="font-dancing text-xs sm:text-sm text-[#801336]/80 font-bold">
+          {isCelebrationToday
+            ? "🎉 Countdown complete! Tap to enter the passcode and open your gifts 💖"
+            : "⏳ Surprise is locked until the countdown ends on October 27 at 00:00:00"}
         </p>
-
-        {/* Quick Preview Toggle */}
-        <div className="mt-1">
-          <button
-            onClick={() => setOverrideArrival(!isCelebrationToday)}
-            className="text-[10px] font-dancing text-[#801336]/60 hover:text-[#801336] underline"
-          >
-            {isCelebrationToday ? 'Show Live Countdown Mode' : 'Preview Birthday Arrival Mode'}
-          </button>
-        </div>
       </div>
+
+      {/* Locked Countdown Notice Modal */}
+      <AnimatePresence>
+        {showLockedModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 15 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border-2 border-rose-200 text-center relative"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setShowLockedModal(false)}
+                className="absolute top-4 right-4 p-2 rounded-full hover:bg-rose-50 text-[#801336] transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="w-16 h-16 rounded-full bg-rose-100 text-[#801336] flex items-center justify-center mx-auto mb-3 shadow-inner">
+                <Hourglass className="w-8 h-8 text-[#801336] animate-pulse" />
+              </div>
+
+              <h3 className="font-playfair text-xl sm:text-2xl font-bold text-[#801336] mb-1">
+                Patience, Bestie! 💖
+              </h3>
+
+              <p className="font-dancing text-base sm:text-lg text-[#801336] font-semibold mb-3">
+                "Special surprises are worth waiting for..."
+              </p>
+
+              <div className="bg-[#FAF6F0] p-4 rounded-2xl border border-rose-200/60 my-3 text-left">
+                <p className="font-jakarta text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  This birthday tribute for <strong>Hebziba</strong> is time-locked until the stroke of midnight on <strong>October 27</strong>.
+                </p>
+                <p className="font-dancing text-sm sm:text-base text-[#801336] font-bold mt-2">
+                  ⏳ Time remaining: {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+                </p>
+                <p className="font-jakarta text-[11px] text-[#801336]/80 mt-1">
+                  The moment this countdown reaches 00:00:00, this button will automatically unlock the surprise! ✨
+                </p>
+              </div>
+
+              <div className="mt-4">
+                <button
+                  onClick={() => setShowLockedModal(false)}
+                  className="w-full py-2.5 rounded-full bg-[#801336] text-[#FAF6F0] font-playfair font-bold text-xs tracking-wider shadow-md hover:bg-[#9E1B43] transition-all cursor-pointer"
+                >
+                  I'll Wait for the Big Day! ⏳
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
+
+export default StartingCountdownScreen;
